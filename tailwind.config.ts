@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Playfair Display"', 'serif'],
+        display: ['"Roboto"', 'sans-serif'],
         body: ['"EB Garamond"', '"Cormorant Garamond"', 'serif'],
       },
       colors: {
