@@ -161,7 +161,7 @@ const ReservationSection = () => {
                     mode="single"
                     selected={date}
                     onSelect={setDate}
-                    disabled={(d) => d < new Date()}
+                    disabled={(d) => d < new Date() || d.getDay() === 2 || d.getDay() === 3}
                     initialFocus
                     className="p-3 pointer-events-auto"
                   />
