@@ -30,6 +30,7 @@ const Navbar = () => {
           {[
             { label: "Carta", id: "carta" },
             { label: "Vinos", id: "vinos" },
+            { label: "Regala", id: "regala" },
             { label: "Reservas", id: "reservas" },
             { label: "Contacto", id: "contacto" },
           ].map((item) => (
