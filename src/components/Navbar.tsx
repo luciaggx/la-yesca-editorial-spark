@@ -39,6 +39,12 @@ const Navbar = () => {
     ? "bg-background/95 backdrop-blur-md border-b border-foreground/10 shadow-sm"
     : "bg-transparent";
 
+  // Sobre el vídeo (sin scroll) → texto blanco. Con fondo crema → texto oliva.
+  const textColor   = scrolled || menuOpen ? "text-foreground"      : "text-stone-100";
+  const subColor    = scrolled || menuOpen ? "text-foreground/50"   : "text-stone-100/55";
+  const borderColor = scrolled || menuOpen ? "border-amber-700/40 text-amber-800" : "border-stone-100/50 text-stone-100";
+  const iconColor   = scrolled || menuOpen ? "text-foreground/60 hover:text-foreground" : "text-stone-100/70 hover:text-stone-100";
+
   return (
     <>
       <motion.nav
@@ -54,14 +60,14 @@ const Navbar = () => {
 
             <button
               onClick={() => scrollTo("reservas")}
-              className="font-body text-[10px] tracking-[0.22em] uppercase px-3 py-1.5 border border-amber-700/40 text-amber-800 hover:bg-amber-700/10 transition-colors duration-300 rounded-sm"
+              className={`font-body text-[10px] tracking-[0.22em] uppercase px-3 py-1.5 border hover:bg-white/10 transition-colors duration-300 rounded-sm ${borderColor}`}
             >
               Reservar
             </button>
 
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="font-display text-sm tracking-[0.3em] uppercase text-foreground absolute left-1/2 -translate-x-1/2"
+              className={`font-display text-sm tracking-[0.3em] uppercase absolute left-1/2 -translate-x-1/2 transition-colors duration-500 ${textColor}`}
               style={{ fontFamily: "'Roboto', sans-serif", fontWeight: 100 }}
             >
               LA YESCA
@@ -69,7 +75,7 @@ const Navbar = () => {
 
             <button
               onClick={() => setMenuOpen(v => !v)}
-              className="p-1.5 text-foreground/60 hover:text-foreground transition-colors"
+              className={`p-1.5 transition-colors ${iconColor}`}
               aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
             >
               {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -81,7 +87,7 @@ const Navbar = () => {
 
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="flex-shrink-0 pr-4 font-display text-sm tracking-[0.3em] uppercase text-foreground whitespace-nowrap"
+              className={`flex-shrink-0 pr-4 font-display text-sm tracking-[0.3em] uppercase whitespace-nowrap transition-colors duration-500 ${textColor}`}
               style={{ fontFamily: "'Roboto', sans-serif", fontWeight: 100 }}
             >
               LA YESCA
@@ -110,7 +116,7 @@ const Navbar = () => {
                   <span key={`${item.id}-${i}`} className="inline-flex items-center">
                     <button
                       onClick={() => scrollTo(item.id)}
-                      className="font-body text-xs tracking-[0.2em] uppercase text-foreground/50 hover:text-amber-800 active:text-amber-800 transition-colors duration-300 whitespace-nowrap px-1 py-1"
+                      className={`font-body text-xs tracking-[0.2em] uppercase transition-colors duration-300 whitespace-nowrap px-1 py-1 ${scrolled ? "text-foreground/50 hover:text-amber-800" : "text-stone-100/55 hover:text-stone-100"}`}
                     >
                       {item.label}
                     </button>
