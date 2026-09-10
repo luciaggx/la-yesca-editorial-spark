@@ -5,6 +5,11 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // En GitHub Pages la web vive en /la-yesca-editorial-spark/
+  // En desarrollo y Netlify vive en /
+  base: mode === "production" && process.env.DEPLOY_TARGET === "ghpages"
+    ? "/la-yesca-editorial-spark/"
+    : "/",
   server: {
     host: "::",
     port: 8080,

@@ -30,7 +30,7 @@ const GiftExperienceSection = () => {
   const [persons, setPersons] = useState(2);
 
   return (
-    <section id="regala" ref={ref} className="py-20 md:py-32 px-6 bg-accent/10">
+    <section id="regala" ref={ref} className="py-20 md:py-32 px-6" style={{ backgroundColor: "hsl(155 18% 10%)" }}>
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ scaleX: 0 }}
@@ -45,7 +45,7 @@ const GiftExperienceSection = () => {
           transition={{ duration: 0.8 }}
           className="font-display text-4xl md:text-5xl text-foreground text-center mb-4"
         >
-          Regala una Experiencia
+          Regala La Yesca
         </motion.h2>
 
         <motion.p

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where chrome:*)",
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Read(//c/Program Files \\(x86\\)/Google/Chrome/Application/**)",
+      "Bash(\"C:/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --print-to-pdf=\"C:/Users/lucia/Documents/CLAUDE WORK/YESCA/Plan_de_Trabajo_LaYesca.pdf\" --no-margins \"C:/Users/lucia/Documents/CLAUDE WORK/YESCA/Plan_de_Trabajo_LaYesca.html\" 2>&1)"
+    ]
+  }
+}

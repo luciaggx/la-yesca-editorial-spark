@@ -3,7 +3,11 @@ import { useRef } from "react";
 import logo from "@/assets/logo.png";
 import { MapPin } from "lucide-react";
 
-const FooterSection = () => {
+interface FooterSectionProps {
+  onOpenLegal: (type: "privacidad" | "cookies") => void;
+}
+
+const FooterSection = ({ onOpenLegal }: FooterSectionProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
@@ -109,8 +113,24 @@ const FooterSection = () => {
           </a>
         </motion.div>
 
+        {/* Legal links */}
+        <div className="mt-12 flex flex-wrap justify-center gap-6">
+          <button
+            onClick={() => onOpenLegal("privacidad")}
+            className="text-xs text-muted-foreground/50 hover:text-foreground/70 transition-colors tracking-widest uppercase underline-offset-4 hover:underline"
+          >
+            Política de Privacidad
+          </button>
+          <button
+            onClick={() => onOpenLegal("cookies")}
+            className="text-xs text-muted-foreground/50 hover:text-foreground/70 transition-colors tracking-widest uppercase underline-offset-4 hover:underline"
+          >
+            Política de Cookies
+          </button>
+        </div>
+
         {/* Copyright */}
-        <p className="mt-16 text-xs text-muted-foreground/40 tracking-widest uppercase">
+        <p className="mt-4 text-xs text-muted-foreground/30 tracking-widest uppercase">
           © {new Date().getFullYear()} La Yesca — Todos los derechos reservados
         </p>
       </div>

@@ -56,28 +56,49 @@ const HeroSection = () => {
         </video>
       </div>
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-background/60 z-[1]" />
+      {/* Overlay — degradado cinematográfico */}
+      <div className="absolute inset-0 z-[1]"
+        style={{
+          background: "linear-gradient(to bottom, hsl(155 22% 7% / 0.80) 0%, hsl(155 22% 7% / 0.38) 45%, hsl(155 22% 7% / 0.82) 100%)"
+        }}
+      />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center">
+      <div className="relative z-10 flex flex-col items-center text-center px-4">
+        {/* Línea decorativa */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.2, delay: 0.3 }}
+          className="h-px w-12 bg-amber-400/60 mb-10 origin-center"
+        />
+
         <motion.h1
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="font-display text-5xl md:text-7xl lg:text-8xl tracking-[0.15em] text-foreground mb-4"
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="font-display text-6xl md:text-8xl lg:text-9xl tracking-[0.22em] text-foreground mb-5"
+          style={{ fontWeight: 100 }}
         >
           LA YESCA
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="font-display text-xl md:text-2xl tracking-[0.3em] text-foreground/70 uppercase"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="font-body text-sm md:text-base tracking-[0.45em] text-foreground/50 uppercase"
         >
-          Taberna
+          Taberna · San Lorenzo de El Escorial
         </motion.p>
+
+        {/* Línea decorativa inferior */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.2, delay: 1 }}
+          className="h-px w-12 bg-amber-400/60 mt-10 origin-center"
+        />
       </div>
 
       {/* Scroll hint */}

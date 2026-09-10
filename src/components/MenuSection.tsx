@@ -115,10 +115,77 @@ const MenuCategoryBlock = ({ category, index }: { category: MenuCategory; index:
   );
 };
 
+const groupMenuData: MenuCategory[] = [
+  {
+    title: "Menú Grupos — Entrantes",
+    items: [
+      { name: "Tabla de embutidos ibéricos", prices: ["—"] },
+      { name: "Caldo de la sierra", prices: ["—"] },
+      { name: "Croquetas de jamón (4 uds)", prices: ["—"] },
+      { name: "Ensalada de corujas", prices: ["—"] },
+    ],
+  },
+  {
+    title: "Menú Grupos — Principales",
+    items: [
+      { name: "Pluma ibérica a la brasa", prices: ["—"] },
+      { name: "Jarrete de jabalí confitado", prices: ["—"] },
+      { name: "Gamba de Huelva a la plancha", prices: ["—"] },
+    ],
+  },
+  {
+    title: "Menú Grupos — Postres",
+    items: [
+      { name: "Flan de la casa", prices: ["—"] },
+      { name: "Tabla de quesos artesanos", prices: ["—"] },
+    ],
+  },
+];
+
+const GroupMenuSection = () => (
+  <div>
+    <p className="font-body text-base text-foreground/60 text-center mb-10">
+      Para grupos de más de 6 personas. Consulta disponibilidad y precio cerrado contactando con nosotros.
+    </p>
+    {groupMenuData.map((category, i) => (
+      <motion.div
+        key={category.title}
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: i * 0.1 }}
+        className="mb-12"
+      >
+        <h3 className="font-display text-xl md:text-2xl text-foreground mb-5 text-center">
+          {category.title}
+        </h3>
+        <div className="space-y-3">
+          {category.items.map((item) => (
+            <div key={item.name} className="flex items-baseline">
+              <span className="font-body text-base md:text-lg text-foreground whitespace-nowrap">
+                {item.name}
+              </span>
+              <span className="menu-dots" />
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    ))}
+    <div className="mt-10 text-center">
+      <a
+        href="#contacto"
+        onClick={(e) => { e.preventDefault(); document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" }); }}
+        className="inline-block py-3 px-8 border border-foreground/30 rounded-sm font-body text-sm tracking-[0.2em] uppercase text-foreground hover:bg-foreground hover:text-background transition-all duration-300"
+      >
+        Consultar disponibilidad
+      </a>
+    </div>
+  </div>
+);
+
 const MenuSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [tab, setTab] = useState<"carta" | "vinos">("carta");
+  const [tab, setTab] = useState<"carta" | "vinos" | "grupos">("carta");
 
   return (
     <section id="carta" ref={ref} className="pt-4 pb-20 md:pb-32 px-6">
@@ -137,7 +204,7 @@ const MenuSection = () => {
           transition={{ duration: 0.8 }}
           className="font-display text-4xl md:text-5xl text-foreground text-center mb-10"
         >
-          {tab === "carta" ? "La Carta" : "Vinos"}
+          {tab === "carta" ? "La Carta" : tab === "vinos" ? "Vinos" : "Menú Grupos"}
         </motion.h2>
 
         {/* Tab switcher */}
@@ -150,7 +217,7 @@ const MenuSection = () => {
           <div className="inline-flex border border-foreground/30 rounded-sm overflow-hidden">
             <button
               onClick={() => setTab("carta")}
-              className={`px-8 py-2.5 font-body text-sm tracking-[0.2em] uppercase transition-all duration-300 ${
+              className={`px-6 py-2.5 font-body text-sm tracking-[0.2em] uppercase transition-all duration-300 ${
                 tab === "carta"
                   ? "bg-foreground text-background"
                   : "text-foreground/70 hover:text-foreground"
@@ -161,13 +228,24 @@ const MenuSection = () => {
             <div className="w-px bg-foreground/30" />
             <button
               onClick={() => setTab("vinos")}
-              className={`px-8 py-2.5 font-body text-sm tracking-[0.2em] uppercase transition-all duration-300 ${
+              className={`px-6 py-2.5 font-body text-sm tracking-[0.2em] uppercase transition-all duration-300 ${
                 tab === "vinos"
                   ? "bg-foreground text-background"
                   : "text-foreground/70 hover:text-foreground"
               }`}
             >
               Vinos
+            </button>
+            <div className="w-px bg-foreground/30" />
+            <button
+              onClick={() => setTab("grupos")}
+              className={`px-6 py-2.5 font-body text-sm tracking-[0.2em] uppercase transition-all duration-300 ${
+                tab === "grupos"
+                  ? "bg-foreground text-background"
+                  : "text-foreground/70 hover:text-foreground"
+              }`}
+            >
+              Grupos
             </button>
           </div>
         </motion.div>
@@ -186,7 +264,7 @@ const MenuSection = () => {
                 <MenuCategoryBlock key={category.title} category={category} index={i} />
               ))}
             </motion.div>
-          ) : (
+          ) : tab === "vinos" ? (
             <motion.div
               key="vinos"
               initial={{ opacity: 0, y: 15 }}
@@ -195,6 +273,16 @@ const MenuSection = () => {
               transition={{ duration: 0.4 }}
             >
               <WineSectionInline />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="grupos"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.4 }}
+            >
+              <GroupMenuSection />
             </motion.div>
           )}
         </AnimatePresence>
