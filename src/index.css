@@ -6,51 +6,50 @@
 
 @layer base {
   :root {
-    /* ── Paleta bosque: distintos verdes + crema + oro ── */
+    /* ── Paleta campo fresco: crema, oliva, sage, ámbar ── */
 
-    --background:  155 22%  7%;    /* Verde bosque profundo — casi negro */
-    --foreground:   43 25% 90%;    /* Crema cálida */
+    --background:   50 28% 95%;    /* Lino cálido / crema campo */
+    --foreground:   95 30% 14%;    /* Verde oliva profundo */
 
-    --card:        155 18% 11%;    /* Verde medio-oscuro para tarjetas */
-    --card-foreground: 43 22% 88%;
+    --card:         87 16% 90%;    /* Sage suave */
+    --card-foreground: 95 28% 14%;
 
-    --popover:     155 18% 11%;
-    --popover-foreground: 43 22% 88%;
+    --popover:      87 16% 90%;
+    --popover-foreground: 95 28% 14%;
 
-    --primary:     155 22%  7%;
-    --primary-foreground: 43 25% 90%;
+    --primary:      95 30% 14%;    /* Oliva */
+    --primary-foreground: 50 28% 95%;
 
-    --secondary:   150 14% 18%;    /* Verde pizarra */
-    --secondary-foreground: 40 15% 65%;
+    --secondary:    86 18% 86%;    /* Sage medio */
+    --secondary-foreground: 95 25% 20%;
 
-    --muted:       150 10% 14%;    /* Verde muy oscuro muted */
-    --muted-foreground: 40 10% 52%;
+    --muted:        80 14% 87%;    /* Verde grisáceo suave */
+    --muted-foreground: 90 12% 40%;
 
-    /* Oro — acento principal sobre verde */
-    --accent:       38 55% 50%;
-    --accent-foreground: 155 22% 7%;
+    /* Ámbar trigo — acento cálido sobre campo */
+    --accent:       36 58% 47%;
+    --accent-foreground: 50 28% 96%;
 
-    /* Crema papel — secciones con contraste */
-    --cream:        43 38% 87%;
-    --cream-foreground: 155 18% 14%;
+    --cream:        50 28% 95%;
+    --cream-foreground: 95 30% 14%;
 
-    --destructive:   0 72% 52%;
-    --destructive-foreground: 43 25% 90%;
+    --destructive:   0 70% 50%;
+    --destructive-foreground: 50 28% 95%;
 
-    --border:      155 12% 16%;
-    --input:       155 12% 14%;
-    --ring:         38 55% 50%;
+    --border:       86 16% 80%;    /* Borde sage */
+    --input:        86 16% 82%;
+    --ring:          36 58% 47%;
 
     --radius: 0.2rem;
 
-    --sidebar-background: 155 18% 11%;
-    --sidebar-foreground: 43 22% 88%;
-    --sidebar-primary: 38 55% 50%;
-    --sidebar-primary-foreground: 155 22% 7%;
-    --sidebar-accent: 38 55% 50%;
-    --sidebar-accent-foreground: 155 22% 7%;
-    --sidebar-border: 155 12% 16%;
-    --sidebar-ring: 38 55% 50%;
+    --sidebar-background: 87 16% 90%;
+    --sidebar-foreground: 95 28% 14%;
+    --sidebar-primary: 36 58% 47%;
+    --sidebar-primary-foreground: 50 28% 95%;
+    --sidebar-accent: 36 58% 47%;
+    --sidebar-accent-foreground: 50 28% 95%;
+    --sidebar-border: 86 16% 80%;
+    --sidebar-ring: 36 58% 47%;
   }
 }
 
@@ -75,26 +74,26 @@ html { scroll-behavior: smooth; }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: hsl(155 22% 7%); }
-::-webkit-scrollbar-thumb { background: hsl(155 14% 22%); border-radius: 2px; }
+::-webkit-scrollbar-track { background: hsl(50 28% 92%); }
+::-webkit-scrollbar-thumb { background: hsl(86 18% 72%); border-radius: 2px; }
 
 /* ── Puntos de guía del menú ── */
 .menu-dots {
   flex: 1;
-  border-bottom: 1px dotted hsl(155 10% 30%);
+  border-bottom: 1px dotted hsl(86 15% 70%);
   margin: 0 0.75rem;
   position: relative;
   bottom: 0.3em;
 }
 
-/* ── Papel crema — ManifiestoSection ── */
+/* ── Papel crema ── */
 .cream-paper-bg {
-  background-color: hsl(43, 38%, 87%);
-  color: hsl(155, 18%, 14%);
+  background-color: hsl(50, 28%, 93%);
+  color: hsl(95, 30%, 14%);
 }
 
 /* ── Selección ── */
 ::selection {
-  background: hsl(38 55% 50% / 0.28);
-  color: hsl(43 25% 95%);
+  background: hsl(36 58% 47% / 0.25);
+  color: hsl(95 30% 10%);
 }

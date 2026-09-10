@@ -59,7 +59,7 @@ const HeroSection = () => {
       {/* Overlay — degradado cinematográfico */}
       <div className="absolute inset-0 z-[1]"
         style={{
-          background: "linear-gradient(to bottom, hsl(155 22% 7% / 0.80) 0%, hsl(155 22% 7% / 0.38) 45%, hsl(155 22% 7% / 0.82) 100%)"
+          background: "linear-gradient(to bottom, hsl(90 40% 8% / 0.78) 0%, hsl(90 35% 10% / 0.32) 45%, hsl(90 40% 8% / 0.80) 100%)"
         }}
       />
 
@@ -77,7 +77,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="font-display text-6xl md:text-8xl lg:text-9xl tracking-[0.22em] text-foreground mb-5"
+          className="font-display text-6xl md:text-8xl lg:text-9xl tracking-[0.22em] text-stone-100 mb-5"
           style={{ fontWeight: 100 }}
         >
           LA YESCA
@@ -87,7 +87,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
-          className="font-body text-sm md:text-base tracking-[0.45em] text-foreground/50 uppercase"
+          className="font-body text-sm md:text-base tracking-[0.45em] text-stone-100/55 uppercase"
         >
           Taberna · San Lorenzo de El Escorial
         </motion.p>
@@ -111,7 +111,7 @@ const HeroSection = () => {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-px h-10 bg-foreground/40 mx-auto"
+          className="w-px h-10 bg-stone-100/40 mx-auto"
         />
       </motion.div>
     </section>

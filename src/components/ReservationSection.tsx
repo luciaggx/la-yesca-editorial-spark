@@ -81,7 +81,7 @@ const ReservationSection = () => {
               {/* Izquierda: logo + textos */}
               <div className="flex items-center gap-5">
                 <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 border border-foreground/10 group-hover:border-amber-500/40 transition-colors duration-300"
-                  style={{ backgroundColor: "hsl(155 16% 13%)" }}>
+                  style={{ backgroundColor: "hsl(87 20% 89%)" }}>
                   {platform.logo}
                 </div>
                 <div>

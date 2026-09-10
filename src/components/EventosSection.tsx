@@ -26,7 +26,7 @@ const EventosSection = () => {
 
   return (
     <section id="eventos" ref={ref} className="py-24 md:py-36 px-6"
-      style={{ backgroundColor: "hsl(155 20% 9%)" }}>
+      style={{ backgroundColor: "hsl(87 20% 89%)" }}>
       <div className="max-w-3xl mx-auto">
 
         <motion.div

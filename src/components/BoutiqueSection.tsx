@@ -66,7 +66,7 @@ const BoutiqueSection = () => {
 
         {/* Grid de productos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-px"
-          style={{ backgroundColor: "hsl(155 12% 16%)" }}>
+          style={{ backgroundColor: "hsl(85 14% 78%)" }}>
           {productos.map((p, i) => (
             <motion.div
               key={p.nombre}
@@ -74,7 +74,7 @@ const BoutiqueSection = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.2 + i * 0.1 }}
               className="group flex flex-col justify-between p-8 cursor-pointer transition-colors duration-300"
-              style={{ backgroundColor: "hsl(155 18% 10%)" }}
+              style={{ backgroundColor: "hsl(50 28% 95%)" }}
             >
               <div>
                 <p className="font-body text-xs tracking-[0.2em] uppercase text-foreground/30 mb-3">
