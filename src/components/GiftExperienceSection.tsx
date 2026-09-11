@@ -1,24 +1,24 @@
-import { useRef, useState } from "react";
+﻿import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
 const personOptions = [1, 2, 3, 4];
 
 const menus = [
   {
-    name: "Menú Especial",
-    description: "Una selección de nuestros platos más emblemáticos, maridados con vinos de la tierra.",
+    name: "MenÃº Especial",
+    description: "Una selecciÃ³n de nuestros platos mÃ¡s emblemÃ¡ticos, maridados con vinos de la tierra.",
     pricePerPerson: 45,
     link: "#",
   },
   {
-    name: "Menú Degustación",
+    name: "MenÃº DegustaciÃ³n",
     description: "Un recorrido por los sabores del monte y la brasa en seis tiempos inolvidables.",
     pricePerPerson: 65,
     link: "#",
   },
   {
-    name: "Menú Romántico",
-    description: "Cena íntima para dos con entrantes, principal, postre y botella de vino seleccionada.",
+    name: "MenÃº RomÃ¡ntico",
+    description: "Cena Ã­ntima para dos con entrantes, principal, postre y botella de vino seleccionada.",
     pricePerPerson: 80,
     link: "#",
   },
@@ -30,7 +30,7 @@ const GiftExperienceSection = () => {
   const [persons, setPersons] = useState(2);
 
   return (
-    <section id="regala" ref={ref} className="py-20 md:py-32 px-6" style={{ backgroundColor: "hsl(48 28% 93%)" }}>
+    <section id="regala" ref={ref} className="py-20 md:py-32 px-6" style={{ backgroundColor: "hsl(48 25% 93%)" }}>
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ scaleX: 0 }}
@@ -65,7 +65,7 @@ const GiftExperienceSection = () => {
           className="flex flex-col items-center mb-14"
         >
           <span className="font-body text-sm tracking-[0.2em] uppercase text-foreground/60 mb-4">
-            Número de personas
+            NÃºmero de personas
           </span>
           <div className="inline-flex border border-foreground/30 rounded-sm overflow-hidden">
             {personOptions.map((n) => (
@@ -103,9 +103,9 @@ const GiftExperienceSection = () => {
                   {menu.description}
                 </p>
                 <div className="text-center mb-5">
-                  <span className="font-display text-3xl text-foreground">{total}€</span>
+                  <span className="font-display text-3xl text-foreground">{total}â‚¬</span>
                   <span className="font-body text-xs text-foreground/50 block mt-1">
-                    {menu.pricePerPerson}€ × {persons} {persons === 1 ? "persona" : "personas"}
+                    {menu.pricePerPerson}â‚¬ Ã— {persons} {persons === 1 ? "persona" : "personas"}
                   </span>
                 </div>
                 <a

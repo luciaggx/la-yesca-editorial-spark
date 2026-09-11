@@ -1,137 +1,76 @@
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+const HeroSection = () => (
+  <section
+    className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden"
+    style={{
+      /* Gradiente oliva campo: manchas de color orgánicas */
+      background: `
+        radial-gradient(ellipse at 22% 30%, hsl(88 30% 78% / 0.75), transparent 52%),
+        radial-gradient(ellipse at 78% 68%, hsl(68 24% 80% / 0.65), transparent 50%),
+        radial-gradient(ellipse at 55% 15%, hsl(75 22% 82% / 0.55), transparent 48%),
+        radial-gradient(ellipse at 10% 80%, hsl(84 26% 76% / 0.5), transparent 45%),
+        hsl(80 20% 87%)
+      `,
+    }}
+  >
+    {/* Línea decorativa horizontal — muy fina, arriba */}
+    <div className="absolute top-0 left-0 right-0 h-px bg-foreground/8" />
 
-const HeroSection = () => {
-  const sectionRef  = useRef<HTMLElement>(null);
-  const videoRef    = useRef<HTMLVideoElement>(null);
-  const videoWrapRef = useRef<HTMLDivElement>(null);
-  const [videoReady, setVideoReady] = useState(false);
+    {/* Contenido */}
+    <div className="relative z-10 flex flex-col items-center text-center px-4">
 
-  /* ── Reproducción del vídeo ── */
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const startFrom3 = () => {
-      video.currentTime = 3;
-      video.play().then(() => setVideoReady(true)).catch(() => {});
-    };
-
-    if (video.readyState >= 1) startFrom3();
-    else video.addEventListener("loadedmetadata", startFrom3, { once: true });
-
-    const handleEnded = () => { video.currentTime = 3; video.play(); };
-    video.addEventListener("ended", handleEnded);
-    return () => video.removeEventListener("ended", handleEnded);
-  }, []);
-
-  /* ── Parallax del vídeo con GSAP ScrollTrigger ── */
-  useEffect(() => {
-    if (!videoWrapRef.current || !sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.to(videoWrapRef.current, {
-        yPercent: 28,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-    });
-
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section
-      ref={sectionRef}
-      className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden"
-    >
-      {/* Vídeo con parallax */}
-      <div ref={videoWrapRef} className="absolute inset-0 z-0 will-change-transform">
-        <video
-          ref={videoRef}
-          muted
-          playsInline
-          className="absolute inset-0 w-full object-cover transition-opacity duration-700"
-          style={{
-            height: "130%",
-            top: "-15%",
-            objectPosition: "center top",
-            opacity: videoReady ? 1 : 0,
-          }}
-        >
-          <source src="/hero-video.mp4" type="video/mp4" />
-        </video>
-      </div>
-
-      {/* Overlay cinematográfico */}
-      <div
-        className="absolute inset-0 z-[1]"
-        style={{
-          background:
-            "linear-gradient(to bottom, hsl(90 40% 8% / 0.80) 0%, hsl(90 35% 10% / 0.28) 50%, hsl(90 40% 8% / 0.84) 100%)",
-        }}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 1.2, delay: 0.3 }}
+        className="h-px w-14 bg-foreground/25 mb-10 origin-center"
       />
 
-      {/* Contenido */}
-      <div className="relative z-10 flex flex-col items-center text-center px-4">
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1.2, delay: 0.3 }}
-          className="h-px w-12 bg-amber-400/60 mb-10 origin-center"
-        />
+      <motion.h1
+        initial={{ opacity: 0, y: 28 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+        className="font-display text-6xl md:text-8xl lg:text-[9rem] tracking-[0.22em] text-foreground mb-5"
+        style={{ fontWeight: 100 }}
+      >
+        LA YESCA
+      </motion.h1>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.4, ease: "easeOut" }}
-          className="font-display text-6xl md:text-8xl lg:text-9xl tracking-[0.22em] text-stone-100 mb-5"
-          style={{ fontWeight: 100 }}
-        >
-          LA YESCA
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.9 }}
-          className="font-body text-sm md:text-base tracking-[0.45em] text-stone-100/55 uppercase"
-        >
-          Taberna · San Lorenzo de El Escorial
-        </motion.p>
-
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1.2, delay: 1.1 }}
-          className="h-px w-12 bg-amber-400/60 mt-10 origin-center"
-        />
-      </div>
-
-      {/* Scroll hint */}
-      <motion.div
+      <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.6 }}
-        className="absolute bottom-10 z-10"
+        transition={{ duration: 1, delay: 0.9 }}
+        className="font-body text-xs md:text-sm tracking-[0.52em] text-foreground/45 uppercase"
       >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-px h-10 bg-stone-100/35 mx-auto"
-        />
-      </motion.div>
-    </section>
-  );
-};
+        Taberna · San Lorenzo de El Escorial
+      </motion.p>
+
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 1.2, delay: 1.1 }}
+        className="h-px w-14 bg-foreground/25 mt-10 origin-center"
+      />
+    </div>
+
+    {/* Scroll hint */}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1.6 }}
+      className="absolute bottom-10 z-10 flex flex-col items-center gap-2"
+    >
+      <span className="font-body text-[9px] tracking-[0.3em] uppercase text-foreground/30">
+        Scroll
+      </span>
+      <motion.div
+        animate={{ y: [0, 7, 0] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        className="w-px h-8 bg-foreground/25"
+      />
+    </motion.div>
+  </section>
+);
 
 export default HeroSection;

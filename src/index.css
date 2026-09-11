@@ -6,50 +6,50 @@
 
 @layer base {
   :root {
-    /* ── Paleta campo fresco: crema, oliva, sage, ámbar ── */
+    /* ── Paleta oliva campo: verdes claros + crema + negro ── */
 
-    --background:  100 18% 86%;    /* Sage fresco de campo */
-    --foreground:   95 32% 13%;    /* Verde oliva profundo */
+    --background:   80 20% 87%;    /* Verde oliva sage claro */
+    --foreground:    0  0%  9%;    /* Negro */
 
-    --card:         48 28% 93%;    /* Crema cálida para tarjetas */
-    --card-foreground: 95 30% 14%;
+    --card:         48 25% 93%;    /* Crema cálida */
+    --card-foreground:  0  0% 9%;
 
-    --popover:      48 28% 93%;
-    --popover-foreground: 95 30% 14%;
+    --popover:      48 25% 93%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary:      95 32% 13%;
-    --primary-foreground: 48 28% 94%;
+    --primary:       0  0%  9%;
+    --primary-foreground: 80 20% 87%;
 
-    --secondary:    98 20% 80%;    /* Sage más oscuro */
-    --secondary-foreground: 95 28% 18%;
+    --secondary:    78 18% 80%;    /* Oliva más oscuro */
+    --secondary-foreground: 0 0% 9%;
 
-    --muted:        95 15% 82%;
-    --muted-foreground: 92 14% 38%;
+    --muted:        76 15% 83%;
+    --muted-foreground: 0 0% 38%;
 
-    /* Ámbar trigo — acento cálido */
-    --accent:       36 58% 44%;
-    --accent-foreground: 48 28% 96%;
+    /* Ámbar trigo — acento dorado */
+    --accent:       36 55% 44%;
+    --accent-foreground: 0 0% 98%;
 
-    --cream:        48 28% 93%;
-    --cream-foreground: 95 32% 13%;
+    --cream:        48 25% 93%;
+    --cream-foreground: 0 0% 9%;
 
     --destructive:   0 70% 50%;
-    --destructive-foreground: 48 28% 95%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border:       95 16% 76%;    /* Borde sage */
-    --input:        95 16% 78%;
-    --ring:          36 58% 44%;
+    --border:       78 15% 76%;
+    --input:        78 15% 78%;
+    --ring:          36 55% 44%;
 
     --radius: 0.2rem;
 
-    --sidebar-background: 87 16% 90%;
-    --sidebar-foreground: 95 28% 14%;
-    --sidebar-primary: 36 58% 47%;
-    --sidebar-primary-foreground: 50 28% 95%;
-    --sidebar-accent: 36 58% 47%;
-    --sidebar-accent-foreground: 50 28% 95%;
-    --sidebar-border: 86 16% 80%;
-    --sidebar-ring: 36 58% 47%;
+    --sidebar-background: 48 25% 93%;
+    --sidebar-foreground: 0 0% 9%;
+    --sidebar-primary: 36 55% 44%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 36 55% 44%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 78 15% 76%;
+    --sidebar-ring: 36 55% 44%;
   }
 }
 
@@ -74,13 +74,13 @@ html { scroll-behavior: smooth; }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: hsl(50 28% 92%); }
-::-webkit-scrollbar-thumb { background: hsl(86 18% 72%); border-radius: 2px; }
+::-webkit-scrollbar-track { background: hsl(80 20% 84%); }
+::-webkit-scrollbar-thumb { background: hsl(78 18% 65%); border-radius: 2px; }
 
 /* ── Puntos de guía del menú ── */
 .menu-dots {
   flex: 1;
-  border-bottom: 1px dotted hsl(86 15% 70%);
+  border-bottom: 1px dotted hsl(78 15% 60%);
   margin: 0 0.75rem;
   position: relative;
   bottom: 0.3em;
@@ -88,17 +88,17 @@ html { scroll-behavior: smooth; }
 
 /* ── Papel crema ── */
 .cream-paper-bg {
-  background-color: hsl(50, 28%, 93%);
-  color: hsl(95, 30%, 14%);
+  background-color: hsl(48, 25%, 93%);
+  color: hsl(0, 0%, 9%);
 }
 
 /* ── Selección ── */
 ::selection {
-  background: hsl(36 58% 47% / 0.25);
-  color: hsl(95 30% 10%);
+  background: hsl(36 55% 44% / 0.22);
+  color: hsl(0 0% 5%);
 }
 
-/* ── Grain / ruido de película — da profundidad y elimina el efecto plano ── */
+/* ── Grain / ruido de película ── */
 body::after {
   content: '';
   position: fixed;
@@ -106,6 +106,6 @@ body::after {
   z-index: 9998;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.06;
+  opacity: 0.055;
   mix-blend-mode: multiply;
 }

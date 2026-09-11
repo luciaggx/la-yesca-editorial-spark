@@ -44,18 +44,15 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
-  /* Sobre el hero (oscuro) → texto blanco. Con fondo crema → texto oliva. */
-  const light = !scrolled && !menuOpen;
-
   const navBg = scrolled || menuOpen
-    ? "bg-background/96 backdrop-blur-md border-b border-foreground/10 shadow-sm"
+    ? "bg-background/92 backdrop-blur-md border-b border-foreground/10 shadow-sm"
     : "bg-transparent";
 
-  const logoColor    = light ? "text-stone-100"      : "text-foreground";
-  const ctaBorder    = light ? "border-stone-100/55"  : "border-foreground/35";
-  const ctaText      = light ? "text-stone-100"       : "text-foreground";
-  const ctaHover     = light ? "hover:bg-white/10"    : "hover:bg-foreground/8";
-  const iconColor    = light ? "text-stone-100"       : "text-foreground";
+  const logoColor = "text-foreground";
+  const ctaBorder = "border-foreground/30";
+  const ctaText   = "text-foreground";
+  const ctaHover  = "hover:bg-foreground/6";
+  const iconColor = "text-foreground";
 
   return (
     <>

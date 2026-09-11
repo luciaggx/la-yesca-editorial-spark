@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+﻿import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 
@@ -65,7 +65,7 @@ const ReservationSection = () => {
           </p>
         </motion.div>
 
-        {/* Plataformas — filas editoriales */}
+        {/* Plataformas â€” filas editoriales */}
         <div className="border-t border-foreground/10">
           {platforms.map((platform, i) => (
             <motion.a
@@ -81,7 +81,7 @@ const ReservationSection = () => {
               {/* Izquierda: logo + textos */}
               <div className="flex items-center gap-5">
                 <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 border border-foreground/10 group-hover:border-amber-500/40 transition-colors duration-300"
-                  style={{ backgroundColor: "hsl(87 20% 89%)" }}>
+                  style={{ backgroundColor: "hsl(48 25% 93%)" }}>
                   {platform.logo}
                 </div>
                 <div>
@@ -110,12 +110,12 @@ const ReservationSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center font-body text-sm text-foreground/35 mt-10 italic"
         >
-          ¿Sois más de 6 personas?{" "}
+          Â¿Sois mÃ¡s de 6 personas?{" "}
           <a
             href="mailto:info@layesca.com"
             className="text-foreground/55 hover:text-amber-400 underline underline-offset-4 transition-colors duration-300 not-italic"
           >
-            Escríbenos para grupos
+            EscrÃ­benos para grupos
           </a>
         </motion.p>
 
