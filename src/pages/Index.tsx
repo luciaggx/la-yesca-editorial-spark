@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Navbar               from "@/components/Navbar";
 import HeroSection          from "@/components/HeroSection";
+import ScrollingStrip       from "@/components/ScrollingStrip";
 import FloralDivider        from "@/components/FloralDivider";
 import QueEsSection         from "@/components/QueEsSection";
 import QuienesSomosSection  from "@/components/QuienesSomosSection";
@@ -28,6 +29,7 @@ const Index = () => {
       <Navbar />
 
       <HeroSection />
+      <ScrollingStrip />
       <FloralDivider />
 
       <QueEsSection />
