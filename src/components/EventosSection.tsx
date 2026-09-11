@@ -1,22 +1,22 @@
-﻿import { useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 const eventos = [
   {
-    titulo: "Celebraciones y cumpleaÃ±os",
+    titulo: "Celebraciones y cumpleaños",
     descripcion:
-      "Celebra lo que merece ser celebrado. Te diseÃ±amos un menÃº a medida para que el dÃ­a sea Ãºnico, con los sabores del monte y la brasa como protagonistas.",
+      "Celebra lo que merece ser celebrado. Te diseñamos un menú a medida para que el día sea único, con los sabores del monte y la brasa como protagonistas.",
   },
   {
     titulo: "Cenas privadas",
     descripcion:
-      "El espacio solo para vosotros. Una experiencia Ã­ntima con menÃº cerrado, selecciÃ³n de vinos y atenciÃ³n exclusiva para grupos de hasta 30 personas.",
+      "El espacio solo para vosotros. Una experiencia íntima con menú cerrado, selección de vinos y atención exclusiva para grupos de hasta 30 personas.",
   },
   {
     titulo: "Eventos de empresa",
     descripcion:
-      "Comidas de trabajo, presentaciones o team buildings con el carÃ¡cter de La Yesca. GastronomÃ­a que genera conversaciÃ³n y crea vÃ­nculos.",
+      "Comidas de trabajo, presentaciones o team buildings con el carácter de La Yesca. Gastronomía que genera conversación y crea vínculos.",
   },
 ];
 
@@ -26,7 +26,7 @@ const EventosSection = () => {
 
   return (
     <section id="eventos" ref={ref} className="py-24 md:py-36 px-6"
-      style={{ backgroundColor: "hsl(48 25% 93%)" }}>
+      style={{ backgroundColor: "hsl(87 20% 89%)" }}>
       <div className="max-w-3xl mx-auto">
 
         <motion.div
@@ -52,7 +52,7 @@ const EventosSection = () => {
           transition={{ duration: 0.9, delay: 0.15 }}
           className="font-body text-base text-foreground/45 italic text-center mb-16"
         >
-          Momentos que merecen algo mÃ¡s que una comida
+          Momentos que merecen algo más que una comida
         </motion.p>
 
         {/* Lista de tipos de evento */}

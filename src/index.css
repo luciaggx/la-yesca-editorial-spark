@@ -8,37 +8,37 @@
   :root {
     /* ── Paleta oliva campo: verdes claros + crema + negro ── */
 
-    --background:   80 20% 87%;    /* Verde oliva sage claro */
-    --foreground:    0  0%  9%;    /* Negro */
+    --background:   85 28% 80%;    /* Verde sage campo — visible y fresco */
+    --foreground:    0  0%  8%;    /* Negro */
 
-    --card:         48 25% 93%;    /* Crema cálida */
-    --card-foreground:  0  0% 9%;
+    --card:         46 30% 91%;    /* Crema cálida para tarjetas */
+    --card-foreground:  0  0% 8%;
 
-    --popover:      48 25% 93%;
-    --popover-foreground: 0 0% 9%;
+    --popover:      46 30% 91%;
+    --popover-foreground: 0 0% 8%;
 
-    --primary:       0  0%  9%;
-    --primary-foreground: 80 20% 87%;
+    --primary:       0  0%  8%;
+    --primary-foreground: 85 28% 80%;
 
-    --secondary:    78 18% 80%;    /* Oliva más oscuro */
-    --secondary-foreground: 0 0% 9%;
+    --secondary:    82 22% 70%;    /* Oliva más oscuro */
+    --secondary-foreground: 0 0% 8%;
 
-    --muted:        76 15% 83%;
-    --muted-foreground: 0 0% 38%;
+    --muted:        80 18% 75%;
+    --muted-foreground: 0 0% 35%;
 
     /* Ámbar trigo — acento dorado */
-    --accent:       36 55% 44%;
+    --accent:       36 55% 42%;
     --accent-foreground: 0 0% 98%;
 
-    --cream:        48 25% 93%;
-    --cream-foreground: 0 0% 9%;
+    --cream:        46 30% 91%;
+    --cream-foreground: 0 0% 8%;
 
     --destructive:   0 70% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --border:       78 15% 76%;
-    --input:        78 15% 78%;
-    --ring:          36 55% 44%;
+    --border:       82 18% 70%;
+    --input:        82 18% 72%;
+    --ring:          36 55% 42%;
 
     --radius: 0.2rem;
 

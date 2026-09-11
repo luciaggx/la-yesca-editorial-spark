@@ -1,4 +1,4 @@
-﻿import { useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const QuienesSomosSection = () => {
@@ -23,7 +23,7 @@ const QuienesSomosSection = () => {
           className="font-display text-4xl md:text-6xl text-foreground text-center mb-16"
           style={{ fontWeight: 100, letterSpacing: "0.1em" }}
         >
-          QuiÃ©nes somos
+          Quiénes somos
         </motion.h2>
 
         {/* Bloque principal */}
@@ -36,26 +36,26 @@ const QuienesSomosSection = () => {
           <p className="font-body text-lg md:text-xl text-foreground/75 leading-relaxed">
             {/* TODO: reemplazar con el texto real del equipo */}
             Somos un equipo apasionado por la cocina de fuego y los productos del entorno.
-            Nacimos con la idea de rescatar la cocina mÃ¡s honesta de la sierra de Madrid
-            y llevarla a la mesa con carÃ¡cter y tÃ©cnica.
+            Nacimos con la idea de rescatar la cocina más honesta de la sierra de Madrid
+            y llevarla a la mesa con carácter y técnica.
           </p>
           <p className="font-body text-base md:text-lg text-foreground/55 leading-relaxed">
-            Cada plato que servimos lleva detrÃ¡s horas de elaboraciÃ³n, productores de
+            Cada plato que servimos lleva detrás horas de elaboración, productores de
             proximidad y un respeto profundo por el ingrediente. Eso es La Yesca.
           </p>
         </motion.div>
 
-        {/* Valores â€” tres columnas */}
+        {/* Valores — tres columnas */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9, delay: 0.4 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-px border border-foreground/8"
-          style={{ backgroundColor: "hsl(76 18% 80%)" }}
+          style={{ backgroundColor: "hsl(85 14% 78%)" }}
         >
           {[
             { label: "Producto", text: "De temporada, de proximidad y con historia." },
-            { label: "Fuego",    text: "La brasa como tÃ©cnica y como filosofÃ­a de cocina." },
+            { label: "Fuego",    text: "La brasa como técnica y como filosofía de cocina." },
             { label: "Terroir",  text: "La sierra de Madrid en cada bocado." },
           ].map((v, i) => (
             <motion.div
@@ -64,7 +64,7 @@ const QuienesSomosSection = () => {
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.5 + i * 0.12 }}
               className="flex flex-col items-center text-center px-8 py-10"
-              style={{ backgroundColor: "hsl(80 20% 87%)" }}
+              style={{ backgroundColor: "hsl(50 28% 95%)" }}
             >
               <div className="w-6 h-px bg-amber-500/50 mb-5" />
               <p className="font-display text-sm tracking-[0.25em] uppercase text-amber-400/70 mb-3"

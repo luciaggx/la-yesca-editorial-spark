@@ -1,4 +1,4 @@
-﻿import { useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const QueEsSection = () => {
@@ -7,7 +7,7 @@ const QueEsSection = () => {
 
   return (
     <section id="que-es" ref={ref} className="py-24 md:py-36 px-6"
-      style={{ backgroundColor: "hsl(48 25% 93%)" }}>
+      style={{ backgroundColor: "hsl(48 28% 93%)" }}>
       <div className="max-w-3xl mx-auto">
 
         <motion.div
@@ -24,7 +24,7 @@ const QueEsSection = () => {
           className="font-display text-4xl md:text-6xl text-foreground text-center mb-16"
           style={{ fontWeight: 100, letterSpacing: "0.1em" }}
         >
-          QuÃ© es La Yesca
+          Qué es La Yesca
         </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
@@ -41,12 +41,12 @@ const QueEsSection = () => {
                 La yesca
               </span>{" "}
               es el nombre que recibe el hongo <em>Fomes fomentarius</em>, que crece paciente
-              sobre los Ã¡rboles del monte y fue durante siglos la chispa que encendÃ­a el fuego.
+              sobre los árboles del monte y fue durante siglos la chispa que encendía el fuego.
             </p>
             <p className="font-body text-base md:text-lg text-foreground/60 leading-relaxed">
-              Ese mismo espÃ­ritu nos inspira: somos la mecha que enciende la experiencia,
+              Ese mismo espíritu nos inspira: somos la mecha que enciende la experiencia,
               lo que transforma lo crudo en algo extraordinario. Conectamos lo ancestral con
-              lo contemporÃ¡neo, el monte con la mesa, el fuego con el paladar.
+              lo contemporáneo, el monte con la mesa, el fuego con el paladar.
             </p>
             <p className="font-body text-base md:text-lg text-foreground/55 leading-relaxed">
               Una taberna donde la cocina de brasa y los productos de la sierra de Madrid
@@ -54,7 +54,7 @@ const QueEsSection = () => {
             </p>
           </motion.div>
 
-          {/* Elemento visual â€” barra dorada decorativa */}
+          {/* Elemento visual — barra dorada decorativa */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -63,7 +63,7 @@ const QueEsSection = () => {
           >
             <div className="w-px h-32 bg-gradient-to-b from-transparent via-amber-500/40 to-transparent" />
             <p className="font-body text-sm tracking-[0.35em] uppercase text-foreground/30 text-center">
-              Taberna Â· Brasa Â· Monte
+              Taberna · Brasa · Monte
             </p>
             <div className="w-px h-32 bg-gradient-to-b from-transparent via-amber-500/40 to-transparent" />
           </motion.div>
