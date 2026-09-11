@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import BotanicalDecor from "@/components/BotanicalDecor";
 
 const HeroSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -62,6 +63,9 @@ const HeroSection = () => {
           background: "linear-gradient(to bottom, hsl(90 40% 8% / 0.78) 0%, hsl(90 35% 10% / 0.32) 45%, hsl(90 40% 8% / 0.80) 100%)"
         }}
       />
+
+      {/* Botanical decoration — enredaderas de las esquinas */}
+      <BotanicalDecor variant="hero" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-4">

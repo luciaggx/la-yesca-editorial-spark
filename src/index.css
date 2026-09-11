@@ -8,37 +8,37 @@
   :root {
     /* ── Paleta campo fresco: crema, oliva, sage, ámbar ── */
 
-    --background:   50 28% 95%;    /* Lino cálido / crema campo */
-    --foreground:   95 30% 14%;    /* Verde oliva profundo */
+    --background:  100 18% 86%;    /* Sage fresco de campo */
+    --foreground:   95 32% 13%;    /* Verde oliva profundo */
 
-    --card:         87 16% 90%;    /* Sage suave */
-    --card-foreground: 95 28% 14%;
+    --card:         48 28% 93%;    /* Crema cálida para tarjetas */
+    --card-foreground: 95 30% 14%;
 
-    --popover:      87 16% 90%;
-    --popover-foreground: 95 28% 14%;
+    --popover:      48 28% 93%;
+    --popover-foreground: 95 30% 14%;
 
-    --primary:      95 30% 14%;    /* Oliva */
-    --primary-foreground: 50 28% 95%;
+    --primary:      95 32% 13%;
+    --primary-foreground: 48 28% 94%;
 
-    --secondary:    86 18% 86%;    /* Sage medio */
-    --secondary-foreground: 95 25% 20%;
+    --secondary:    98 20% 80%;    /* Sage más oscuro */
+    --secondary-foreground: 95 28% 18%;
 
-    --muted:        80 14% 87%;    /* Verde grisáceo suave */
-    --muted-foreground: 90 12% 40%;
+    --muted:        95 15% 82%;
+    --muted-foreground: 92 14% 38%;
 
-    /* Ámbar trigo — acento cálido sobre campo */
-    --accent:       36 58% 47%;
-    --accent-foreground: 50 28% 96%;
+    /* Ámbar trigo — acento cálido */
+    --accent:       36 58% 44%;
+    --accent-foreground: 48 28% 96%;
 
-    --cream:        50 28% 95%;
-    --cream-foreground: 95 30% 14%;
+    --cream:        48 28% 93%;
+    --cream-foreground: 95 32% 13%;
 
     --destructive:   0 70% 50%;
-    --destructive-foreground: 50 28% 95%;
+    --destructive-foreground: 48 28% 95%;
 
-    --border:       86 16% 80%;    /* Borde sage */
-    --input:        86 16% 82%;
-    --ring:          36 58% 47%;
+    --border:       95 16% 76%;    /* Borde sage */
+    --input:        95 16% 78%;
+    --ring:          36 58% 44%;
 
     --radius: 0.2rem;
 

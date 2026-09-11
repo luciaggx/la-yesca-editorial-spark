@@ -1,13 +1,15 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import BotanicalDecor from "@/components/BotanicalDecor";
 
 const QueEsSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="que-es" ref={ref} className="py-24 md:py-36 px-6"
-      style={{ backgroundColor: "hsl(87 20% 89%)" }}>
+    <section id="que-es" ref={ref} className="relative py-24 md:py-36 px-6 overflow-hidden"
+      style={{ backgroundColor: "hsl(48 28% 93%)" }}>
+      <BotanicalDecor variant="section" />
       <div className="max-w-3xl mx-auto">
 
         <motion.div

@@ -30,7 +30,7 @@ const GiftExperienceSection = () => {
   const [persons, setPersons] = useState(2);
 
   return (
-    <section id="regala" ref={ref} className="py-20 md:py-32 px-6" style={{ backgroundColor: "hsl(87 20% 89%)" }}>
+    <section id="regala" ref={ref} className="py-20 md:py-32 px-6" style={{ backgroundColor: "hsl(48 28% 93%)" }}>
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ scaleX: 0 }}
