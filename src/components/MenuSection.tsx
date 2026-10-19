@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import WineSection from "./WineSection";
+import BodegaSection from "./BodegaSection";
+
+export type CartaTab = "carta" | "bodega" | "grupos";
 
 interface MenuItem {
   name: string;
@@ -173,7 +175,13 @@ const GroupMenuSection = () => (
     <div className="mt-10 text-center">
       <a
         href="#contacto"
-        onClick={(e) => { e.preventDefault(); document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" }); }}
+        onClick={(e) => {
+          e.preventDefault();
+          const el = document.getElementById("contacto");
+          /* En la vista "solo carta" (QR) no hay contacto: abre la web completa */
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+          else window.location.hash = "contacto";
+        }}
         className="inline-block py-3 px-8 border border-foreground/30 rounded-sm font-body text-sm tracking-[0.2em] uppercase text-foreground hover:bg-foreground hover:text-background transition-all duration-300"
       >
         Consultar disponibilidad
@@ -182,10 +190,16 @@ const GroupMenuSection = () => (
   </div>
 );
 
-const MenuSection = () => {
+const tabs: { id: CartaTab; label: string; title: string }[] = [
+  { id: "carta",  label: "Carta",     title: "La Carta" },
+  { id: "bodega", label: "La Bodega", title: "La Bodega" },
+  { id: "grupos", label: "Grupos",    title: "Menú Grupos" },
+];
+
+const MenuSection = ({ initialTab = "carta" }: { initialTab?: CartaTab }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [tab, setTab] = useState<"carta" | "vinos" | "grupos">("carta");
+  const [tab, setTab] = useState<CartaTab>(initialTab);
 
   return (
     <section id="carta" ref={ref} className="pt-4 pb-20 md:pb-32 px-6">
@@ -204,7 +218,7 @@ const MenuSection = () => {
           transition={{ duration: 0.8 }}
           className="font-display text-4xl md:text-5xl text-foreground text-center mb-10"
         >
-          {tab === "carta" ? "La Carta" : tab === "vinos" ? "Vinos" : "Menú Grupos"}
+          {tabs.find(t => t.id === tab)?.title}
         </motion.h2>
 
         {/* Tab switcher */}
@@ -215,38 +229,21 @@ const MenuSection = () => {
           className="flex justify-center mb-14"
         >
           <div className="inline-flex border border-foreground/30 rounded-sm overflow-hidden">
-            <button
-              onClick={() => setTab("carta")}
-              className={`px-6 py-2.5 font-body text-sm tracking-[0.2em] uppercase transition-all duration-300 ${
-                tab === "carta"
-                  ? "bg-foreground text-background"
-                  : "text-foreground/70 hover:text-foreground"
-              }`}
-            >
-              Carta
-            </button>
-            <div className="w-px bg-foreground/30" />
-            <button
-              onClick={() => setTab("vinos")}
-              className={`px-6 py-2.5 font-body text-sm tracking-[0.2em] uppercase transition-all duration-300 ${
-                tab === "vinos"
-                  ? "bg-foreground text-background"
-                  : "text-foreground/70 hover:text-foreground"
-              }`}
-            >
-              Vinos
-            </button>
-            <div className="w-px bg-foreground/30" />
-            <button
-              onClick={() => setTab("grupos")}
-              className={`px-6 py-2.5 font-body text-sm tracking-[0.2em] uppercase transition-all duration-300 ${
-                tab === "grupos"
-                  ? "bg-foreground text-background"
-                  : "text-foreground/70 hover:text-foreground"
-              }`}
-            >
-              Grupos
-            </button>
+            {tabs.map((t, i) => (
+              <div key={t.id} className="flex">
+                {i > 0 && <div className="w-px bg-foreground/30" />}
+                <button
+                  onClick={() => setTab(t.id)}
+                  className={`px-4 md:px-6 py-2.5 font-body text-xs md:text-sm tracking-[0.18em] uppercase whitespace-nowrap transition-all duration-300 ${
+                    tab === t.id
+                      ? "bg-foreground text-background"
+                      : "text-foreground/70 hover:text-foreground"
+                  }`}
+                >
+                  {t.label}
+                </button>
+              </div>
+            ))}
           </div>
         </motion.div>
 
@@ -264,15 +261,15 @@ const MenuSection = () => {
                 <MenuCategoryBlock key={category.title} category={category} index={i} />
               ))}
             </motion.div>
-          ) : tab === "vinos" ? (
+          ) : tab === "bodega" ? (
             <motion.div
-              key="vinos"
+              key="bodega"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.4 }}
             >
-              <WineSectionInline />
+              <BodegaSection />
             </motion.div>
           ) : (
             <motion.div
@@ -290,51 +287,5 @@ const MenuSection = () => {
     </section>
   );
 };
-
-/* ── Inline wine list (reuses data, avoids full WineSection wrapper) ── */
-import { wineData } from "./WineSection";
-
-const WineSectionInline = () => (
-  <div>
-    {wineData.map((category, i) => (
-      <motion.div
-        key={category.title}
-        initial={{ opacity: 0, y: 25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: i * 0.08 }}
-        className="mb-12"
-      >
-        <h3 className="font-display text-xl md:text-2xl text-foreground mb-5 text-center italic">
-          {category.title}
-        </h3>
-        <div className="space-y-4">
-          {category.wines.map((wine) => (
-            <div key={wine.name}>
-              <div className="flex items-baseline">
-                <span className="font-body text-base md:text-lg text-foreground whitespace-nowrap">
-                  {wine.name}
-                </span>
-                <span className="menu-dots" />
-                <div className="flex gap-4 items-baseline">
-                  {wine.glass && (
-                    <span className="font-body text-sm text-foreground/70 whitespace-nowrap">
-                      {wine.glass}€ <span className="text-xs">copa</span>
-                    </span>
-                  )}
-                  <span className="font-body text-base text-foreground whitespace-nowrap">
-                    {wine.bottle}€
-                  </span>
-                </div>
-              </div>
-              <p className="text-xs tracking-wide text-foreground/60 mt-0.5 pl-1">
-                {wine.variety} · {wine.origin}
-              </p>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-    ))}
-  </div>
-);
 
 export default MenuSection;
