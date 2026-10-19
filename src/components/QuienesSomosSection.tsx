@@ -1,9 +1,12 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import fotoJorgeAsenjo from "@/assets/jorge-asenjo.jpg";
+import fotoAnaLazaro from "@/assets/ana-lazaro.jpg";
 
 interface Persona {
   nombre: string;
   rol: string;
+  foto?: string;
   parrafos: string[];
 }
 
@@ -11,6 +14,7 @@ const equipo: Persona[] = [
   {
     nombre: "Jorge Asenjo",
     rol: "Chef",
+    foto: fotoJorgeAsenjo,
     parrafos: [
       "Jorge Asenjo es un cocinero segoviano con más de dos décadas de trayectoria profesional y una relación muy especial con la cocina de territorio, la naturaleza y, especialmente, la caza.",
       "Se inició en la cocina con tan solo 16 años y se formó en Segovia y San Sebastián (País Vasco), pasando por cocinas como Casa Duque, Cándido y Mirador de Ulía, además de trabajar muy joven como jefe de cocina en Zumaia.",
@@ -32,6 +36,7 @@ const equipo: Persona[] = [
   {
     nombre: "Ana Lázaro",
     rol: "Anfitriona y sala",
+    foto: fotoAnaLazaro,
     parrafos: [
       "Ana Lázaro es cocinera, periodista y comunicadora gastronómica, natural de San Lorenzo de El Escorial. Tras trabajar 10 años como periodista y corresponsal fuera de España, estudió cocina y su formación y experiencia la llevaron a pasar por cocinas de gran prestigio, entre ellas Club Allard, L’Atelier de Joël Robuchon, Montia, Barro y Hisa Franko, donde fue construyendo una identidad propia basada en el producto, la técnica y una mirada muy personal sobre la cocina. Pasión que hoy en día compagina con el periodismo gastronómico.",
       "En 2023 recibió el reconocimiento como Mejor Cocinera de la Comunidad de Madrid, y en 2025 consiguió uno de los grandes hitos de su carrera al ganar el Concurso de Cocina Creativa de la Gamba Roja de Dénia, imponiéndose con una propuesta que unía el Mediterráneo con los paisajes y sabores de la meseta castellana.",
@@ -65,8 +70,27 @@ const PersonaBlock = ({ persona, index }: { persona: Persona; index: number }) =
           {persona.rol}
         </p>
       </div>
-      <div className="space-y-4 font-body text-base md:text-lg text-foreground/75 leading-relaxed">
-        {persona.parrafos.map((p, i) => <p key={i}>{p}</p>)}
+      <div className={persona.foto ? "md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-12 md:items-start" : ""}>
+        {persona.foto && (
+          <div className={`mb-10 md:mb-0 md:sticky md:top-24 ${index % 2 === 1 ? "md:order-2" : ""}`}>
+            {/* Foto con marco fino desplazado */}
+            <div className="relative max-w-[280px] md:max-w-none mx-auto">
+              <div
+                className="absolute inset-0 translate-x-3 translate-y-3 border border-amber-700/40"
+                aria-hidden="true"
+              />
+              <img
+                src={persona.foto}
+                alt={persona.nombre}
+                loading="lazy"
+                className="relative w-full aspect-[4/5] object-cover shadow-md"
+              />
+            </div>
+          </div>
+        )}
+        <div className="space-y-4 font-body text-base md:text-lg text-foreground/75 leading-relaxed">
+          {persona.parrafos.map((p, i) => <p key={i}>{p}</p>)}
+        </div>
       </div>
     </motion.article>
   );
