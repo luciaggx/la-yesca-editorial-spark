@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { bodegaData } from "@/data/bodega";
+import CartaPapel from "./CartaPapel";
 
 export type CartaTab = "carta" | "vinos" | "grupos";
 
@@ -14,108 +15,6 @@ interface MenuCategory {
   columns?: string[];
   items: MenuItem[];
 }
-
-const menuData: MenuCategory[] = [
-  {
-    title: "Para Picar",
-    columns: ["Bocado", "Media", "Entera"],
-    items: [
-      { name: "Caldo de la sierra", prices: ["4", "6", "—"] },
-      { name: "Ostra francesa", prices: ["4", "—", "—"] },
-      { name: "Gilda de pato", prices: ["3.5", "—", "—"] },
-      { name: "Gilda de atún", prices: ["3.5", "—", "—"] },
-      { name: "Croqueta de jamón", prices: ["2.5", "—", "—"] },
-      { name: "Tabla de embutidos ibéricos", prices: ["—", "12", "18"] },
-    ],
-  },
-  {
-    title: "De la Mar",
-    items: [
-      { name: "Mejillones a la brasa", prices: ["14"] },
-      { name: "Gamba de Huelva a la plancha", prices: ["18"] },
-      { name: "Calamares en su tinta", prices: ["16"] },
-    ],
-  },
-  {
-    title: "Del Terruño",
-    items: [
-      { name: "Ensalada de corujas", prices: ["12"] },
-      { name: "Setas y huevo a baja temperatura", prices: ["14"] },
-      { name: "Cogollo a la brasa con anchoa", prices: ["11"] },
-    ],
-  },
-  {
-    title: "Del Campo",
-    items: [
-      { name: "Pluma ibérica a la brasa", prices: ["17"] },
-      { name: "Albóndigas de ciervo en salsa", prices: ["16"] },
-      { name: "Jarrete de jabalí confitado", prices: ["22"] },
-    ],
-  },
-  {
-    title: "Para Rematar",
-    items: [
-      { name: "Flan de la casa", prices: ["6"] },
-      { name: "Corte helado de bellota", prices: ["7"] },
-      { name: "Tabla de quesos artesanos", prices: ["14"] },
-    ],
-  },
-];
-
-const MenuCategoryBlock = ({ category, index }: { category: MenuCategory; index: number }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.1 }}
-      className="mb-14"
-    >
-      <h3 className="font-display text-2xl md:text-3xl text-foreground mb-6 text-center">
-        {category.title}
-      </h3>
-
-      {category.columns && (
-        <div className="flex justify-end mb-3 px-2">
-          <div className="flex gap-6 md:gap-8">
-            {category.columns.map((col) => (
-              <span
-                key={col}
-                className="text-xs tracking-[0.15em] uppercase text-foreground/70 w-14 text-center"
-              >
-                {col}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      <div className="space-y-3">
-        {category.items.map((item) => (
-          <div key={item.name} className="flex items-baseline">
-            <span className="font-body text-base md:text-lg text-foreground whitespace-nowrap">
-              {item.name}
-            </span>
-            <span className="menu-dots" />
-            <div className="flex gap-6 md:gap-8">
-              {item.prices.map((price, i) => (
-                <span
-                  key={i}
-                  className="font-body text-base md:text-lg text-foreground w-14 text-center"
-                >
-                  {price !== "—" ? `${price}€` : "—"}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </motion.div>
-  );
-};
 
 const groupMenuData: MenuCategory[] = [
   {
@@ -283,9 +182,7 @@ const MenuSection = ({ initialTab = "carta" }: { initialTab?: CartaTab }) => {
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.4 }}
             >
-              {menuData.map((category, i) => (
-                <MenuCategoryBlock key={category.title} category={category} index={i} />
-              ))}
+              <CartaPapel />
             </motion.div>
           ) : tab === "vinos" ? (
             <motion.div
