@@ -10,6 +10,7 @@ import MenuSection          from "@/components/MenuSection";
 import EventosSection       from "@/components/EventosSection";
 import GiftExperienceSection from "@/components/GiftExperienceSection";
 import BoutiqueSection      from "@/components/BoutiqueSection";
+import BodegaSection        from "@/components/BodegaSection";
 import ReservationSection   from "@/components/ReservationSection";
 import FooterSection        from "@/components/FooterSection";
 import CookieBanner         from "@/components/CookieBanner";
@@ -17,9 +18,9 @@ import LegalModal           from "@/components/LegalModal";
 
 const readHash = () => decodeURIComponent(window.location.hash.slice(1));
 
-/* Vista "solo carta": la que abre el QR de las mesas (/#carta o /#bodega).
+/* Vista "solo carta": la que abre el QR de las mesas (/#carta).
    Sin el resto de la web debajo, para no tener que bajar por toda la página. */
-const CartaView = ({ initialTab }: { initialTab: "carta" | "bodega" }) => (
+const CartaView = () => (
   <>
     <header className="sticky top-0 z-50 bg-background/92 backdrop-blur-md border-b border-foreground/10">
       <div className="flex items-center justify-between h-14 px-5 max-w-2xl mx-auto">
@@ -39,7 +40,7 @@ const CartaView = ({ initialTab }: { initialTab: "carta" | "bodega" }) => (
       </div>
     </header>
     <main className="pt-8">
-      <MenuSection initialTab={initialTab} />
+      <MenuSection />
     </main>
   </>
 );
@@ -55,7 +56,7 @@ const Index = () => {
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
-  const soloCarta = hash === "carta" || hash === "bodega";
+  const soloCarta = hash === "carta";
 
   /* Si la URL trae #seccion, baja hasta ella al cargar */
   useEffect(() => {
@@ -103,7 +104,7 @@ const Index = () => {
   if (soloCarta) {
     return (
       <div className="bg-background text-foreground min-h-screen overflow-x-hidden">
-        <CartaView initialTab={hash === "bodega" ? "bodega" : "carta"} />
+        <CartaView />
         {legal}
       </div>
     );
@@ -133,6 +134,9 @@ const Index = () => {
       <FloralDivider />
 
       <BoutiqueSection />
+      <FloralDivider />
+
+      <BodegaSection />
       <FloralDivider />
 
       <ReservationSection />

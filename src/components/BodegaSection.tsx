@@ -1,61 +1,6 @@
-import { motion } from "framer-motion";
-
-type WineType = "espumoso" | "blanco" | "rosado" | "tinto" | "dulce";
-
-interface Wine {
-  name: string;
-  bodega: string;
-  variety: string;
-  origin: string;
-  type: WineType;
-  glass?: string;
-  bottle: string;
-  /* Foto real del vino: importarla de src/assets y ponerla aquí.
-     Sin foto se muestra una botella dibujada. */
-  image?: string;
-}
-
-interface WineCategory {
-  title: string;
-  wines: Wine[];
-}
-
-/* ── Ejemplos inventados: sustituir por los vinos reales ── */
-const bodegaData: WineCategory[] = [
-  {
-    title: "Espumosos",
-    wines: [
-      { name: "Brut Nature de la Sierra", bodega: "Cava Los Abantos", variety: "Xarel·lo, Macabeo", origin: "Penedès", type: "espumoso", glass: "6", bottle: "29" },
-    ],
-  },
-  {
-    title: "Blancos",
-    wines: [
-      { name: "Piedra Caballera", bodega: "Viñas del Alberche", variety: "Albillo Real", origin: "Sierra de Gredos", type: "blanco", glass: "5", bottle: "24" },
-      { name: "Rías del Norte", bodega: "Pazo da Néboa", variety: "Albariño", origin: "Rías Baixas", type: "blanco", glass: "5.5", bottle: "27" },
-    ],
-  },
-  {
-    title: "Rosados",
-    wines: [
-      { name: "Rosa de Monte", bodega: "Bodegas Larraga", variety: "Garnacha", origin: "Navarra", type: "rosado", glass: "4.5", bottle: "21" },
-    ],
-  },
-  {
-    title: "Tintos",
-    wines: [
-      { name: "La Yesca", bodega: "Vino de la casa", variety: "Garnacha", origin: "Sierra de Guadarrama", type: "tinto", glass: "4", bottle: "18" },
-      { name: "Pino Negro", bodega: "Bodegas Valdeolmos", variety: "Tempranillo", origin: "Ribera del Duero", type: "tinto", glass: "6", bottle: "34" },
-      { name: "Cerro del Ciervo", bodega: "Finca El Raso", variety: "Syrah, Garnacha", origin: "Vinos de Madrid", type: "tinto", bottle: "42" },
-    ],
-  },
-  {
-    title: "Dulces",
-    wines: [
-      { name: "Miel de Otoño", bodega: "Bodegas Axarquía", variety: "Moscatel", origin: "Málaga", type: "dulce", glass: "6", bottle: "30" },
-    ],
-  },
-];
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { bodegaData, type Wine, type WineType } from "@/data/bodega";
 
 const glassColor: Record<WineType, string> = {
   espumoso: "#2f3d27",
@@ -82,10 +27,10 @@ const BottleIllustration = ({ type }: { type: WineType }) => (
 );
 
 const WineCard = ({ wine }: { wine: Wine }) => (
-  <div className="bg-card border border-foreground/10 rounded-sm overflow-hidden flex flex-col">
+  <div className="flex flex-col h-full" style={{ backgroundColor: "hsl(50 28% 95%)" }}>
     <div
       className="aspect-[4/5] flex items-center justify-center"
-      style={{ backgroundColor: "hsl(46 26% 85%)" }}
+      style={{ backgroundColor: "hsl(46 26% 87%)" }}
     >
       {wine.image ? (
         <img src={wine.image} alt={wine.name} className="w-full h-full object-cover" loading="lazy" />
@@ -94,53 +39,93 @@ const WineCard = ({ wine }: { wine: Wine }) => (
       )}
     </div>
 
-    <div className="p-3 md:p-4 flex flex-col flex-1">
-      <h4 className="font-display text-base md:text-lg leading-tight text-foreground">
-        {wine.name}
-      </h4>
-      <p className="text-[11px] md:text-xs tracking-wide text-foreground/55 mt-1">
-        {wine.bodega}
+    <div className="p-4 md:p-6 flex flex-col flex-1">
+      <p className="font-body text-[10px] md:text-xs tracking-[0.2em] uppercase text-foreground/35 mb-2">
+        {wine.origin}
       </p>
-      <p className="text-[11px] md:text-xs tracking-wide text-foreground/55 italic">
-        {wine.variety} · {wine.origin}
+      <p className="font-display text-base md:text-lg text-foreground/90 leading-tight mb-2" style={{ fontWeight: 300 }}>
+        {wine.name}
+      </p>
+      <p className="font-body text-xs md:text-sm text-foreground/50 leading-snug mb-4">
+        {wine.bodega} · <span className="italic">{wine.variety}</span>
       </p>
 
-      <div className="mt-auto pt-3">
-        <div className="border-t border-foreground/10 pt-2 flex justify-between items-baseline font-body text-sm text-foreground">
-          {wine.glass ? (
-            <span><span className="text-[10px] tracking-[0.15em] uppercase text-foreground/50 mr-1">Copa</span>{wine.glass}€</span>
-          ) : <span />}
-          <span><span className="text-[10px] tracking-[0.15em] uppercase text-foreground/50 mr-1">Botella</span>{wine.bottle}€</span>
-        </div>
+      <div className="mt-auto flex items-baseline justify-between gap-2 border-t border-foreground/10 pt-3">
+        {wine.glass ? (
+          <span className="font-body text-sm text-foreground/70">
+            <span className="text-[10px] tracking-[0.15em] uppercase text-foreground/35 mr-1">Copa</span>{wine.glass} €
+          </span>
+        ) : <span />}
+        <span className="font-display text-lg md:text-xl text-foreground/80" style={{ fontWeight: 300 }}>
+          {wine.bottle} €
+        </span>
       </div>
     </div>
   </div>
 );
 
-const BodegaSection = () => (
-  <div>
-    <p className="font-body text-base text-foreground/60 text-center italic mb-12">
-      Vinos de nuestra bodega, elegidos para acompañar la brasa
-    </p>
-    {bodegaData.map((category, i) => (
-      <motion.div
-        key={category.title}
-        initial={{ opacity: 0, y: 25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: i * 0.08 }}
-        className="mb-14"
-      >
-        <h3 className="font-display text-xl md:text-2xl text-foreground mb-6 text-center italic">
-          {category.title}
-        </h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
-          {category.wines.map((wine) => (
-            <WineCard key={wine.name} wine={wine} />
+const BodegaSection = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const wines = bodegaData.flatMap(c => c.wines);
+
+  return (
+    <section id="bodega" ref={ref} className="py-24 md:py-36 px-6 bg-background">
+      <div className="max-w-4xl mx-auto">
+
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={isInView ? { scaleX: 1 } : {}}
+          transition={{ duration: 1 }}
+          className="h-px w-10 bg-amber-500/50 mx-auto mb-10 origin-center"
+        />
+
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.9 }}
+          className="font-display text-4xl md:text-6xl text-foreground text-center mb-4"
+          style={{ fontWeight: 100, letterSpacing: "0.1em" }}
+        >
+          La Bodega
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.9, delay: 0.15 }}
+          className="font-body text-base text-foreground/45 italic text-center mb-16"
+        >
+          Vinos elegidos para acompañar la brasa
+        </motion.p>
+
+        {/* Grid de vinos */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px"
+          style={{ backgroundColor: "hsl(85 14% 78%)" }}>
+          {wines.map((wine, i) => (
+            <motion.div
+              key={wine.name}
+              initial={{ opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.2 + i * 0.06 }}
+            >
+              <WineCard wine={wine} />
+            </motion.div>
           ))}
         </div>
-      </motion.div>
-    ))}
-  </div>
-);
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="text-center font-body text-sm text-foreground/30 mt-10 italic"
+        >
+          Todos nuestros vinos se pueden llevar a casa. Pregunta en sala.
+        </motion.p>
+
+      </div>
+    </section>
+  );
+};
 
 export default BodegaSection;

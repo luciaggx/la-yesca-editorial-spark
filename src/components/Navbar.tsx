@@ -9,6 +9,7 @@ const navItems = [
   { label: "Eventos",           id: "eventos" },
   { label: "Regala La Yesca",   id: "regala" },
   { label: "La Yesca Boutique", id: "boutique" },
+  { label: "La Bodega",         id: "bodega" },
   { label: "Reservas",          id: "reservas" },
   { label: "Contacto",          id: "contacto" },
 ];

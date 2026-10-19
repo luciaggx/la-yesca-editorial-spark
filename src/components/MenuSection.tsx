@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import BodegaSection from "./BodegaSection";
+import { bodegaData } from "@/data/bodega";
 
-export type CartaTab = "carta" | "bodega" | "grupos";
+export type CartaTab = "carta" | "vinos" | "grupos";
 
 interface MenuItem {
   name: string;
@@ -190,9 +190,35 @@ const GroupMenuSection = () => (
   </div>
 );
 
+/* ── Vinos en la carta: solo los nombres (fotos y precios en la sección La Bodega) ── */
+const WineList = () => (
+  <div>
+    {bodegaData.map((category, i) => (
+      <motion.div
+        key={category.title}
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: i * 0.08 }}
+        className="mb-10"
+      >
+        <h3 className="font-display text-xl md:text-2xl text-foreground mb-4 text-center italic">
+          {category.title}
+        </h3>
+        <ul className="space-y-2 text-center">
+          {category.wines.map((wine) => (
+            <li key={wine.name} className="font-body text-base md:text-lg text-foreground">
+              {wine.name}
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+    ))}
+  </div>
+);
+
 const tabs: { id: CartaTab; label: string; title: string }[] = [
   { id: "carta",  label: "Carta",     title: "La Carta" },
-  { id: "bodega", label: "La Bodega", title: "La Bodega" },
+  { id: "vinos",  label: "Vinos",     title: "Vinos" },
   { id: "grupos", label: "Grupos",    title: "Menú Grupos" },
 ];
 
@@ -261,15 +287,15 @@ const MenuSection = ({ initialTab = "carta" }: { initialTab?: CartaTab }) => {
                 <MenuCategoryBlock key={category.title} category={category} index={i} />
               ))}
             </motion.div>
-          ) : tab === "bodega" ? (
+          ) : tab === "vinos" ? (
             <motion.div
-              key="bodega"
+              key="vinos"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.4 }}
             >
-              <BodegaSection />
+              <WineList />
             </motion.div>
           ) : (
             <motion.div
