@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Navbar               from "@/components/Navbar";
 import HeroSection          from "@/components/HeroSection";
@@ -18,6 +18,31 @@ import LegalModal           from "@/components/LegalModal";
 const Index = () => {
   const [legalOpen, setLegalOpen] = useState(false);
   const [legalType, setLegalType] = useState<"privacidad" | "cookies" | null>(null);
+
+  /* Si la URL trae #seccion (p. ej. el QR de la carta: /#carta), baja hasta ella al cargar */
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (!id) return;
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
+    /* Imágenes y animaciones cambian la altura de la página mientras cargan,
+       así que se recoloca varias veces hasta que todo está en su sitio */
+    const goTo = () => document.getElementById(id)?.scrollIntoView({ behavior: "auto", block: "start" });
+    const timers = [100, 600, 1200, 2000].map(ms => setTimeout(goTo, ms));
+    window.addEventListener("load", goTo);
+
+    /* Si el usuario empieza a desplazarse, deja de recolocar */
+    const stop = () => timers.forEach(clearTimeout);
+    window.addEventListener("wheel", stop, { once: true, passive: true });
+    window.addEventListener("touchstart", stop, { once: true, passive: true });
+
+    return () => {
+      stop();
+      window.removeEventListener("load", goTo);
+      window.removeEventListener("wheel", stop);
+      window.removeEventListener("touchstart", stop);
+    };
+  }, []);
 
   const openLegal = (type: "privacidad" | "cookies") => {
     setLegalType(type);
