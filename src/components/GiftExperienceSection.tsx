@@ -3,6 +3,19 @@ import { motion, useInView } from "framer-motion";
 
 const personOptions = [1, 2, 3, 4];
 
+const aperitivo = {
+  name: "Menú Aperitivo",
+  price: 55,
+  items: [
+    "Una botella de vino",
+    "2 gildas",
+    "2 bocados de croqueta",
+    "2 tapas de ensaladilla",
+    "Una ración de temporada",
+  ],
+  link: "#",
+};
+
 const menus = [
   {
     name: "Menú Especial",
@@ -56,6 +69,31 @@ const GiftExperienceSection = () => {
         >
           Dale a alguien especial un momento inolvidable
         </motion.p>
+
+        {/* Menú Aperitivo — precio cerrado para dos */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.25 }}
+          className="border border-foreground/25 rounded-sm px-6 py-10 md:px-12 mb-16 bg-background/50 text-center"
+        >
+          <p className="font-body text-xs tracking-[0.25em] uppercase text-amber-700/80 mb-3">
+            Para dos personas
+          </p>
+          <h3 className="font-display text-2xl md:text-3xl text-foreground mb-6">
+            {aperitivo.name}
+          </h3>
+          <ul className="font-body text-base md:text-lg text-foreground/75 space-y-1.5 mb-8">
+            {aperitivo.items.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+          <span className="font-display text-4xl text-foreground block mb-6">{aperitivo.price}€</span>
+          <a
+            href={aperitivo.link}
+            className="inline-block px-10 py-3 border border-foreground/30 rounded-sm font-body text-sm tracking-[0.2em] uppercase text-foreground hover:bg-foreground hover:text-background transition-all duration-300"
+          >
+            Regalar
+          </a>
+        </motion.div>
 
         {/* Person selector */}
         <motion.div

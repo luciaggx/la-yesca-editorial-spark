@@ -24,51 +24,54 @@ const QueEsSection = () => {
           className="font-display text-4xl md:text-6xl text-foreground text-center mb-16"
           style={{ fontWeight: 100, letterSpacing: "0.1em" }}
         >
-          Qué es La Yesca
+          ¿Qué es La Yesca?
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.9, delay: 0.2 }}
+          className="max-w-2xl mx-auto space-y-6 font-body text-base md:text-lg text-foreground/75 leading-relaxed"
+        >
+          <p className="text-lg md:text-xl text-foreground/85">
+            <span className="font-display text-2xl text-amber-700" style={{ fontWeight: 300 }}>
+              La Yesca
+            </span>{" "}
+            es una pequeña taberna en San Lorenzo de El Escorial que nace con una idea muy
+            sencilla: recuperar el espíritu de la cocina de siempre.
+          </p>
+          <p>
+            Creemos en el producto, en el territorio y en la cercanía. En cocinar sin artificios,
+            con respeto y con el conocimiento que dan los años de oficio. Nuestro chef, Jorge
+            Asenjo, lleva dos décadas dedicándose a este mundo y esa experiencia está detrás
+            de cada plato, de cada elaboración y de cada decisión que tomamos.
+          </p>
+          <p>
+            Nuestra gran seña de identidad es la cocina de caza. Corzo, ciervo, gamo, jabalí,
+            pato o liebre forman parte de una despensa que sentimos profundamente ligada a la
+            Sierra de Guadarrama.
+          </p>
+          <p>
+            Creemos en la caza como un producto sostenible y en la responsabilidad de
+            aprovecharla de principio a fin. No se trata solo de cocinar caza, sino de entenderla,
+            respetarla y transformarla en guisos, fondos hechos a fuego lento, embutidos,
+            patés…
+          </p>
+          <p>
+            Y si algo acompaña bien a una buena mesa, es un buen vino. Nuestra bodega
+            reúne más de 70 productores, algunos conocidos y otros prácticamente
+            desconocidos para el gran público. No buscamos nombres ni etiquetas por prestigio:
+            buscamos vinos seleccionados a conciencia, vinos con personalidad, con historia y,
+            sobre todo, vinos que nos emocionan y que queremos compartir.
+          </p>
+          <p className="font-display text-lg md:text-xl text-foreground/85 text-center pt-6 italic" style={{ fontWeight: 300 }}>
+            En La Yesca creemos que comer bien no tiene por qué ser complicado. Tiene que
+            ser honesto. Una cocina de territorio, de temporada y de memoria; una cocina
+            cercana que respeta lo que somos y que pone en valor los sabores de siempre en
+            un ambiente casero, familiar y sin formalidades.
+          </p>
+        </motion.div>
 
-          {/* Texto */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.2 }}
-            className="space-y-6"
-          >
-            <p className="font-body text-lg md:text-xl text-foreground/80 leading-relaxed">
-              <span className="font-display text-2xl text-amber-400/90" style={{ fontWeight: 300 }}>
-                La yesca
-              </span>{" "}
-              es el nombre que recibe el hongo <em>Fomes fomentarius</em>, que crece paciente
-              sobre los árboles del monte y fue durante siglos la chispa que encendía el fuego.
-            </p>
-            <p className="font-body text-base md:text-lg text-foreground/60 leading-relaxed">
-              Ese mismo espíritu nos inspira: somos la mecha que enciende la experiencia,
-              lo que transforma lo crudo en algo extraordinario. Conectamos lo ancestral con
-              lo contemporáneo, el monte con la mesa, el fuego con el paladar.
-            </p>
-            <p className="font-body text-base md:text-lg text-foreground/55 leading-relaxed">
-              Una taberna donde la cocina de brasa y los productos de la sierra de Madrid
-              son los protagonistas de cada plato.
-            </p>
-          </motion.div>
-
-          {/* Elemento visual — barra dorada decorativa */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.35 }}
-            className="flex flex-col items-center gap-4"
-          >
-            <div className="w-px h-32 bg-gradient-to-b from-transparent via-amber-500/40 to-transparent" />
-            <p className="font-body text-sm tracking-[0.35em] uppercase text-foreground/30 text-center">
-              Taberna · Brasa · Monte
-            </p>
-            <div className="w-px h-32 bg-gradient-to-b from-transparent via-amber-500/40 to-transparent" />
-          </motion.div>
-
-        </div>
       </div>
     </section>
   );

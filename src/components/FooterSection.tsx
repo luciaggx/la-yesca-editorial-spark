@@ -41,43 +41,56 @@ const FooterSection = ({ onOpenLegal }: FooterSectionProps) => {
 
         <div className="h-px w-20 mx-auto bg-accent/30 mb-10" />
 
-        {/* Contact info */}
+        {/* Dónde estamos */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="space-y-4"
+          className="max-w-2xl mx-auto"
         >
-          <p className="text-lg tracking-wide text-muted-foreground">
-            Reservas & Contacto
+          <h2
+            className="font-display text-3xl md:text-5xl text-foreground mb-8"
+            style={{ fontWeight: 100, letterSpacing: "0.1em" }}
+          >
+            ¿Dónde estamos?
+          </h2>
+          <p className="font-body text-base md:text-lg text-foreground/75 leading-relaxed">
+            La Yesca está en pleno corazón de San Lorenzo de El Escorial, escondida en un
+            pequeño callejón de granito, justo detrás del mercado municipal. Un rincón con
+            encanto, rodeado de historia y con ese carácter tan especial de nuestro pueblo,
+            donde tradición y vida cotidiana se encuentran.
           </p>
-          <p className="text-foreground/80 text-lg">
-            info@layesca.com
-          </p>
-          <p className="text-foreground/50">
-            +34 600 000 000
-          </p>
-        </motion.div>
 
-        {/* Location */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-8"
-        >
-          <div className="flex items-center justify-center gap-2 mb-2">
+          <div className="flex items-center justify-center gap-2 mt-8 mb-2">
             <MapPin className="w-4 h-4 text-accent" />
             <p className="text-sm tracking-[0.2em] uppercase text-foreground/60">
               Ubicación
             </p>
           </div>
-          <p className="text-foreground/80 text-sm">
-            C. San Quintín, 4
+          <p className="text-foreground/80">
+            Calle San Quintín, 4
           </p>
           <p className="text-foreground/60 text-sm">
             28200 San Lorenzo de El Escorial, Madrid
           </p>
+        </motion.div>
+
+        {/* Contacto */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mt-10 space-y-2"
+        >
+          <p className="text-sm tracking-[0.2em] uppercase text-foreground/60">
+            Contacto
+          </p>
+          <a
+            href="mailto:layescataberna@gmail.com"
+            className="inline-block text-foreground/85 text-lg hover:text-accent underline-offset-4 hover:underline transition-colors"
+          >
+            layescataberna@gmail.com
+          </a>
         </motion.div>
 
         {/* Google Maps Embed */}

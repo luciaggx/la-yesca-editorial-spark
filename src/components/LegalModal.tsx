@@ -18,7 +18,7 @@ const privacidadContent = (
     <p className="mb-4">
       <strong>La Yesca Taberna o Viceversa, S.L.</strong><br />
       Calle San Quintín, 4 — 28200 San Lorenzo de El Escorial, Madrid<br />
-      Email: info@layesca.com
+      Email: layescataberna@gmail.com
     </p>
 
     <h3 className="font-semibold text-base mb-2 mt-6">2. Finalidad del tratamiento</h3>
@@ -40,7 +40,7 @@ const privacidadContent = (
 
     <h3 className="font-semibold text-base mb-2 mt-6">6. Derechos del interesado</h3>
     <p className="mb-2">Puede ejercer en cualquier momento sus derechos de acceso, rectificación, supresión, oposición, portabilidad y limitación del tratamiento escribiendo a:</p>
-    <p className="mb-4"><strong>info@layesca.com</strong></p>
+    <p className="mb-4"><strong>layescataberna@gmail.com</strong></p>
     <p className="mb-4">Si considera que el tratamiento no es conforme a la normativa, puede presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).</p>
   </>
 );
@@ -95,7 +95,7 @@ const cookiesContent = (
     </ul>
 
     <h3 className="font-semibold text-base mb-2 mt-6">Más información</h3>
-    <p className="mb-4">Para cualquier consulta sobre el uso de cookies puede contactarnos en <strong>info@layesca.com</strong>. Esta política puede actualizarse; le recomendamos revisarla periódicamente.</p>
+    <p className="mb-4">Para cualquier consulta sobre el uso de cookies puede contactarnos en <strong>layescataberna@gmail.com</strong>. Esta política puede actualizarse; le recomendamos revisarla periódicamente.</p>
   </>
 );
 

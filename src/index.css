@@ -8,7 +8,7 @@
   :root {
     /* ── Paleta oliva campo: verdes claros + crema + negro ── */
 
-    --background:   85 28% 80%;    /* Verde sage campo — visible y fresco */
+    --background:   88 32% 72%;    /* Verde sage campo — más intenso para que no se vea blanco con mucha luz */
     --foreground:    0  0%  8%;    /* Negro */
 
     --card:         46 30% 91%;    /* Crema cálida para tarjetas */
@@ -18,13 +18,13 @@
     --popover-foreground: 0 0% 8%;
 
     --primary:       0  0%  8%;
-    --primary-foreground: 85 28% 80%;
+    --primary-foreground: 88 32% 72%;
 
-    --secondary:    82 22% 70%;    /* Oliva más oscuro */
+    --secondary:    85 26% 62%;    /* Oliva más oscuro */
     --secondary-foreground: 0 0% 8%;
 
-    --muted:        80 18% 75%;
-    --muted-foreground: 0 0% 35%;
+    --muted:        84 22% 67%;
+    --muted-foreground: 0 0% 28%;
 
     /* Ámbar trigo — acento dorado */
     --accent:       36 55% 42%;
@@ -36,8 +36,8 @@
     --destructive:   0 70% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --border:       82 18% 70%;
-    --input:        82 18% 72%;
+    --border:       84 22% 62%;
+    --input:        84 22% 64%;
     --ring:          36 55% 42%;
 
     --radius: 0.2rem;
@@ -74,8 +74,8 @@ html { scroll-behavior: smooth; }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: hsl(80 20% 84%); }
-::-webkit-scrollbar-thumb { background: hsl(78 18% 65%); border-radius: 2px; }
+::-webkit-scrollbar-track { background: hsl(86 28% 76%); }
+::-webkit-scrollbar-thumb { background: hsl(84 22% 55%); border-radius: 2px; }
 
 /* ── Puntos de guía del menú ── */
 .menu-dots {

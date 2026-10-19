@@ -26,7 +26,7 @@ const EventosSection = () => {
 
   return (
     <section id="eventos" ref={ref} className="py-24 md:py-36 px-6"
-      style={{ backgroundColor: "hsl(87 20% 89%)" }}>
+      style={{ backgroundColor: "hsl(87 26% 82%)" }}>
       <div className="max-w-3xl mx-auto">
 
         <motion.div
@@ -84,7 +84,7 @@ const EventosSection = () => {
           className="mt-12 text-center"
         >
           <a
-            href="mailto:info@layesca.com"
+            href="mailto:layescataberna@gmail.com"
             className="group inline-flex items-center gap-3 font-body text-sm tracking-[0.2em] uppercase text-foreground/60 hover:text-amber-400 transition-colors duration-300"
           >
             Consultar disponibilidad

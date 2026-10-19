@@ -6,11 +6,11 @@ const HeroSection = () => (
     style={{
       /* Gradiente oliva campo: manchas de color orgánicas */
       background: `
-        radial-gradient(ellipse at 22% 30%, hsl(92 38% 72% / 0.8), transparent 52%),
-        radial-gradient(ellipse at 78% 68%, hsl(70 30% 74% / 0.7), transparent 50%),
-        radial-gradient(ellipse at 55% 15%, hsl(78 28% 76% / 0.6), transparent 48%),
-        radial-gradient(ellipse at 10% 80%, hsl(88 34% 70% / 0.55), transparent 45%),
-        hsl(85 28% 80%)
+        radial-gradient(ellipse at 22% 30%, hsl(94 40% 64% / 0.8), transparent 52%),
+        radial-gradient(ellipse at 78% 68%, hsl(74 32% 66% / 0.7), transparent 50%),
+        radial-gradient(ellipse at 55% 15%, hsl(82 32% 68% / 0.6), transparent 48%),
+        radial-gradient(ellipse at 10% 80%, hsl(90 36% 62% / 0.55), transparent 45%),
+        hsl(88 32% 72%)
       `,
     }}
   >

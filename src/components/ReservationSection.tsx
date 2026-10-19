@@ -81,7 +81,7 @@ const ReservationSection = () => {
               {/* Izquierda: logo + textos */}
               <div className="flex items-center gap-5">
                 <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 border border-foreground/10 group-hover:border-amber-500/40 transition-colors duration-300"
-                  style={{ backgroundColor: "hsl(87 20% 89%)" }}>
+                  style={{ backgroundColor: "hsl(87 26% 82%)" }}>
                   {platform.logo}
                 </div>
                 <div>
@@ -112,7 +112,7 @@ const ReservationSection = () => {
         >
           ¿Sois más de 6 personas?{" "}
           <a
-            href="mailto:info@layesca.com"
+            href="mailto:layescataberna@gmail.com"
             className="text-foreground/55 hover:text-amber-400 underline underline-offset-4 transition-colors duration-300 not-italic"
           >
             Escríbenos para grupos

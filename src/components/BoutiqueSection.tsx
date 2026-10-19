@@ -109,7 +109,7 @@ const BoutiqueSection = () => {
           className="text-center font-body text-sm text-foreground/30 mt-10 italic"
         >
           Disponible en el local y próximamente online.{" "}
-          <a href="mailto:info@layesca.com"
+          <a href="mailto:layescataberna@gmail.com"
             className="text-foreground/45 hover:text-amber-400 underline underline-offset-4 transition-colors duration-300 not-italic">
             Consultar pedidos
           </a>
