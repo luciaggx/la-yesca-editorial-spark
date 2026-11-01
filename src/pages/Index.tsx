@@ -15,6 +15,8 @@ import ReservationSection   from "@/components/ReservationSection";
 import FooterSection        from "@/components/FooterSection";
 import CookieBanner         from "@/components/CookieBanner";
 import LegalModal           from "@/components/LegalModal";
+import CartSheet            from "@/components/CartSheet";
+import { CartProvider }     from "@/hooks/use-cart";
 
 const readHash = () => decodeURIComponent(window.location.hash.slice(1));
 
@@ -111,6 +113,7 @@ const Index = () => {
   }
 
   return (
+    <CartProvider>
     <div className="bg-background text-foreground overflow-x-hidden">
       <Navbar />
 
@@ -144,8 +147,10 @@ const Index = () => {
 
       <FooterSection onOpenLegal={openLegal} />
 
+      <CartSheet />
       {legal}
     </div>
+    </CartProvider>
   );
 };
 

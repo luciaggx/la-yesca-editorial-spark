@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { ShoppingBag, X } from "lucide-react";
+import { useCart } from "@/hooks/use-cart";
 
 const navItems = [
   { label: "Qué es La Yesca",   id: "que-es" },
@@ -31,6 +32,7 @@ const HamburgerIcon = () => (
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { count, setOpen: setCartOpen } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -88,17 +90,33 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Hamburguesa */}
-          <button
-            onClick={() => setMenuOpen(v => !v)}
-            className="text-foreground p-1 z-[60] relative"
-            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-          >
-            {menuOpen
-              ? <X className="w-5 h-5" />
-              : <HamburgerIcon />
-            }
-          </button>
+          <div className="flex items-center gap-4">
+            {/* Carrito */}
+            <button
+              onClick={() => setCartOpen(true)}
+              className="text-foreground p-1 relative"
+              aria-label={count > 0 ? `Abrir carrito, ${count} botellas` : "Abrir carrito"}
+            >
+              <ShoppingBag className="w-5 h-5" strokeWidth={1.5} />
+              {count > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-4 h-4 px-1 rounded-full bg-foreground text-background font-body text-[10px] leading-4 text-center">
+                  {count}
+                </span>
+              )}
+            </button>
+
+            {/* Hamburguesa */}
+            <button
+              onClick={() => setMenuOpen(v => !v)}
+              className="text-foreground p-1 z-[60] relative"
+              aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            >
+              {menuOpen
+                ? <X className="w-5 h-5" />
+                : <HamburgerIcon />
+              }
+            </button>
+          </div>
         </div>
       </motion.nav>
 

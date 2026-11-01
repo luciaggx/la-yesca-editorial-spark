@@ -1,12 +1,16 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { bodegaData, type Wine, type WineType } from "@/data/bodega";
+import WineDialog from "./WineDialog";
 
 const glassColor: Record<WineType, string> = {
   espumoso: "#2f3d27",
   blanco:   "#a7b36a",
+  naranja:  "#c98a3f",
   rosado:   "#d9978f",
   tinto:    "#3b1f22",
+  generoso: "#7a4a1e",
+  vermut:   "#5a2c1c",
   dulce:    "#b07a2a",
 };
 
@@ -26,48 +30,62 @@ const BottleIllustration = ({ type }: { type: WineType }) => (
   </svg>
 );
 
-const WineCard = ({ wine }: { wine: Wine }) => (
-  <div className="flex flex-col h-full" style={{ backgroundColor: "hsl(50 28% 95%)" }}>
+const WineCard = ({ wine, onSelect }: { wine: Wine; onSelect: () => void }) => (
+  <button
+    type="button"
+    onClick={onSelect}
+    aria-label={`Ver ${wine.name}`}
+    className="group flex flex-col w-full h-full text-left transition-shadow hover:shadow-lg"
+    style={{ backgroundColor: "hsl(50 28% 95%)" }}
+  >
     <div
-      className="aspect-[4/5] flex items-center justify-center"
+      className="aspect-[3/5] w-full overflow-hidden flex items-center justify-center"
       style={{ backgroundColor: "hsl(46 26% 87%)" }}
     >
       {wine.image ? (
-        <img src={wine.image} alt={wine.name} className="w-full h-full object-cover" loading="lazy" />
+        <img src={wine.image} alt={wine.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
       ) : (
         <BottleIllustration type={wine.type} />
       )}
     </div>
 
     <div className="p-4 md:p-6 flex flex-col flex-1">
-      <p className="font-body text-[10px] md:text-xs tracking-[0.2em] uppercase text-foreground/35 mb-2">
-        {wine.origin}
-      </p>
+      {wine.origin && (
+        <p className="font-body text-[10px] md:text-xs tracking-[0.2em] uppercase text-foreground/35 mb-2">
+          {wine.origin}
+        </p>
+      )}
       <p className="font-display text-base md:text-lg text-foreground/90 leading-tight mb-2" style={{ fontWeight: 300 }}>
         {wine.name}
       </p>
-      <p className="font-body text-xs md:text-sm text-foreground/50 leading-snug mb-4">
-        {wine.bodega} · <span className="italic">{wine.variety}</span>
-      </p>
+      {(wine.bodega || wine.variety) && (
+        <p className="font-body text-xs md:text-sm text-foreground/50 leading-snug mb-4">
+          {wine.bodega}
+          {wine.bodega && wine.variety && " · "}
+          {wine.variety && <span className="italic">{wine.variety}</span>}
+        </p>
+      )}
 
-      <div className="mt-auto flex items-baseline justify-between gap-2 border-t border-foreground/10 pt-3">
-        {wine.glass ? (
-          <span className="font-body text-sm text-foreground/70">
-            <span className="text-[10px] tracking-[0.15em] uppercase text-foreground/35 mr-1">Copa</span>{wine.glass} €
+      {wine.bottle && (
+        <div className="mt-auto flex items-baseline justify-between gap-2 border-t border-foreground/10 pt-3">
+          {wine.glass ? (
+            <span className="font-body text-sm text-foreground/70">
+              <span className="text-[10px] tracking-[0.15em] uppercase text-foreground/35 mr-1">Copa</span>{wine.glass} €
+            </span>
+          ) : <span />}
+          <span className="font-display text-lg md:text-xl text-foreground/80" style={{ fontWeight: 300 }}>
+            {wine.bottle} €
           </span>
-        ) : <span />}
-        <span className="font-display text-lg md:text-xl text-foreground/80" style={{ fontWeight: 300 }}>
-          {wine.bottle} €
-        </span>
-      </div>
+        </div>
+      )}
     </div>
-  </div>
+  </button>
 );
 
 const BodegaSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const wines = bodegaData.flatMap(c => c.wines);
+  const [selected, setSelected] = useState<Wine | null>(null);
 
   return (
     <section id="bodega" ref={ref} className="py-24 md:py-36 px-6 bg-background">
@@ -99,20 +117,32 @@ const BodegaSection = () => {
           Vinos elegidos para acompañar la brasa
         </motion.p>
 
-        {/* Grid de vinos */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px"
-          style={{ backgroundColor: "hsl(85 14% 78%)" }}>
-          {wines.map((wine, i) => (
-            <motion.div
-              key={wine.name}
-              initial={{ opacity: 0, y: 24 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.2 + i * 0.06 }}
+        {/* Vinos por tipo */}
+        {bodegaData.map((category) => (
+          <div key={category.title} className="mb-14 md:mb-20">
+            <motion.h3
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="font-display text-2xl md:text-3xl text-foreground/80 text-center mb-8"
+              style={{ fontWeight: 200, letterSpacing: "0.06em" }}
             >
-              <WineCard wine={wine} />
-            </motion.div>
-          ))}
-        </div>
+              {category.title}
+            </motion.h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+              {category.wines.map((wine, i) => (
+                <motion.div
+                  key={wine.name}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.7, delay: 0.2 + Math.min(i, 8) * 0.06 }}
+                >
+                  <WineCard wine={wine} onSelect={() => setSelected(wine)} />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        ))}
 
         <motion.p
           initial={{ opacity: 0 }}
@@ -124,6 +154,8 @@ const BodegaSection = () => {
         </motion.p>
 
       </div>
+
+      <WineDialog wine={selected} onClose={() => setSelected(null)} />
     </section>
   );
 };
