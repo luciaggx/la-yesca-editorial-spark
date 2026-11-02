@@ -3,9 +3,9 @@ import DibujoTinta from "@/components/DibujoTinta";
 import { irASeccion } from "@/lib/scroll";
 
 const HeroSection = () => (
-  <section className="marco-hero hero-texto flex flex-col min-h-svh pt-16">
+  <section className="marco-hero hero-texto flex flex-col md:min-h-svh pt-16">
     {/* En móvil: título arriba, párrafo y dibujo en paralelo, botones debajo */}
-    <div className="flex-1 grid grid-cols-[minmax(0,1fr)_46%] md:grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] content-center md:content-normal items-center gap-x-3 md:gap-x-[clamp(24px,5vw,80px)] gap-y-7 md:gap-y-6 py-6 md:py-0">
+    <div className="flex-1 grid grid-cols-[minmax(0,1fr)_46%] md:grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] content-center md:content-normal items-center gap-x-3 md:gap-x-[clamp(24px,5vw,80px)] gap-y-5 md:gap-y-6 py-5 md:py-0">
       <div className="contents md:flex md:flex-col md:gap-9 md:max-w-[620px] md:py-6">
         <h1 className="hero-titulo col-span-2">
           La Yesca,<br />taberna de caza
@@ -37,7 +37,7 @@ const HeroSection = () => (
       </div>
     </div>
 
-    <div className="hero-pie flex flex-wrap justify-between gap-x-8 gap-y-3 pt-7 pb-8">
+    <div className="hero-pie flex flex-wrap justify-between gap-x-8 gap-y-3 pt-5 pb-5 md:pt-7 md:pb-8">
       <span>Calle San Quintín 4 · San Lorenzo de El Escorial</span>
       <span>Taberna o viceversa</span>
     </div>

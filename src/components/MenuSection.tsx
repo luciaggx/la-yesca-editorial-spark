@@ -108,7 +108,7 @@ const MenuSection = ({ initialTab = "carta" }: { initialTab?: CartaTab }) => {
   return (
     <section id="carta" ref={ref} className="seccion">
       <div className="marco">
-        <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-6 mb-12 md:mb-16">
+        <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-3 mb-5 md:mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}

@@ -27,8 +27,8 @@ const EventosSection = () => (
         <p className="texto-lead md:pl-[3vw]">Momentos que merecen algo más que una comida</p>
       </Reveal>
 
-      <div className="mt-16 md:mt-24 grid md:grid-cols-12 gap-x-6 gap-y-12 md:items-end">
-        <Reveal delay={0.1} className="order-2 md:order-1 md:col-span-4 w-3/5 ml-auto md:w-auto md:ml-0">
+      <div className="mt-6 md:mt-24 grid md:grid-cols-12 gap-x-6 gap-y-12 md:items-end">
+        <Reveal delay={0.1} className="hidden md:block md:order-1 md:col-span-4">
           <img
             src={patioDeLosReyes}
             alt="Grabado antiguo del Patio de los Reyes del monasterio de San Lorenzo de El Escorial"
@@ -37,7 +37,7 @@ const EventosSection = () => (
           />
         </Reveal>
 
-        <div className="order-1 md:order-2 md:col-span-6 md:col-start-7 space-y-10">
+        <div className="order-1 md:order-2 md:col-span-6 md:col-start-7 space-y-5 md:space-y-10">
           {eventos.map((ev, i) => (
             <Reveal key={ev.titulo} delay={0.1 + i * 0.08}>
               <h3 className="texto-subtitulo mb-2">{ev.titulo}</h3>

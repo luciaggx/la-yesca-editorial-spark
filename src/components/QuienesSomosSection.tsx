@@ -1,6 +1,8 @@
+import { useState } from "react";
 import fotoJorgeAsenjo from "@/assets/jorge-asenjo.jpg";
 import fotoAnaLazaro from "@/assets/ana-lazaro.jpg";
 import fotoDelantales from "@/assets/delantales.jpg";
+import LeerMas from "./LeerMas";
 import Reveal from "./Reveal";
 
 interface Persona {
@@ -48,11 +50,13 @@ const equipo: Persona[] = [
 const PersonaBlock = ({ persona, index }: { persona: Persona; index: number }) => {
   const foto = persona.foto ?? fotoDelantales;
   const izquierda = index % 2 === 0;
+  const [abierto, setAbierto] = useState(false);
 
   return (
-    <article className="grid md:grid-cols-12 gap-x-6 gap-y-8 md:items-start">
+    /* En móvil la foto va pequeña junto al nombre, y la biografía se despliega con "Leer más" */
+    <article className="grid grid-cols-[92px_minmax(0,1fr)] md:grid-cols-12 items-center gap-x-4 md:gap-x-6 gap-y-4 md:gap-y-8 md:items-start">
       <Reveal className={`md:sticky md:top-24 ${
-        izquierda ? "md:col-span-5 w-full" : persona.foto ? "md:col-span-4 md:col-start-9 md:order-2 w-3/4 ml-auto md:w-full" : "md:col-span-3 md:col-start-10 md:order-2 w-3/5 ml-auto md:w-full"
+        izquierda ? "md:col-span-5" : persona.foto ? "md:col-span-4 md:col-start-9 md:order-2" : "md:col-span-3 md:col-start-10 md:order-2"
       }`}>
         <img
           src={foto}
@@ -63,13 +67,16 @@ const PersonaBlock = ({ persona, index }: { persona: Persona; index: number }) =
           className="w-full aspect-[4/5] object-cover"
         />
       </Reveal>
-      <div className={izquierda ? "md:col-span-6 md:col-start-7" : "md:col-span-7 md:col-start-1"}>
+      <div className={`contents md:block ${izquierda ? "md:col-span-6 md:col-start-7" : "md:col-span-7 md:col-start-1"}`}>
         <Reveal delay={0.08}>
           <h3 className="texto-titulo">{persona.nombre}</h3>
-          <p className="texto-lead mt-1 mb-8">{persona.rol}</p>
+          <p className="texto-lead mt-1 md:mb-8">{persona.rol}</p>
         </Reveal>
-        <Reveal delay={0.14} className="space-y-5 texto-cuerpo">
-          {persona.parrafos.map((p, i) => <p key={i}>{p}</p>)}
+        <Reveal delay={0.14} className="col-span-2 space-y-3 md:space-y-5 texto-cuerpo">
+          {persona.parrafos.map((p, i) => (
+            <p key={i} className={i > 0 && !abierto ? "hidden md:block" : ""}>{p}</p>
+          ))}
+          <LeerMas abierto={abierto} onToggle={() => setAbierto((v) => !v)} />
         </Reveal>
       </div>
     </article>
@@ -80,9 +87,9 @@ const QuienesSomosSection = () => (
   <section id="quienes-somos" className="seccion !pb-0">
     <div className="marco">
       <Reveal>
-        <h2 className="texto-titulo mb-16 md:mb-24">¿Quiénes somos?</h2>
+        <h2 className="texto-titulo mb-6 md:mb-24">¿Quiénes somos?</h2>
       </Reveal>
-      <div className="flex flex-col gap-24 md:gap-40">
+      <div className="flex flex-col gap-9 md:gap-40">
         {equipo.map((persona, i) => (
           <PersonaBlock key={persona.nombre} persona={persona} index={i} />
         ))}

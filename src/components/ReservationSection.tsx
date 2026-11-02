@@ -11,14 +11,14 @@ const platforms = [
 
 const ReservationSection = () => (
   <section id="reservas" className="seccion">
-    <div className="marco grid md:grid-cols-12 gap-x-6 gap-y-10 md:items-start">
+    <div className="marco grid md:grid-cols-12 gap-x-6 gap-y-6 md:gap-y-10 md:items-start">
       <Reveal className="md:col-span-5">
         <h2 className="texto-titulo mb-5">Reservas</h2>
         <p className="texto-lead">Elige tu plataforma preferida</p>
       </Reveal>
 
       <Reveal delay={0.1} className="md:col-span-4 md:col-start-9">
-        <div className="space-y-7">
+        <div className="space-y-4 md:space-y-7">
           {platforms.map((platform) => (
             <a
               key={platform.name}
@@ -35,7 +35,7 @@ const ReservationSection = () => (
             </a>
           ))}
         </div>
-        <p className="texto-cuerpo mt-9">
+        <p className="texto-cuerpo mt-5 md:mt-9">
           ¿Sois más de 6 personas?{" "}
           <a href="mailto:layescataberna@gmail.com" className="enlace">
             Escríbenos para grupos

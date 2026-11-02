@@ -1,5 +1,7 @@
+import { useState } from "react";
 import ciervo from "@/assets/mundo/ciervo-tinta.webp";
 import { irASeccion } from "@/lib/scroll";
+import LeerMas from "./LeerMas";
 import Reveal from "./Reveal";
 
 const enlaces = [
@@ -7,21 +9,25 @@ const enlaces = [
   { label: "La Bodega", id: "bodega" },
 ];
 
-const QueEsSection = () => (
+const QueEsSection = () => {
+  const [abierto, setAbierto] = useState(false);
+  const plegado = abierto ? "" : "hidden md:block";
+
+  return (
   <section
     id="que-es"
-    className="bg-tono text-[#1A1D15] scroll-mt-16 pt-12 md:pt-11 pb-[clamp(64px,7vw,120px)]"
+    className="bg-tono text-[#1A1D15] scroll-mt-16 pt-9 md:pt-11 pb-[clamp(44px,7vw,120px)]"
   >
     <div className="marco-hero">
-      <div className="grid md:grid-cols-2 items-center gap-x-[clamp(32px,5vw,80px)] gap-y-10">
+      <div className="grid md:grid-cols-2 items-center gap-x-[clamp(32px,5vw,80px)] gap-y-5 md:gap-y-10">
         <div>
           <Reveal>
-            <h2 className="text-[clamp(44px,5.3vw,84px)] leading-none tracking-[-0.015em] mb-7">
+            <h2 className="text-[34px] md:text-[clamp(44px,5.3vw,84px)] leading-none tracking-[-0.015em] mb-4 md:mb-7">
               ¿Qué es La Yesca?
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
-            <p className="text-[clamp(21px,1.9vw,28px)] leading-[1.4] max-w-[620px]">
+            <p className="text-[20px] md:text-[clamp(21px,1.9vw,28px)] leading-[1.35] md:leading-[1.4] max-w-[620px]">
               La Yesca es una pequeña taberna en San Lorenzo de El Escorial que nace con una idea muy
               sencilla: recuperar el espíritu de la cocina de siempre.
             </p>
@@ -35,27 +41,27 @@ const QueEsSection = () => (
             width={980}
             height={760}
             loading="lazy"
-            className="w-full max-w-[480px] mx-auto"
+            className="w-full max-w-[230px] md:max-w-[480px] mx-auto"
           />
         </Reveal>
       </div>
 
-      <div className="mt-[clamp(40px,6vw,96px)] pt-[clamp(40px,4.6vw,72px)] border-t border-[#1A1D15]/20 grid md:grid-cols-2 lg:grid-cols-3 gap-x-[clamp(32px,7vw,112px)] gap-y-6 texto-cuerpo !leading-[1.75]">
-        <Reveal className="space-y-6">
+      <div className="mt-5 md:mt-[clamp(40px,6vw,96px)] pt-6 md:pt-[clamp(40px,4.6vw,72px)] border-t border-[#1A1D15]/20 grid md:grid-cols-2 lg:grid-cols-3 gap-x-[clamp(32px,7vw,112px)] gap-y-4 texto-cuerpo md:!leading-[1.75]">
+        <Reveal className="space-y-4 md:space-y-6">
           <p>
             Creemos en el producto, en el territorio y en la cercanía. En cocinar sin artificios,
             con respeto y con el conocimiento que dan los años de oficio. Nuestro chef, Jorge
             Asenjo, lleva dos décadas dedicándose a este mundo y esa experiencia está detrás
             de cada plato, de cada elaboración y de cada decisión que tomamos.
           </p>
-          <p>
+          <p className={plegado}>
             Nuestra gran seña de identidad es la cocina de caza. Corzo, ciervo, gamo, jabalí,
             pato o liebre forman parte de una despensa que sentimos profundamente ligada a la
             Sierra de Guadarrama.
           </p>
         </Reveal>
 
-        <Reveal delay={0.08} className="space-y-6">
+        <Reveal delay={0.08} className={`space-y-4 md:space-y-6 ${plegado}`}>
           <p>
             Creemos en la caza como un producto sostenible y en la responsabilidad de
             aprovecharla de principio a fin. No se trata solo de cocinar caza, sino de entenderla,
@@ -71,7 +77,9 @@ const QueEsSection = () => (
           </p>
         </Reveal>
 
-        <Reveal delay={0.16} className="self-end mt-4 lg:mt-0 md:col-span-2 lg:col-span-1">
+        <LeerMas abierto={abierto} onToggle={() => setAbierto((v) => !v)} />
+
+        <Reveal delay={0.16} className="self-end mt-1 md:mt-4 lg:mt-0 md:col-span-2 lg:col-span-1">
           {enlaces.map(({ label, id }) => (
             <button key={id} type="button" onClick={() => irASeccion(id)} className="enlace-seccion">
               {label}
@@ -81,8 +89,8 @@ const QueEsSection = () => (
         </Reveal>
       </div>
 
-      <Reveal className="mt-[clamp(64px,7.5vw,120px)]">
-        <p className="max-w-[1040px] mx-auto text-center italic text-[clamp(28px,3vw,46px)] leading-[1.27]">
+      <Reveal className="mt-8 md:mt-[clamp(64px,7.5vw,120px)]">
+        <p className="max-w-[1040px] mx-auto text-center italic text-[22px] md:text-[clamp(28px,3vw,46px)] leading-[1.27]">
           En La Yesca creemos que comer bien no tiene por qué ser complicado. Tiene que
           ser honesto. Una cocina de territorio, de temporada y de memoria; una cocina
           cercana que respeta lo que somos y que pone en valor los sabores de siempre en
@@ -91,6 +99,7 @@ const QueEsSection = () => (
       </Reveal>
     </div>
   </section>
-);
+  );
+};
 
 export default QueEsSection;

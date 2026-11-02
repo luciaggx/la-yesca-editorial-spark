@@ -1,4 +1,3 @@
-import aceite from "@/assets/aceite-pinar.jpg";
 import Reveal from "./Reveal";
 
 /* TODO: reemplazar con los productos reales y sus precios */
@@ -31,24 +30,13 @@ const productos = [
 
 const BoutiqueSection = () => (
   <section id="boutique" className="seccion">
-    <div className="marco grid md:grid-cols-12 gap-x-6 gap-y-12">
-      <Reveal className="md:col-span-6 md:row-span-2">
-        <img
-          src={aceite}
-          alt="Botella de aceite entre ramas de pino y piñas"
-          width={593}
-          height={750}
-          loading="lazy"
-          className="w-full aspect-[4/5] object-cover"
-        />
-      </Reveal>
-
-      <Reveal delay={0.08} className="md:col-span-5 md:col-start-8 md:row-start-1">
+    <div className="marco grid md:grid-cols-12 gap-x-6 gap-y-6 md:gap-y-12">
+      <Reveal className="md:col-span-5">
         <h2 className="texto-titulo mb-4">La Yesca Boutique</h2>
         <p className="texto-lead">Llévate un pedazo del monte a casa</p>
       </Reveal>
 
-      <div className="md:col-span-5 md:col-start-8 md:row-start-2 space-y-8">
+      <div className="md:col-span-6 md:col-start-7 space-y-5 md:space-y-8">
         {productos.map((p, i) => (
           <Reveal key={p.nombre} delay={0.12 + i * 0.06}>
             <h3 className="flex items-baseline justify-between gap-4 texto-subtitulo">

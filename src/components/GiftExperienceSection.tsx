@@ -17,7 +17,7 @@ const GiftExperienceSection = () => {
 
   return (
     <section id="regala" className="seccion bg-cream">
-      <div className="marco grid md:grid-cols-12 gap-x-6 gap-y-12">
+      <div className="marco grid md:grid-cols-12 gap-x-6 gap-y-7 md:gap-y-12">
         <Reveal className="md:col-span-4">
           <h2 className="texto-titulo mb-5">Regala La Yesca</h2>
           <p className="texto-lead">Dale a alguien especial un momento inolvidable</p>
@@ -31,7 +31,7 @@ const GiftExperienceSection = () => {
           />
         </Reveal>
 
-        <div className="md:col-span-7 md:col-start-6 space-y-20">
+        <div className="md:col-span-7 md:col-start-6 space-y-9 md:space-y-20">
           {giftMenus.map((menu, i) => (
             <Reveal key={menu.name} delay={0.08 + i * 0.06}>
               <h3 className="flex items-baseline justify-between gap-6 texto-subtitulo">

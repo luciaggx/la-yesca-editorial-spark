@@ -17,17 +17,17 @@ const menu = [
 const FooterSection = ({ onOpenLegal }: FooterSectionProps) => (
   <footer id="contacto">
     <div className="seccion bg-tono">
-      <div className="marco grid md:grid-cols-12 gap-x-6 gap-y-12 md:items-start">
+      <div className="marco grid md:grid-cols-12 gap-x-6 gap-y-6 md:gap-y-12 md:items-start">
         <Reveal className="md:col-span-5">
-          <h2 className="texto-titulo mb-8">¿Dónde estamos?</h2>
-          <p className="texto-cuerpo mb-8">
+          <h2 className="texto-titulo mb-3 md:mb-8">¿Dónde estamos?</h2>
+          <p className="texto-cuerpo mb-4 md:mb-8">
             La Yesca está en pleno corazón de San Lorenzo de El Escorial, escondida en un
             pequeño callejón de granito, justo detrás del mercado municipal. Un rincón con
             encanto, rodeado de historia y con ese carácter tan especial de nuestro pueblo,
             donde tradición y vida cotidiana se encuentran.
           </p>
           <p className="texto-lead">Calle San Quintín, 4</p>
-          <p className="texto-cuerpo mb-6">28200 San Lorenzo de El Escorial, Madrid</p>
+          <p className="texto-cuerpo mb-3 md:mb-6">28200 San Lorenzo de El Escorial, Madrid</p>
           <a href="mailto:layescataberna@gmail.com" className="enlace texto-cuerpo">
             layescataberna@gmail.com
           </a>
@@ -43,7 +43,7 @@ const FooterSection = ({ onOpenLegal }: FooterSectionProps) => (
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            className="w-full h-[320px] md:h-[460px]"
+            className="w-full h-[210px] md:h-[460px]"
           />
         </Reveal>
       </div>
@@ -51,20 +51,20 @@ const FooterSection = ({ onOpenLegal }: FooterSectionProps) => (
 
     {/* Cierre: la página acaba como empieza, con el verde y la seta del inicio */}
     <div className="marco-hero hero-texto bg-background">
-      <div className="pt-[clamp(56px,7vw,112px)] pb-[clamp(40px,5vw,72px)] flex flex-wrap items-end justify-between gap-x-12 gap-y-10">
+      <div className="pt-9 pb-6 md:pt-[clamp(56px,7vw,112px)] md:pb-[clamp(40px,5vw,72px)] flex flex-wrap items-end justify-between gap-x-12 gap-y-10">
         <Reveal>
-          <p className="text-[clamp(44px,5.3vw,84px)] leading-none tracking-[-0.015em] mb-5">Taberna o viceversa</p>
-          <p className="hero-lead mb-9">Cocina de fuego y tradición</p>
+          <p className="text-[34px] md:text-[clamp(44px,5.3vw,84px)] leading-none tracking-[-0.015em] mb-2 md:mb-5">Taberna o viceversa</p>
+          <p className="hero-lead mb-5 md:mb-9">Cocina de fuego y tradición</p>
           <button type="button" onClick={() => irASeccion("reservas")} className="hero-boton">
             Reservar mesa
           </button>
         </Reveal>
-        <Reveal delay={0.1} className="w-[190px] md:w-[250px] shrink-0">
+        <Reveal delay={0.1} className="hidden md:block w-[250px] shrink-0">
           <img src={arbolSeta} alt="" width={600} height={748} loading="lazy" className="w-full h-auto" />
         </Reveal>
       </div>
 
-      <div className="hero-pie flex flex-wrap justify-between gap-x-10 gap-y-4 py-7">
+      <div className="hero-pie flex flex-wrap justify-between gap-x-10 gap-y-3 py-5 md:py-7">
         <nav aria-label="Secciones" className="flex flex-wrap gap-x-8 gap-y-3">
           {menu.map((item) => (
             <button
@@ -83,7 +83,7 @@ const FooterSection = ({ onOpenLegal }: FooterSectionProps) => (
         </div>
       </div>
 
-      <div className="border-t border-[#1A1D15]/20 pt-6 pb-8 texto-small flex flex-col gap-2">
+      <div className="border-t border-[#1A1D15]/20 pt-4 pb-6 md:pt-6 md:pb-8 texto-small flex flex-col gap-2">
         <div className="flex flex-wrap gap-x-6 gap-y-1">
           <p>© {new Date().getFullYear()} La Yesca</p>
           <button type="button" onClick={() => onOpenLegal("privacidad")} className="enlace">
