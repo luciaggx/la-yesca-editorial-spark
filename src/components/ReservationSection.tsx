@@ -1,5 +1,4 @@
 import { ArrowUpRight } from "lucide-react";
-import fotoAna from "@/assets/ana-lazaro.jpg";
 import Reveal from "./Reveal";
 
 const GOOGLE_RESERVE_URL = "https://www.google.com/maps/reserve/v/dine/c/FMTRRPP6q6A?source=pa&hl=es-ES";
@@ -18,18 +17,7 @@ const ReservationSection = () => (
         <p className="texto-lead">Elige tu plataforma preferida</p>
       </Reveal>
 
-      <Reveal delay={0.1} className="w-40 md:w-auto md:col-span-2 md:col-start-6">
-        <img
-          src={fotoAna}
-          alt="Ana Lázaro, anfitriona de La Yesca"
-          width={800}
-          height={1000}
-          loading="lazy"
-          className="w-full aspect-square object-cover object-top"
-        />
-      </Reveal>
-
-      <Reveal delay={0.18} className="md:col-span-4 md:col-start-9">
+      <Reveal delay={0.1} className="md:col-span-4 md:col-start-9">
         <div className="space-y-7">
           {platforms.map((platform) => (
             <a

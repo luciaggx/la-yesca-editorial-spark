@@ -1,134 +1,199 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import barriles from "@/assets/barriles-grabado.webp";
-import DibujoTinta from "./DibujoTinta";
-import Reveal from "./Reveal";
-import { bodegaData, type Wine, type WineType } from "@/data/bodega";
-import WineDialog from "./WineDialog";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { bodegaData } from "@/data/bodega";
+import { formatEuros, useCart } from "@/hooks/use-cart";
 
-const glassColor: Record<WineType, string> = {
-  espumoso: "#2f3d27",
-  blanco:   "#a7b36a",
-  naranja:  "#c98a3f",
-  rosado:   "#d9978f",
-  tinto:    "#3b1f22",
-  generoso: "#7a4a1e",
-  vermut:   "#5a2c1c",
-  dulce:    "#b07a2a",
-};
-
-/* Botella dibujada mientras no haya foto */
-const BottleIllustration = ({ type }: { type: WineType }) => (
-  <svg viewBox="0 0 60 200" className="h-[72%] w-auto" aria-hidden="true">
-    <path
-      d="M24 0 h12 v40 c0 18 16 22 16 44 v108 a8 8 0 0 1 -8 8 h-28 a8 8 0 0 1 -8 -8 v-108 c0 -22 16 -26 16 -44 z"
-      fill={glassColor[type]}
-    />
-    <rect x="23" y="0" width="14" height="24" rx="1" fill="#1a1a1a" opacity="0.85" />
-    <rect x="12" y="112" width="36" height="46" rx="2" fill="#f3ead8" />
-    <rect x="18" y="122" width="24" height="2" fill="#1a1a1a" opacity="0.7" />
-    <rect x="21" y="130" width="18" height="1.5" fill="#1a1a1a" opacity="0.4" />
-    <rect x="21" y="136" width="18" height="1.5" fill="#1a1a1a" opacity="0.4" />
-    <path d="M14 60 c-2 20 -2 80 0 120" stroke="#ffffff" strokeOpacity="0.18" strokeWidth="3" fill="none" />
-  </svg>
-);
-
-const WineCard = ({ wine, onSelect }: { wine: Wine; onSelect: () => void }) => (
-  <button
-    type="button"
-    onClick={onSelect}
-    aria-label={`Ver ${wine.name}`}
-    className="group flex flex-col w-full h-full text-left"
-  >
-    <div className="aspect-[3/5] w-full overflow-hidden flex items-center justify-center bg-tono">
-      {wine.image ? (
-        <img src={wine.image} alt={wine.name} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
-      ) : (
-        <BottleIllustration type={wine.type} />
-      )}
-    </div>
-
-    <p className="texto-subtitulo mt-3">{wine.name}</p>
-    {(wine.bodega || wine.variety || wine.origin) && (
-      <p className="texto-small mt-1">
-        {[wine.bodega, wine.variety, wine.origin].filter(Boolean).join(" · ")}
-      </p>
-    )}
-    {wine.bottle && (
-      <p className="texto-cuerpo tabular-nums mt-1">
-        {wine.bottle} €{wine.glass && ` · copa ${wine.glass} €`}
-      </p>
-    )}
-  </button>
-);
-
-const TODOS = "Todos";
+const CATEGORIA_INICIAL = "Tintos";
+const VINO_INICIAL = "Xérico";
 
 const BodegaSection = () => {
-  const [selected, setSelected] = useState<Wine | null>(null);
-  const [tipo, setTipo] = useState("Tintos");
-  const categorias = bodegaData.filter((c) => tipo === TODOS || c.title === tipo);
+  const { lines, count, add, setOpen } = useCart();
+  const [categoria, setCategoria] = useState(CATEGORIA_INICIAL);
+  const [nombre, setNombre] = useState(VINO_INICIAL);
+  const [anadido, setAnadido] = useState(false);
+  const temporizador = useRef<ReturnType<typeof setTimeout>>();
+  const tiraRef = useRef<HTMLDivElement>(null);
+  const activoRef = useRef<HTMLButtonElement>(null);
+
+  const vinos = bodegaData.find((c) => c.title === categoria)?.wines ?? [];
+  const indice = Math.max(0, vinos.findIndex((v) => v.name === nombre));
+  const vino = vinos[indice];
+  const enCarrito = lines.find((l) => l.name === vino.name)?.qty ?? 0;
+
+  const datos = [
+    ["Bodega", vino.bodega],
+    ["Variedad", vino.variety],
+    ["Origen", vino.origin],
+  ].filter(([, valor]) => valor);
+  const ficha = datos.length ? datos : [["Tipo", categoria]];
+
+  const elegir = (name: string) => {
+    clearTimeout(temporizador.current);
+    setAnadido(false);
+    setNombre(name);
+  };
+
+  const cambiarCategoria = (title: string) => {
+    const primero = bodegaData.find((c) => c.title === title)?.wines[0];
+    setCategoria(title);
+    if (primero) elegir(primero.name);
+  };
+
+  const mover = (paso: number) => elegir(vinos[(indice + paso + vinos.length) % vinos.length].name);
+
+  const anadir = () => {
+    add(vino.name, 1);
+    setAnadido(true);
+    clearTimeout(temporizador.current);
+    temporizador.current = setTimeout(() => setAnadido(false), 1200);
+  };
+
+  useEffect(() => () => clearTimeout(temporizador.current), []);
+
+  /* Con las flechas, la botella elegida puede quedar fuera de la tira: la trae a la vista */
+  useEffect(() => {
+    const tira = tiraRef.current;
+    const activo = activoRef.current;
+    if (!tira || !activo) return;
+    const a = activo.getBoundingClientRect();
+    const t = tira.getBoundingClientRect();
+    if (a.left < t.left) tira.scrollLeft += a.left - t.left;
+    else if (a.right > t.right) tira.scrollLeft += a.right - t.right;
+  }, [nombre, categoria]);
 
   return (
-    <section id="bodega" className="bg-field text-wheat">
-      <div className="marco pt-24 text-center">
-        <Reveal>
-          <h2 className="texto-titulo mb-2">La Bodega</h2>
-          <p className="texto-lead">Vinos elegidos para acompañar la brasa</p>
-        </Reveal>
-        <DibujoTinta
-          src={barriles}
-          ancho={1100}
-          alto={868}
-          descripcion="Grabado de tres barriles de vino apilados y uno de pie detrás, entre helechos"
-          tinta="#E4D59E"
-          alVerse
-          className="block w-full h-auto max-w-[720px] mx-auto mt-8 cursor-pointer"
-        />
+    <section
+      id="bodega"
+      className="marco-hero scroll-mt-16 flex flex-col gap-[clamp(40px,5vw,64px)] bg-[#2A3320] text-[#E9E6D4] pt-[clamp(64px,8vw,112px)] pb-[clamp(56px,6vw,88px)]"
+    >
+      <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
+        <div className="flex flex-col gap-2.5">
+          <h2 className="text-[clamp(44px,5vw,72px)] leading-none">La Bodega</h2>
+          <p className="text-[clamp(19px,1.6vw,23px)] italic text-[#C9D1B4]">
+            Vinos elegidos para acompañar la brasa. Llévatelos a casa.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="font-['Jost'] text-[13px] tracking-[0.18em] uppercase border border-[#E9E6D4]/40 px-[18px] py-3 transition-colors hover:bg-[#E9E6D4]/10"
+        >
+          Carrito · {count}
+        </button>
       </div>
 
-      <div className="marco pt-20 pb-24 md:pb-40">
-        <div role="group" aria-label="Tipo de vino" className="flex flex-wrap gap-1 mb-14 md:mb-20">
-          {[TODOS, ...bodegaData.map((c) => c.title)].map((t) => (
-            <button
-              key={t}
-              type="button"
-              onClick={() => setTipo(t)}
-              aria-pressed={tipo === t}
-              className={`px-4 py-2 texto-cuerpo transition-colors duration-300 ${
-                tipo === t ? "bg-wheat text-field" : "hover:bg-wheat/15"
-              }`}
-            >
-              {t}
-            </button>
-          ))}
+      <div role="group" aria-label="Tipo de vino" className="flex flex-wrap gap-1.5 border-b border-[#E9E6D4]/20 pb-5">
+        {bodegaData.map((c) => (
+          <button
+            key={c.title}
+            type="button"
+            onClick={() => cambiarCategoria(c.title)}
+            aria-pressed={c.title === categoria}
+            className={`text-[18px] px-3.5 py-[7px] transition-colors ${
+              c.title === categoria ? "bg-[#E9E6D4] text-[#2A3320]" : "hover:bg-[#E9E6D4]/10"
+            }`}
+          >
+            {c.title}
+          </button>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,360px),1fr))] items-center gap-y-10 gap-x-[clamp(40px,6vw,96px)]">
+        <div className="bg-[#E9E6D4] aspect-square max-h-[640px] overflow-hidden flex justify-center">
+          <img
+            src={vino.image}
+            alt={vino.name}
+            className="w-auto max-w-none h-[118%] -mt-[4%] mix-blend-multiply brightness-[1.12] contrast-[1.05]"
+          />
         </div>
 
-        {categorias.map((category) => (
-          <div key={category.title} className="mb-16 md:mb-24 last:mb-0">
-            <h3 className="texto-titulo mb-8 md:mb-10">{category.title}</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-10 md:gap-y-14">
-              {category.wines.map((wine, i) => (
-                <motion.div
-                  key={wine.name}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.7, delay: (i % 5) * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <WineCard wine={wine} onSelect={() => setSelected(wine)} />
-                </motion.div>
-              ))}
+        <div className="flex flex-col gap-[26px]">
+          <div className="flex items-center justify-between gap-4">
+            <span className="font-['Jost'] text-[13px] tracking-[0.22em] uppercase text-[#B9CEA1]">
+              {categoria} · {indice + 1} de {vinos.length}
+            </span>
+            <div className="flex gap-1.5 font-['Jost'] text-[18px]">
+              <button
+                type="button"
+                onClick={() => mover(-1)}
+                aria-label="Vino anterior"
+                className="w-11 h-11 border border-[#E9E6D4]/35 transition-colors hover:bg-[#E9E6D4]/10"
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                onClick={() => mover(1)}
+                aria-label="Vino siguiente"
+                className="w-11 h-11 border border-[#E9E6D4]/35 transition-colors hover:bg-[#E9E6D4]/10"
+              >
+                →
+              </button>
             </div>
           </div>
-        ))}
 
-        <p className="texto-lead mt-16 md:mt-24">
-          Todos nuestros vinos se pueden llevar a casa. Pregunta en sala.
-        </p>
+          <h3 className="text-[clamp(44px,5vw,72px)] leading-none [text-wrap:balance]">{vino.name}</h3>
+
+          <dl className="grid grid-cols-[110px_1fr] gap-x-5 gap-y-3 text-[21px] border-t border-[#E9E6D4]/20 pt-6">
+            {ficha.map(([etiqueta, valor]) => (
+              <Fragment key={etiqueta}>
+                <dt className="font-['Jost'] text-[12px] tracking-[0.18em] uppercase text-[#B9CEA1] pt-1.5">{etiqueta}</dt>
+                <dd>{valor}</dd>
+              </Fragment>
+            ))}
+          </dl>
+
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-[18px] border-t border-[#E9E6D4]/20 pt-6">
+            {vino.bottle ? (
+              <span className="text-[40px] whitespace-nowrap tabular-nums">{formatEuros(Number(vino.bottle))}</span>
+            ) : (
+              <span className="text-[24px] italic whitespace-nowrap">Precio a confirmar</span>
+            )}
+            <button
+              type="button"
+              onClick={anadir}
+              className="font-['Jost'] text-[13px] tracking-[0.22em] uppercase bg-[#E9E6D4] text-[#2A3320] px-8 py-[18px] transition-colors hover:bg-[#B9CEA1]"
+            >
+              {anadido ? "Añadido" : "Añadir al carrito"}
+            </button>
+            <span className="font-['Jost'] text-[13px] tracking-[0.14em] uppercase text-[#B9CEA1]">
+              En carrito · {enCarrito}
+            </span>
+          </div>
+        </div>
       </div>
 
-      <WineDialog wine={selected} onClose={() => setSelected(null)} />
+      <div
+        ref={tiraRef}
+        className="flex gap-3 overflow-x-auto border-t border-[#E9E6D4]/20 pt-7 pb-2 [scrollbar-width:thin] [scrollbar-color:rgba(233,230,212,0.3)_transparent]"
+      >
+        {vinos.map((v) => {
+          const activo = v.name === vino.name;
+          return (
+            <button
+              key={v.name}
+              ref={activo ? activoRef : undefined}
+              type="button"
+              onClick={() => elegir(v.name)}
+              aria-pressed={activo}
+              className={`flex-none w-[clamp(96px,9vw,128px)] flex flex-col gap-2 text-left transition-opacity hover:opacity-100 ${
+                activo ? "opacity-100" : "opacity-60"
+              }`}
+            >
+              <div className="bg-[#E9E6D4] aspect-[3/4] w-full overflow-hidden flex justify-center">
+                <img
+                  src={v.image}
+                  alt=""
+                  loading="lazy"
+                  className="w-auto max-w-none h-[118%] -mt-[6%] mix-blend-multiply brightness-[1.12]"
+                />
+              </div>
+              <span className={`text-[15px] leading-[1.2] border-t pt-1.5 ${activo ? "border-[#E9E6D4]" : "border-transparent"}`}>
+                {v.name}
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </section>
   );
 };
