@@ -1,6 +1,5 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import aceite from "@/assets/aceite-pinar.jpg";
+import Reveal from "./Reveal";
 
 /* TODO: reemplazar con los productos reales y sus precios */
 const productos = [
@@ -30,94 +29,45 @@ const productos = [
   },
 ];
 
-const BoutiqueSection = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-
-  return (
-    <section id="boutique" ref={ref} className="py-24 md:py-36 px-6 bg-background">
-      <div className="max-w-3xl mx-auto">
-
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 1 }}
-          className="h-px w-10 bg-amber-500/50 mx-auto mb-10 origin-center"
+const BoutiqueSection = () => (
+  <section id="boutique" className="seccion">
+    <div className="marco grid md:grid-cols-12 gap-x-6 gap-y-12">
+      <Reveal className="md:col-span-6 md:row-span-2">
+        <img
+          src={aceite}
+          alt="Botella de aceite entre ramas de pino y piñas"
+          width={593}
+          height={750}
+          loading="lazy"
+          className="w-full aspect-[4/5] object-cover"
         />
+      </Reveal>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9 }}
-          className="font-display text-4xl md:text-6xl text-foreground text-center mb-4"
-          style={{ fontWeight: 100, letterSpacing: "0.1em" }}
-        >
-          La Yesca Boutique
-        </motion.h2>
+      <Reveal delay={0.08} className="md:col-span-5 md:col-start-8 md:row-start-1">
+        <h2 className="texto-titulo mb-4">La Yesca Boutique</h2>
+        <p className="texto-lead">Llévate un pedazo del monte a casa</p>
+      </Reveal>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.9, delay: 0.15 }}
-          className="font-body text-base text-foreground/45 italic text-center mb-16"
-        >
-          Llévate un pedazo del monte a casa
-        </motion.p>
-
-        {/* Grid de productos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-px"
-          style={{ backgroundColor: "hsl(85 14% 78%)" }}>
-          {productos.map((p, i) => (
-            <motion.div
-              key={p.nombre}
-              initial={{ opacity: 0, y: 24 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.2 + i * 0.1 }}
-              className="group flex flex-col justify-between p-8 cursor-pointer transition-colors duration-300"
-              style={{ backgroundColor: "hsl(50 28% 95%)" }}
-            >
-              <div>
-                <p className="font-body text-xs tracking-[0.2em] uppercase text-foreground/30 mb-3">
-                  {p.unidad}
-                </p>
-                <p className="font-display text-lg text-foreground/90 mb-3 group-hover:text-amber-400 transition-colors duration-300"
-                  style={{ fontWeight: 300 }}>
-                  {p.nombre}
-                </p>
-                <p className="font-body text-sm text-foreground/50 leading-relaxed mb-6">
-                  {p.descripcion}
-                </p>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="font-display text-xl text-foreground/80"
-                  style={{ fontWeight: 300 }}>
-                  {p.precio}
-                </span>
-                <span className="flex items-center gap-1.5 font-body text-xs tracking-[0.15em] uppercase text-foreground/30 group-hover:text-amber-400 transition-colors duration-300">
-                  Consultar <ArrowUpRight className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="text-center font-body text-sm text-foreground/30 mt-10 italic"
-        >
-          Disponible en el local y próximamente online.{" "}
-          <a href="mailto:layescataberna@gmail.com"
-            className="text-foreground/45 hover:text-amber-400 underline underline-offset-4 transition-colors duration-300 not-italic">
-            Consultar pedidos
-          </a>
-        </motion.p>
-
+      <div className="md:col-span-5 md:col-start-8 md:row-start-2 space-y-8">
+        {productos.map((p, i) => (
+          <Reveal key={p.nombre} delay={0.12 + i * 0.06}>
+            <h3 className="flex items-baseline justify-between gap-4 texto-subtitulo">
+              <span>{p.nombre}</span>
+              <span className="whitespace-nowrap tabular-nums">{p.precio}</span>
+            </h3>
+            <p className="texto-cuerpo mt-1">{p.descripcion}</p>
+            <p className="texto-small mt-1">{p.unidad}</p>
+          </Reveal>
+        ))}
+        <Reveal delay={0.4}>
+          <p className="texto-cuerpo">
+            Disponible en el local y próximamente online.{" "}
+            <a href="mailto:layescataberna@gmail.com" className="enlace">Consultar pedidos</a>
+          </p>
+        </Reveal>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default BoutiqueSection;

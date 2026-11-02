@@ -37,9 +37,9 @@ const CookieBanner = ({ onOpenLegal }: CookieBannerProps) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 24 }}
           transition={{ duration: 0.45, ease: "easeOut" }}
-          className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-[80] bg-background border border-foreground/15 rounded-sm shadow-2xl px-5 py-5"
+          className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-[80] bg-background shadow-2xl px-5 py-5"
         >
-          <p className="font-body text-sm text-foreground/80 leading-relaxed mb-4">
+          <p className="texto-small mb-4">
             Usamos cookies propias y de terceros para mejorar tu experiencia. Puedes aceptar todas o solo las esenciales.{" "}
             <button
               onClick={() => onOpenLegal("cookies")}
@@ -60,13 +60,13 @@ const CookieBanner = ({ onOpenLegal }: CookieBannerProps) => {
           <div className="flex gap-3">
             <button
               onClick={essential}
-              className="flex-1 py-2.5 border border-foreground/25 rounded-sm font-body text-xs tracking-[0.15em] uppercase text-foreground/70 hover:text-foreground hover:border-foreground/50 transition-all duration-300"
+              className="flex-1 py-2.5 bg-foreground/10 texto-small hover:bg-foreground/15 transition-colors"
             >
               Solo esenciales
             </button>
             <button
               onClick={accept}
-              className="flex-1 py-2.5 bg-foreground text-background rounded-sm font-body text-xs tracking-[0.15em] uppercase hover:opacity-90 transition-opacity duration-300"
+              className="flex-1 py-2.5 bg-foreground text-background texto-small hover:opacity-85 transition-opacity"
             >
               Aceptar todas
             </button>

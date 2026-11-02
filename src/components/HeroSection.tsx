@@ -1,75 +1,46 @@
-import { motion } from "framer-motion";
+import arbolSeta from "@/assets/arbol-seta.png";
+import DibujoTinta from "@/components/DibujoTinta";
+import { irASeccion } from "@/lib/scroll";
 
 const HeroSection = () => (
-  <section
-    className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden"
-    style={{
-      /* Gradiente oliva campo: manchas de color orgánicas */
-      background: `
-        radial-gradient(ellipse at 22% 30%, hsl(94 40% 64% / 0.8), transparent 52%),
-        radial-gradient(ellipse at 78% 68%, hsl(74 32% 66% / 0.7), transparent 50%),
-        radial-gradient(ellipse at 55% 15%, hsl(82 32% 68% / 0.6), transparent 48%),
-        radial-gradient(ellipse at 10% 80%, hsl(90 36% 62% / 0.55), transparent 45%),
-        hsl(88 32% 72%)
-      `,
-    }}
-  >
-    {/* Línea decorativa horizontal — muy fina, arriba */}
-    <div className="absolute top-0 left-0 right-0 h-px bg-foreground/8" />
+  <section className="marco-hero hero-texto flex flex-col min-h-svh pt-16">
+    {/* En móvil: título arriba, párrafo y dibujo en paralelo, botones debajo */}
+    <div className="flex-1 grid grid-cols-[minmax(0,1fr)_46%] md:grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] content-center md:content-normal items-center gap-x-3 md:gap-x-[clamp(24px,5vw,80px)] gap-y-7 md:gap-y-6 py-6 md:py-0">
+      <div className="contents md:flex md:flex-col md:gap-9 md:max-w-[620px] md:py-6">
+        <h1 className="hero-titulo col-span-2">
+          La Yesca,<br />taberna de caza
+        </h1>
 
-    {/* Contenido */}
-    <div className="relative z-10 flex flex-col items-center text-center px-4">
+        <p className="hero-lead col-start-1 row-start-2">
+          Cocina de fuego y tradición en un rincón de San Lorenzo de El Escorial.
+        </p>
 
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 1.2, delay: 0.3 }}
-        className="h-px w-14 bg-foreground/25 mb-10 origin-center"
-      />
+        <div className="col-span-2 row-start-3 flex flex-wrap items-center gap-x-8 gap-y-4 md:pt-2">
+          {/* Sin href="#...": #carta abre la vista "solo carta" del QR */}
+          <button type="button" onClick={() => irASeccion("reservas")} className="hero-boton">
+            Reservar mesa
+          </button>
+          <button type="button" onClick={() => irASeccion("carta")} className="hero-enlace">
+            Ver la carta
+          </button>
+        </div>
+      </div>
 
-      <motion.h1
-        initial={{ opacity: 0, y: 28 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        className="font-display text-6xl md:text-8xl lg:text-[9rem] tracking-[0.22em] text-foreground mb-5"
-        style={{ fontWeight: 100 }}
-      >
-        LA YESCA
-      </motion.h1>
-
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.9 }}
-        className="font-body text-xs md:text-sm tracking-[0.52em] text-foreground/45 uppercase"
-      >
-        Taberna · San Lorenzo de El Escorial
-      </motion.p>
-
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 1.2, delay: 1.1 }}
-        className="h-px w-14 bg-foreground/25 mt-10 origin-center"
-      />
+      <div className="col-start-2 row-start-2 md:col-start-auto md:row-start-auto flex justify-center items-end md:self-stretch md:pt-2">
+        <DibujoTinta
+          src={arbolSeta}
+          ancho={600}
+          alto={748}
+          descripcion="Ilustración de un árbol con el hongo yesca creciendo en el tronco"
+          className="block w-full h-auto max-w-[600px] max-h-[76vh] object-contain cursor-pointer"
+        />
+      </div>
     </div>
 
-    {/* Scroll hint */}
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1.6 }}
-      className="absolute bottom-10 z-10 flex flex-col items-center gap-2"
-    >
-      <span className="font-body text-[9px] tracking-[0.3em] uppercase text-foreground/30">
-        Scroll
-      </span>
-      <motion.div
-        animate={{ y: [0, 7, 0] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        className="w-px h-8 bg-foreground/25"
-      />
-    </motion.div>
+    <div className="hero-pie flex flex-wrap justify-between gap-x-8 gap-y-3 pt-7 pb-8">
+      <span>Calle San Quintín 4 · San Lorenzo de El Escorial</span>
+      <span>Taberna o viceversa</span>
+    </div>
   </section>
 );
 

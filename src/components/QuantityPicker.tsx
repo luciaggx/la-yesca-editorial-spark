@@ -7,22 +7,22 @@ interface QuantityPickerProps {
 }
 
 const QuantityPicker = ({ value, min = 1, onChange }: QuantityPickerProps) => (
-  <div className="inline-flex items-center border border-foreground/25 rounded-sm">
+  <div className="inline-flex items-center bg-foreground/10">
     <button
       type="button"
       onClick={() => onChange(value - 1)}
       disabled={value <= min}
-      aria-label="Quitar una botella"
-      className="p-2.5 text-foreground/70 hover:text-foreground disabled:opacity-30 transition-colors"
+      aria-label="Quitar uno"
+      className="p-2.5 hover:bg-foreground/10 disabled:opacity-30 transition-colors"
     >
       <Minus className="w-3.5 h-3.5" />
     </button>
-    <span className="w-8 text-center font-body text-sm text-foreground" aria-live="polite">{value}</span>
+    <span className="w-8 text-center texto-cuerpo" aria-live="polite">{value}</span>
     <button
       type="button"
       onClick={() => onChange(value + 1)}
-      aria-label="Añadir una botella"
-      className="p-2.5 text-foreground/70 hover:text-foreground transition-colors"
+      aria-label="Añadir uno"
+      className="p-2.5 hover:bg-foreground/10 transition-colors"
     >
       <Plus className="w-3.5 h-3.5" />
     </button>

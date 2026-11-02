@@ -44,34 +44,19 @@ const groupMenuData: MenuCategory[] = [
 ];
 
 const GroupMenuSection = () => (
-  <div>
-    <p className="font-body text-base text-foreground/60 text-center mb-10">
+  <div className="grid md:grid-cols-12 gap-x-6 gap-y-12">
+    <p className="texto-lead md:col-span-4">
       Para grupos de más de 6 personas. Consulta disponibilidad y precio cerrado contactando con nosotros.
     </p>
-    {groupMenuData.map((category, i) => (
-      <motion.div
-        key={category.title}
-        initial={{ opacity: 0, y: 25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: i * 0.1 }}
-        className="mb-12"
-      >
-        <h3 className="font-display text-xl md:text-2xl text-foreground mb-5 text-center">
-          {category.title}
-        </h3>
-        <div className="space-y-3">
-          {category.items.map((item) => (
-            <div key={item.name} className="flex items-baseline">
-              <span className="font-body text-base md:text-lg text-foreground whitespace-nowrap">
-                {item.name}
-              </span>
-              <span className="menu-dots" />
-            </div>
-          ))}
+    <div className="md:col-span-7 md:col-start-6 space-y-10">
+      {groupMenuData.map((category) => (
+        <div key={category.title}>
+          <h3 className="texto-subtitulo mb-3">{category.title}</h3>
+          <ul className="texto-cuerpo space-y-1">
+            {category.items.map((item) => <li key={item.name}>{item.name}</li>)}
+          </ul>
         </div>
-      </motion.div>
-    ))}
-    <div className="mt-10 text-center">
+      ))}
       <a
         href="#contacto"
         onClick={(e) => {
@@ -81,7 +66,7 @@ const GroupMenuSection = () => (
           if (el) el.scrollIntoView({ behavior: "smooth" });
           else window.location.hash = "contacto";
         }}
-        className="inline-block py-3 px-8 border border-foreground/30 rounded-sm font-body text-sm tracking-[0.2em] uppercase text-foreground hover:bg-foreground hover:text-background transition-all duration-300"
+        className="boton"
       >
         Consultar disponibilidad
       </a>
@@ -91,24 +76,18 @@ const GroupMenuSection = () => (
 
 /* ── Vinos en la carta: solo los nombres (fotos y precios en la sección La Bodega) ── */
 const WineList = () => (
-  <div>
+  <div className="md:columns-2 xl:columns-3 gap-x-16">
     {bodegaData.map((category, i) => (
       <motion.div
         key={category.title}
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: i * 0.08 }}
-        className="mb-10"
+        className="break-inside-avoid mb-10"
       >
-        <h3 className="font-display text-xl md:text-2xl text-foreground mb-4 text-center italic">
-          {category.title}
-        </h3>
-        <ul className="space-y-2 text-center">
-          {category.wines.map((wine) => (
-            <li key={wine.name} className="font-body text-base md:text-lg text-foreground">
-              {wine.name}
-            </li>
-          ))}
+        <h3 className="texto-subtitulo mb-3">{category.title}</h3>
+        <ul className="texto-cuerpo space-y-0.5">
+          {category.wines.map((wine) => <li key={wine.name}>{wine.name}</li>)}
         </ul>
       </motion.div>
     ))}
@@ -123,54 +102,44 @@ const tabs: { id: CartaTab; label: string; title: string }[] = [
 
 const MenuSection = ({ initialTab = "carta" }: { initialTab?: CartaTab }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
   const [tab, setTab] = useState<CartaTab>(initialTab);
 
   return (
-    <section id="carta" ref={ref} className="pt-4 pb-20 md:pb-32 px-6">
-      <div className="max-w-2xl mx-auto">
-        {/* Divider */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 1 }}
-          className="h-px w-20 bg-primary mx-auto mb-12 origin-center"
-        />
+    <section id="carta" ref={ref} className="seccion">
+      <div className="marco">
+        <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-6 mb-12 md:mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="texto-titulo"
+          >
+            {tabs.find(t => t.id === tab)?.title}
+          </motion.h2>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="font-display text-4xl md:text-5xl text-foreground text-center mb-10"
-        >
-          {tabs.find(t => t.id === tab)?.title}
-        </motion.h2>
-
-        {/* Tab switcher */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex justify-center mb-14"
-        >
-          <div className="inline-flex border border-foreground/30 rounded-sm overflow-hidden">
-            {tabs.map((t, i) => (
-              <div key={t.id} className="flex">
-                {i > 0 && <div className="w-px bg-foreground/30" />}
-                <button
-                  onClick={() => setTab(t.id)}
-                  className={`px-4 md:px-6 py-2.5 font-body text-xs md:text-sm tracking-[0.18em] uppercase whitespace-nowrap transition-all duration-300 ${
-                    tab === t.id
-                      ? "bg-foreground text-background"
-                      : "text-foreground/70 hover:text-foreground"
-                  }`}
-                >
-                  {t.label}
-                </button>
-              </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex"
+          >
+            {tabs.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                aria-pressed={tab === t.id}
+                className={`px-5 py-2.5 texto-cuerpo transition-colors duration-300 ${
+                  tab === t.id
+                    ? "bg-foreground text-background"
+                    : "text-foreground hover:bg-foreground/10"
+                }`}
+              >
+                {t.label}
+              </button>
             ))}
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
         {/* Content */}
         <AnimatePresence mode="wait">

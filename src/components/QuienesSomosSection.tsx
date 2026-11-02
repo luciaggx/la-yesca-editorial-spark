@@ -1,7 +1,7 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
 import fotoJorgeAsenjo from "@/assets/jorge-asenjo.jpg";
 import fotoAnaLazaro from "@/assets/ana-lazaro.jpg";
+import fotoDelantales from "@/assets/delantales.jpg";
+import Reveal from "./Reveal";
 
 interface Persona {
   nombre: string;
@@ -46,90 +46,49 @@ const equipo: Persona[] = [
 ];
 
 const PersonaBlock = ({ persona, index }: { persona: Persona; index: number }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px" });
+  const foto = persona.foto ?? fotoDelantales;
+  const izquierda = index % 2 === 0;
 
   return (
-    <motion.article
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.9, delay: index * 0.05 }}
-      className="px-6 py-10 md:px-12 md:py-14"
-      style={{ backgroundColor: "hsl(50 28% 95%)" }}
-    >
-      <div className="text-center mb-8">
-        <div className="w-6 h-px bg-amber-500/50 mx-auto mb-5" />
-        <h3
-          className="font-display text-2xl md:text-3xl uppercase text-foreground"
-          style={{ fontWeight: 300, letterSpacing: "0.12em" }}
-        >
-          {persona.nombre}
-        </h3>
-        <p className="font-body text-xs tracking-[0.25em] uppercase text-amber-700/80 mt-2">
-          {persona.rol}
-        </p>
-      </div>
-      <div className={persona.foto ? "md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-12 md:items-start" : ""}>
-        {persona.foto && (
-          <div className={`mb-10 md:mb-0 md:sticky md:top-24 ${index % 2 === 1 ? "md:order-2" : ""}`}>
-            {/* Foto con marco fino desplazado */}
-            <div className="relative max-w-[280px] md:max-w-none mx-auto">
-              <div
-                className="absolute inset-0 translate-x-3 translate-y-3 border border-amber-700/40"
-                aria-hidden="true"
-              />
-              <img
-                src={persona.foto}
-                alt={persona.nombre}
-                loading="lazy"
-                className="relative w-full aspect-[4/5] object-cover shadow-md"
-              />
-            </div>
-          </div>
-        )}
-        <div className="space-y-4 font-body text-base md:text-lg text-foreground/75 leading-relaxed">
-          {persona.parrafos.map((p, i) => <p key={i}>{p}</p>)}
-        </div>
-      </div>
-    </motion.article>
-  );
-};
-
-const QuienesSomosSection = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  return (
-    <section id="quienes-somos" ref={ref} className="py-24 md:py-36 px-6 bg-background">
-      <div className="max-w-3xl mx-auto">
-
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 1 }}
-          className="h-px w-10 bg-amber-500/50 mx-auto mb-10 origin-center"
+    <article className="grid md:grid-cols-12 gap-x-6 gap-y-8 md:items-start">
+      <Reveal className={`md:sticky md:top-24 ${
+        izquierda ? "md:col-span-5 w-full" : persona.foto ? "md:col-span-4 md:col-start-9 md:order-2 w-3/4 ml-auto md:w-full" : "md:col-span-3 md:col-start-10 md:order-2 w-3/5 ml-auto md:w-full"
+      }`}>
+        <img
+          src={foto}
+          alt={persona.foto ? persona.nombre : "Delantales de La Yesca colgados en una pared de piedra"}
+          width={800}
+          height={1000}
+          loading="lazy"
+          className="w-full aspect-[4/5] object-cover"
         />
-
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9 }}
-          className="font-display text-4xl md:text-6xl text-foreground text-center mb-16"
-          style={{ fontWeight: 100, letterSpacing: "0.1em" }}
-        >
-          ¿Quiénes somos?
-        </motion.h2>
-
-        <div className="flex flex-col gap-px" style={{ backgroundColor: "hsl(85 14% 72%)" }}>
-          {equipo.map((persona, i) => (
-            <PersonaBlock key={persona.nombre} persona={persona} index={i} />
-          ))}
-        </div>
-
+      </Reveal>
+      <div className={izquierda ? "md:col-span-6 md:col-start-7" : "md:col-span-7 md:col-start-1"}>
+        <Reveal delay={0.08}>
+          <h3 className="texto-titulo">{persona.nombre}</h3>
+          <p className="texto-lead mt-1 mb-8">{persona.rol}</p>
+        </Reveal>
+        <Reveal delay={0.14} className="space-y-5 texto-cuerpo">
+          {persona.parrafos.map((p, i) => <p key={i}>{p}</p>)}
+        </Reveal>
       </div>
-    </section>
+    </article>
   );
 };
+
+const QuienesSomosSection = () => (
+  <section id="quienes-somos" className="seccion !pb-0">
+    <div className="marco">
+      <Reveal>
+        <h2 className="texto-titulo mb-16 md:mb-24">¿Quiénes somos?</h2>
+      </Reveal>
+      <div className="flex flex-col gap-24 md:gap-40">
+        {equipo.map((persona, i) => (
+          <PersonaBlock key={persona.nombre} persona={persona} index={i} />
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
 export default QuienesSomosSection;

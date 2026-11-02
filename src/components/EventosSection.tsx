@@ -1,6 +1,5 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import patioDeLosReyes from "@/assets/mundo/patio-de-los-reyes.jpg";
+import Reveal from "./Reveal";
 
 const eventos = [
   {
@@ -20,81 +19,40 @@ const eventos = [
   },
 ];
 
-const EventosSection = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+const EventosSection = () => (
+  <section id="eventos" className="seccion bg-tono">
+    <div className="marco">
+      <Reveal>
+        <h2 className="texto-titulo md:pl-[3vw] mb-4">Eventos La Yesca</h2>
+        <p className="texto-lead md:pl-[3vw]">Momentos que merecen algo más que una comida</p>
+      </Reveal>
 
-  return (
-    <section id="eventos" ref={ref} className="py-24 md:py-36 px-6"
-      style={{ backgroundColor: "hsl(87 26% 82%)" }}>
-      <div className="max-w-3xl mx-auto">
+      <div className="mt-16 md:mt-24 grid md:grid-cols-12 gap-x-6 gap-y-12 md:items-end">
+        <Reveal delay={0.1} className="order-2 md:order-1 md:col-span-4 w-3/5 ml-auto md:w-auto md:ml-0">
+          <img
+            src={patioDeLosReyes}
+            alt="Grabado antiguo del Patio de los Reyes del monasterio de San Lorenzo de El Escorial"
+            loading="lazy"
+            className="w-full aspect-[4/5] object-cover"
+          />
+        </Reveal>
 
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 1 }}
-          className="h-px w-10 bg-amber-500/50 mx-auto mb-10 origin-center"
-        />
-
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9 }}
-          className="font-display text-4xl md:text-6xl text-foreground text-center mb-4"
-          style={{ fontWeight: 100, letterSpacing: "0.1em" }}
-        >
-          Eventos La Yesca
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.9, delay: 0.15 }}
-          className="font-body text-base text-foreground/45 italic text-center mb-16"
-        >
-          Momentos que merecen algo más que una comida
-        </motion.p>
-
-        {/* Lista de tipos de evento */}
-        <div className="border-t border-foreground/10">
+        <div className="order-1 md:order-2 md:col-span-6 md:col-start-7 space-y-10">
           {eventos.map((ev, i) => (
-            <motion.div
-              key={ev.titulo}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.25 + i * 0.13 }}
-              className="border-b border-foreground/10 py-8"
-            >
-              <p className="font-display text-lg md:text-xl text-foreground/85 mb-3"
-                style={{ fontWeight: 300, letterSpacing: "0.06em" }}>
-                {ev.titulo}
-              </p>
-              <p className="font-body text-sm md:text-base text-foreground/50 leading-relaxed">
-                {ev.descripcion}
-              </p>
-            </motion.div>
+            <Reveal key={ev.titulo} delay={0.1 + i * 0.08}>
+              <h3 className="texto-subtitulo mb-2">{ev.titulo}</h3>
+              <p className="texto-cuerpo">{ev.descripcion}</p>
+            </Reveal>
           ))}
+          <Reveal delay={0.35}>
+            <a href="mailto:layescataberna@gmail.com" className="boton">
+              Consultar disponibilidad
+            </a>
+          </Reveal>
         </div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="mt-12 text-center"
-        >
-          <a
-            href="mailto:layescataberna@gmail.com"
-            className="group inline-flex items-center gap-3 font-body text-sm tracking-[0.2em] uppercase text-foreground/60 hover:text-amber-400 transition-colors duration-300"
-          >
-            Consultar disponibilidad
-            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
-          </a>
-        </motion.div>
-
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default EventosSection;

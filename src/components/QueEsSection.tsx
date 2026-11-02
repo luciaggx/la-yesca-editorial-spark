@@ -1,45 +1,47 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import ciervo from "@/assets/mundo/ciervo-tinta.webp";
+import { irASeccion } from "@/lib/scroll";
+import Reveal from "./Reveal";
 
-const QueEsSection = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+const enlaces = [
+  { label: "La Carta", id: "carta" },
+  { label: "La Bodega", id: "bodega" },
+];
 
-  return (
-    <section id="que-es" ref={ref} className="py-24 md:py-36 px-6"
-      style={{ backgroundColor: "hsl(48 28% 93%)" }}>
-      <div className="max-w-3xl mx-auto">
+const QueEsSection = () => (
+  <section
+    id="que-es"
+    className="bg-tono text-[#1A1D15] scroll-mt-16 pt-12 md:pt-11 pb-[clamp(64px,7vw,120px)]"
+  >
+    <div className="marco-hero">
+      <div className="grid md:grid-cols-2 items-center gap-x-[clamp(32px,5vw,80px)] gap-y-10">
+        <div>
+          <Reveal>
+            <h2 className="text-[clamp(44px,5.3vw,84px)] leading-none tracking-[-0.015em] mb-7">
+              ¿Qué es La Yesca?
+            </h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="text-[clamp(21px,1.9vw,28px)] leading-[1.4] max-w-[620px]">
+              La Yesca es una pequeña taberna en San Lorenzo de El Escorial que nace con una idea muy
+              sencilla: recuperar el espíritu de la cocina de siempre.
+            </p>
+          </Reveal>
+        </div>
 
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 1 }}
-          className="h-px w-10 bg-amber-500/50 mx-auto mb-10 origin-center"
-        />
+        <Reveal delay={0.12}>
+          <img
+            src={ciervo}
+            alt="Grabado antiguo de un ciervo junto a un árbol"
+            width={980}
+            height={760}
+            loading="lazy"
+            className="w-full max-w-[480px] mx-auto"
+          />
+        </Reveal>
+      </div>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9 }}
-          className="font-display text-4xl md:text-6xl text-foreground text-center mb-16"
-          style={{ fontWeight: 100, letterSpacing: "0.1em" }}
-        >
-          ¿Qué es La Yesca?
-        </motion.h2>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9, delay: 0.2 }}
-          className="max-w-2xl mx-auto space-y-6 font-body text-base md:text-lg text-foreground/75 leading-relaxed"
-        >
-          <p className="text-lg md:text-xl text-foreground/85">
-            <span className="font-display text-2xl text-amber-700" style={{ fontWeight: 300 }}>
-              La Yesca
-            </span>{" "}
-            es una pequeña taberna en San Lorenzo de El Escorial que nace con una idea muy
-            sencilla: recuperar el espíritu de la cocina de siempre.
-          </p>
+      <div className="mt-[clamp(40px,6vw,96px)] pt-[clamp(40px,4.6vw,72px)] border-t border-[#1A1D15]/20 grid md:grid-cols-2 lg:grid-cols-3 gap-x-[clamp(32px,7vw,112px)] gap-y-6 texto-cuerpo !leading-[1.75]">
+        <Reveal className="space-y-6">
           <p>
             Creemos en el producto, en el territorio y en la cercanía. En cocinar sin artificios,
             con respeto y con el conocimiento que dan los años de oficio. Nuestro chef, Jorge
@@ -51,6 +53,9 @@ const QueEsSection = () => {
             pato o liebre forman parte de una despensa que sentimos profundamente ligada a la
             Sierra de Guadarrama.
           </p>
+        </Reveal>
+
+        <Reveal delay={0.08} className="space-y-6">
           <p>
             Creemos en la caza como un producto sostenible y en la responsabilidad de
             aprovecharla de principio a fin. No se trata solo de cocinar caza, sino de entenderla,
@@ -64,17 +69,28 @@ const QueEsSection = () => {
             buscamos vinos seleccionados a conciencia, vinos con personalidad, con historia y,
             sobre todo, vinos que nos emocionan y que queremos compartir.
           </p>
-          <p className="font-display text-lg md:text-xl text-foreground/85 text-center pt-6 italic" style={{ fontWeight: 300 }}>
-            En La Yesca creemos que comer bien no tiene por qué ser complicado. Tiene que
-            ser honesto. Una cocina de territorio, de temporada y de memoria; una cocina
-            cercana que respeta lo que somos y que pone en valor los sabores de siempre en
-            un ambiente casero, familiar y sin formalidades.
-          </p>
-        </motion.div>
+        </Reveal>
 
+        <Reveal delay={0.16} className="self-end mt-4 lg:mt-0 md:col-span-2 lg:col-span-1">
+          {enlaces.map(({ label, id }) => (
+            <button key={id} type="button" onClick={() => irASeccion(id)} className="enlace-seccion">
+              {label}
+              <span aria-hidden="true">→</span>
+            </button>
+          ))}
+        </Reveal>
       </div>
-    </section>
-  );
-};
+
+      <Reveal className="mt-[clamp(64px,7.5vw,120px)]">
+        <p className="max-w-[1040px] mx-auto text-center italic text-[clamp(28px,3vw,46px)] leading-[1.27]">
+          En La Yesca creemos que comer bien no tiene por qué ser complicado. Tiene que
+          ser honesto. Una cocina de territorio, de temporada y de memoria; una cocina
+          cercana que respeta lo que somos y que pone en valor los sabores de siempre en
+          un ambiente casero, familiar y sin formalidades.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+);
 
 export default QueEsSection;

@@ -1,5 +1,8 @@
-import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import barriles from "@/assets/barriles-grabado.webp";
+import DibujoTinta from "./DibujoTinta";
+import Reveal from "./Reveal";
 import { bodegaData, type Wine, type WineType } from "@/data/bodega";
 import WineDialog from "./WineDialog";
 
@@ -16,7 +19,7 @@ const glassColor: Record<WineType, string> = {
 
 /* Botella dibujada mientras no haya foto */
 const BottleIllustration = ({ type }: { type: WineType }) => (
-  <svg viewBox="0 0 60 200" className="h-[72%] w-auto drop-shadow-md" aria-hidden="true">
+  <svg viewBox="0 0 60 200" className="h-[72%] w-auto" aria-hidden="true">
     <path
       d="M24 0 h12 v40 c0 18 16 22 16 44 v108 a8 8 0 0 1 -8 8 h-28 a8 8 0 0 1 -8 -8 v-108 c0 -22 16 -26 16 -44 z"
       fill={glassColor[type]}
@@ -35,107 +38,83 @@ const WineCard = ({ wine, onSelect }: { wine: Wine; onSelect: () => void }) => (
     type="button"
     onClick={onSelect}
     aria-label={`Ver ${wine.name}`}
-    className="group flex flex-col w-full h-full text-left transition-shadow hover:shadow-lg"
-    style={{ backgroundColor: "hsl(50 28% 95%)" }}
+    className="group flex flex-col w-full h-full text-left"
   >
-    <div
-      className="aspect-[3/5] w-full overflow-hidden flex items-center justify-center"
-      style={{ backgroundColor: "hsl(46 26% 87%)" }}
-    >
+    <div className="aspect-[3/5] w-full overflow-hidden flex items-center justify-center bg-tono">
       {wine.image ? (
-        <img src={wine.image} alt={wine.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        <img src={wine.image} alt={wine.name} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
       ) : (
         <BottleIllustration type={wine.type} />
       )}
     </div>
 
-    <div className="p-4 md:p-6 flex flex-col flex-1">
-      {wine.origin && (
-        <p className="font-body text-[10px] md:text-xs tracking-[0.2em] uppercase text-foreground/35 mb-2">
-          {wine.origin}
-        </p>
-      )}
-      <p className="font-display text-base md:text-lg text-foreground/90 leading-tight mb-2" style={{ fontWeight: 300 }}>
-        {wine.name}
+    <p className="texto-subtitulo mt-3">{wine.name}</p>
+    {(wine.bodega || wine.variety || wine.origin) && (
+      <p className="texto-small mt-1">
+        {[wine.bodega, wine.variety, wine.origin].filter(Boolean).join(" · ")}
       </p>
-      {(wine.bodega || wine.variety) && (
-        <p className="font-body text-xs md:text-sm text-foreground/50 leading-snug mb-4">
-          {wine.bodega}
-          {wine.bodega && wine.variety && " · "}
-          {wine.variety && <span className="italic">{wine.variety}</span>}
-        </p>
-      )}
-
-      {wine.bottle && (
-        <div className="mt-auto flex items-baseline justify-between gap-2 border-t border-foreground/10 pt-3">
-          {wine.glass ? (
-            <span className="font-body text-sm text-foreground/70">
-              <span className="text-[10px] tracking-[0.15em] uppercase text-foreground/35 mr-1">Copa</span>{wine.glass} €
-            </span>
-          ) : <span />}
-          <span className="font-display text-lg md:text-xl text-foreground/80" style={{ fontWeight: 300 }}>
-            {wine.bottle} €
-          </span>
-        </div>
-      )}
-    </div>
+    )}
+    {wine.bottle && (
+      <p className="texto-cuerpo tabular-nums mt-1">
+        {wine.bottle} €{wine.glass && ` · copa ${wine.glass} €`}
+      </p>
+    )}
   </button>
 );
 
+const TODOS = "Todos";
+
 const BodegaSection = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [selected, setSelected] = useState<Wine | null>(null);
+  const [tipo, setTipo] = useState("Tintos");
+  const categorias = bodegaData.filter((c) => tipo === TODOS || c.title === tipo);
 
   return (
-    <section id="bodega" ref={ref} className="py-24 md:py-36 px-6 bg-background">
-      <div className="max-w-4xl mx-auto">
-
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 1 }}
-          className="h-px w-10 bg-amber-500/50 mx-auto mb-10 origin-center"
+    <section id="bodega" className="bg-field text-wheat">
+      <div className="marco pt-24 text-center">
+        <Reveal>
+          <h2 className="texto-titulo mb-2">La Bodega</h2>
+          <p className="texto-lead">Vinos elegidos para acompañar la brasa</p>
+        </Reveal>
+        <DibujoTinta
+          src={barriles}
+          ancho={1100}
+          alto={868}
+          descripcion="Grabado de tres barriles de vino apilados y uno de pie detrás, entre helechos"
+          tinta="#E4D59E"
+          alVerse
+          className="block w-full h-auto max-w-[720px] mx-auto mt-8 cursor-pointer"
         />
+      </div>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9 }}
-          className="font-display text-4xl md:text-6xl text-foreground text-center mb-4"
-          style={{ fontWeight: 100, letterSpacing: "0.1em" }}
-        >
-          La Bodega
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.9, delay: 0.15 }}
-          className="font-body text-base text-foreground/45 italic text-center mb-16"
-        >
-          Vinos elegidos para acompañar la brasa
-        </motion.p>
-
-        {/* Vinos por tipo */}
-        {bodegaData.map((category) => (
-          <div key={category.title} className="mb-14 md:mb-20">
-            <motion.h3
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="font-display text-2xl md:text-3xl text-foreground/80 text-center mb-8"
-              style={{ fontWeight: 200, letterSpacing: "0.06em" }}
+      <div className="marco pt-20 pb-24 md:pb-40">
+        <div role="group" aria-label="Tipo de vino" className="flex flex-wrap gap-1 mb-14 md:mb-20">
+          {[TODOS, ...bodegaData.map((c) => c.title)].map((t) => (
+            <button
+              key={t}
+              type="button"
+              onClick={() => setTipo(t)}
+              aria-pressed={tipo === t}
+              className={`px-4 py-2 texto-cuerpo transition-colors duration-300 ${
+                tipo === t ? "bg-wheat text-field" : "hover:bg-wheat/15"
+              }`}
             >
-              {category.title}
-            </motion.h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+              {t}
+            </button>
+          ))}
+        </div>
+
+        {categorias.map((category) => (
+          <div key={category.title} className="mb-16 md:mb-24 last:mb-0">
+            <h3 className="texto-titulo mb-8 md:mb-10">{category.title}</h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-10 md:gap-y-14">
               {category.wines.map((wine, i) => (
                 <motion.div
                   key={wine.name}
                   initial={{ opacity: 0, y: 24 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.7, delay: 0.2 + Math.min(i, 8) * 0.06 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.7, delay: (i % 5) * 0.06, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <WineCard wine={wine} onSelect={() => setSelected(wine)} />
                 </motion.div>
@@ -144,15 +123,9 @@ const BodegaSection = () => {
           </div>
         ))}
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="text-center font-body text-sm text-foreground/30 mt-10 italic"
-        >
+        <p className="texto-lead mt-16 md:mt-24">
           Todos nuestros vinos se pueden llevar a casa. Pregunta en sala.
-        </motion.p>
-
+        </p>
       </div>
 
       <WineDialog wine={selected} onClose={() => setSelected(null)} />

@@ -40,7 +40,7 @@ const WineDialog = ({ wine, onClose }: WineDialogProps) => {
   ].filter(([, value]) => value);
 
   const addToCart = () => {
-    add(wine, qty);
+    add(wine.name, qty);
     onClose();
     toast(`${wine.name} añadido al carrito`, {
       position: "top-center",
@@ -50,7 +50,7 @@ const WineDialog = ({ wine, onClose }: WineDialogProps) => {
 
   return (
     <Dialog open onOpenChange={(open) => { if (!open) onClose(); }}>
-      <DialogContent className="z-[85] w-[calc(100%-2rem)] max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0 rounded-sm sm:rounded-sm md:grid-cols-2">
+      <DialogContent className="z-[85] w-[calc(100%-2rem)] max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0 border-0 rounded-none sm:rounded-none md:grid-cols-2">
         <div className="overflow-hidden" style={{ backgroundColor: "hsl(240 5% 86%)" }}>
           {wine.image && (
             <motion.img
@@ -66,18 +66,17 @@ const WineDialog = ({ wine, onClose }: WineDialogProps) => {
 
         <div className="p-6 md:p-8 flex flex-col">
           <DialogTitle
-            className="font-display text-3xl text-foreground leading-tight mb-6 pr-6"
-            style={{ fontWeight: 200 }}
+            className="font-display !text-[clamp(34px,3.4vw,48px)] !leading-tight !tracking-normal mb-6 pr-6 font-normal"
           >
             {wine.name}
           </DialogTitle>
           <DialogDescription className="sr-only">Ficha del vino y compra</DialogDescription>
 
-          <dl className="font-body text-sm mb-6">
+          <dl className="texto-cuerpo mb-6">
             {details.map(([label, value]) => (
-              <div key={label} className="flex justify-between gap-6 py-2.5 border-b border-foreground/10">
-                <dt className="text-[10px] tracking-[0.18em] uppercase text-foreground/45 pt-0.5">{label}</dt>
-                <dd className="text-right text-foreground/85">{value}</dd>
+              <div key={label} className="flex justify-between gap-6 py-1.5">
+                <dt className="opacity-70">{label}</dt>
+                <dd className="text-right">{value}</dd>
               </div>
             ))}
           </dl>
@@ -87,17 +86,17 @@ const WineDialog = ({ wine, onClose }: WineDialogProps) => {
               {wine.bottle ? (
                 <>
                   {wine.glass ? (
-                    <span className="font-body text-sm text-foreground/70">
-                      <span className="text-[10px] tracking-[0.15em] uppercase text-foreground/45 mr-1">Copa en sala</span>
+                    <span className="texto-cuerpo">
+                      <span className="mr-1">Copa en sala</span>
                       {formatEuros(Number(wine.glass))}
                     </span>
                   ) : <span />}
-                  <span className="font-display text-2xl text-foreground" style={{ fontWeight: 300 }}>
+                  <span className="texto-subtitulo tabular-nums">
                     {formatEuros(Number(wine.bottle))}
                   </span>
                 </>
               ) : (
-                <span className="font-body text-sm italic text-foreground/60">Precio a confirmar con tu pedido</span>
+                <span className="texto-cuerpo">Precio a confirmar con tu pedido</span>
               )}
             </div>
 
@@ -106,7 +105,7 @@ const WineDialog = ({ wine, onClose }: WineDialogProps) => {
               <button
                 type="button"
                 onClick={addToCart}
-                className="flex-1 px-4 py-3 bg-foreground text-background rounded-sm font-body text-xs tracking-[0.18em] uppercase hover:opacity-85 transition-opacity"
+                className="boton flex-1"
               >
                 Añadir al carrito
               </button>

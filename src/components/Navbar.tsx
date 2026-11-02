@@ -16,9 +16,9 @@ const navItems = [
 ];
 
 const ctaItems = [
-  { label: "Reservar", id: "reservas" },
-  { label: "Regala",   id: "regala"   },
-  { label: "La Carta", id: "carta"    },
+  { label: "La Carta",  id: "carta"  },
+  { label: "La Bodega", id: "bodega" },
+  { label: "Regala La Yesca", id: "regala" },
 ];
 
 const HamburgerIcon = () => (
@@ -30,15 +30,8 @@ const HamburgerIcon = () => (
 );
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { count, setOpen: setCartOpen } = useCart();
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   /* Bloquea el scroll del body cuando el panel está abierto */
   useEffect(() => {
@@ -53,53 +46,50 @@ const Navbar = () => {
     }, 300);
   };
 
-  const navBg = scrolled
-    ? "bg-background/92 backdrop-blur-md border-b border-foreground/10 shadow-sm"
-    : "bg-transparent";
-
   return (
     <>
       <motion.nav
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.9, delay: 0.3 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${navBg}`}
+        className="fixed top-0 left-0 right-0 z-50 bg-background"
       >
-        <div className="flex items-center justify-between h-16 px-5 md:px-10">
+        <div className="marco-hero flex items-center justify-between h-16">
 
           {/* Logo */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="font-display text-sm md:text-base tracking-[0.32em] uppercase text-foreground"
-            style={{ fontFamily: "'Roboto', sans-serif", fontWeight: 100 }}
+            className="wordmark text-[15px] text-[#1A1D15]"
           >
             LA YESCA
           </button>
 
-          {/* CTAs centrales */}
-          <div className="hidden sm:flex items-center gap-2 md:gap-3 absolute left-1/2 -translate-x-1/2">
+          <div className="flex items-center gap-4 md:gap-9">
             {ctaItems.map((cta) => (
               <button
                 key={cta.id}
                 onClick={() => scrollTo(cta.id)}
-                className="font-body text-[10px] md:text-xs tracking-[0.22em] uppercase px-3 md:px-5 py-2 border border-foreground/30 text-foreground hover:bg-foreground/6 transition-all duration-300"
-                style={{ borderStyle: "dashed" }}
+                className="hidden lg:block texto-cuerpo text-[#1A1D15] hover:text-[#4A5530] transition-colors"
               >
                 {cta.label}
               </button>
             ))}
-          </div>
+            <button
+              onClick={() => scrollTo("reservas")}
+              className="hidden sm:block texto-cuerpo text-[#1A1D15] border-b border-[#1A1D15] pb-0.5 hover:text-[#4A5530] transition-colors"
+            >
+              Reservas
+            </button>
 
-          <div className="flex items-center gap-4">
             {/* Carrito */}
             <button
               onClick={() => setCartOpen(true)}
               className="text-foreground p-1 relative"
-              aria-label={count > 0 ? `Abrir carrito, ${count} botellas` : "Abrir carrito"}
+              aria-label={count > 0 ? `Abrir carrito, ${count} ${count === 1 ? "artículo" : "artículos"}` : "Abrir carrito"}
             >
               <ShoppingBag className="w-5 h-5" strokeWidth={1.5} />
               {count > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-4 h-4 px-1 rounded-full bg-foreground text-background font-body text-[10px] leading-4 text-center">
+                <span className="absolute -top-1.5 -right-2 min-w-5 h-5 px-1 rounded-full bg-foreground text-background font-body text-[13px] leading-5 text-center">
                   {count}
                 </span>
               )}
@@ -130,7 +120,7 @@ const Navbar = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-[55] bg-black/20 backdrop-blur-[2px]"
+              className="fixed inset-0 z-[55] bg-black/30"
               onClick={() => setMenuOpen(false)}
             />
 
@@ -144,16 +134,11 @@ const Navbar = () => {
               className="fixed top-0 right-0 bottom-0 z-[60] w-72 bg-card shadow-2xl flex flex-col"
             >
               {/* Cabecera del panel */}
-              <div className="flex items-center justify-between px-7 h-16 border-b border-foreground/10">
-                <span
-                  className="font-display text-xs tracking-[0.3em] uppercase text-foreground/40"
-                  style={{ fontFamily: "'Roboto', sans-serif", fontWeight: 300 }}
-                >
-                  Menú
-                </span>
+              <div className="flex items-center justify-between px-7 h-16">
+                <span className="wordmark text-sm text-foreground">LA YESCA</span>
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="text-foreground/50 hover:text-foreground transition-colors p-1"
+                  className="text-foreground hover:opacity-70 transition-opacity p-1"
                   aria-label="Cerrar menú"
                 >
                   <X className="w-4 h-4" />
@@ -169,10 +154,10 @@ const Navbar = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.22, delay: 0.1 + i * 0.05 }}
                     onClick={() => scrollTo(item.id)}
-                    className="group text-left px-7 py-4 font-body text-sm tracking-[0.16em] uppercase text-foreground/55 hover:text-foreground hover:bg-foreground/5 transition-all duration-200 border-b border-foreground/8 last:border-0 flex items-center justify-between"
+                    className="group text-left px-7 py-3 texto-subtitulo text-foreground hover:bg-foreground/5 transition-colors duration-200 flex items-center justify-between"
                   >
                     <span>{item.label}</span>
-                    <span className="text-foreground/20 group-hover:text-amber-700 transition-colors">
+                    <span className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">
                       →
                     </span>
                   </motion.button>
@@ -180,8 +165,8 @@ const Navbar = () => {
               </nav>
 
               {/* Pie del panel */}
-              <div className="px-7 py-6 border-t border-foreground/10">
-                <p className="font-body text-[10px] tracking-[0.2em] uppercase text-foreground/25">
+              <div className="px-7 py-6">
+                <p className="texto-small text-foreground">
                   La Yesca Taberna · San Lorenzo de El Escorial
                 </p>
               </div>

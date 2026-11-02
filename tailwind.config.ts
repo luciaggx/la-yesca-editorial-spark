@@ -14,10 +14,12 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Roboto"', 'sans-serif'],
+        display: ['"EB Garamond"', 'serif'],
         body: ['"EB Garamond"', '"Cormorant Garamond"', 'serif'],
       },
       colors: {
+        field: "hsl(var(--field))",
+        wheat: "hsl(var(--wheat))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

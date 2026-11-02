@@ -1,160 +1,55 @@
-import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-
-const personOptions = [1, 2, 3, 4];
-
-const aperitivo = {
-  name: "Menú Aperitivo",
-  price: 55,
-  items: [
-    "Una botella de vino",
-    "2 gildas",
-    "2 bocados de croqueta",
-    "2 tapas de ensaladilla",
-    "Una ración de temporada",
-  ],
-  link: "#",
-};
-
-const menus = [
-  {
-    name: "Menú Especial",
-    description: "Una selección de nuestros platos más emblemáticos, maridados con vinos de la tierra.",
-    pricePerPerson: 45,
-    link: "#",
-  },
-  {
-    name: "Menú Degustación",
-    description: "Un recorrido por los sabores del monte y la brasa en seis tiempos inolvidables.",
-    pricePerPerson: 65,
-    link: "#",
-  },
-  {
-    name: "Menú Romántico",
-    description: "Cena íntima para dos con entrantes, principal, postre y botella de vino seleccionada.",
-    pricePerPerson: 80,
-    link: "#",
-  },
-];
+import { toast } from "sonner";
+import lamina from "@/assets/yesca-lamina.webp";
+import { giftMenus } from "@/data/regalos";
+import { useCart } from "@/hooks/use-cart";
+import Reveal from "./Reveal";
 
 const GiftExperienceSection = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [persons, setPersons] = useState(2);
+  const { add, setOpen } = useCart();
+
+  const addToCart = (name: string) => {
+    add(name, 1);
+    toast(`${name} añadido al carrito`, {
+      position: "top-center",
+      action: { label: "Ver carrito", onClick: () => setOpen(true) },
+    });
+  };
 
   return (
-    <section id="regala" ref={ref} className="py-20 md:py-32 px-6" style={{ backgroundColor: "hsl(48 28% 93%)" }}>
-      <div className="max-w-3xl mx-auto">
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 1 }}
-          className="h-px w-20 bg-accent mx-auto mb-12 origin-center"
-        />
+    <section id="regala" className="seccion bg-cream">
+      <div className="marco grid md:grid-cols-12 gap-x-6 gap-y-12">
+        <Reveal className="md:col-span-4">
+          <h2 className="texto-titulo mb-5">Regala La Yesca</h2>
+          <p className="texto-lead">Dale a alguien especial un momento inolvidable</p>
+          <img
+            src={lamina}
+            alt="Lámina de la yesca"
+            width={608}
+            height={630}
+            loading="lazy"
+            className="hidden md:block w-full mt-16"
+          />
+        </Reveal>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="font-display text-4xl md:text-5xl text-foreground text-center mb-4"
-        >
-          Regala La Yesca
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.15 }}
-          className="font-body text-lg md:text-xl text-foreground/70 text-center mb-14"
-        >
-          Dale a alguien especial un momento inolvidable
-        </motion.p>
-
-        {/* Menú Aperitivo — precio cerrado para dos */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.25 }}
-          className="border border-foreground/25 rounded-sm px-6 py-10 md:px-12 mb-16 bg-background/50 text-center"
-        >
-          <p className="font-body text-xs tracking-[0.25em] uppercase text-amber-700/80 mb-3">
-            Para dos personas
-          </p>
-          <h3 className="font-display text-2xl md:text-3xl text-foreground mb-6">
-            {aperitivo.name}
-          </h3>
-          <ul className="font-body text-base md:text-lg text-foreground/75 space-y-1.5 mb-8">
-            {aperitivo.items.map((item) => <li key={item}>{item}</li>)}
-          </ul>
-          <span className="font-display text-4xl text-foreground block mb-6">{aperitivo.price}€</span>
-          <a
-            href={aperitivo.link}
-            className="inline-block px-10 py-3 border border-foreground/30 rounded-sm font-body text-sm tracking-[0.2em] uppercase text-foreground hover:bg-foreground hover:text-background transition-all duration-300"
-          >
-            Regalar
-          </a>
-        </motion.div>
-
-        {/* Person selector */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex flex-col items-center mb-14"
-        >
-          <span className="font-body text-sm tracking-[0.2em] uppercase text-foreground/60 mb-4">
-            Número de personas
-          </span>
-          <div className="inline-flex border border-foreground/30 rounded-sm overflow-hidden">
-            {personOptions.map((n) => (
-              <button
-                key={n}
-                onClick={() => setPersons(n)}
-                className={`px-5 py-2.5 font-body text-sm tracking-[0.15em] transition-all duration-300 ${
-                  persons === n
-                    ? "bg-foreground text-background"
-                    : "text-foreground/70 hover:text-foreground"
-                } ${n < personOptions.length ? "border-r border-foreground/30" : ""}`}
-              >
-                {n === 4 ? "4+" : n}
+        <div className="md:col-span-7 md:col-start-6 space-y-20">
+          {giftMenus.map((menu, i) => (
+            <Reveal key={menu.name} delay={0.08 + i * 0.06}>
+              <h3 className="flex items-baseline justify-between gap-6 texto-subtitulo">
+                <span>{menu.name}</span>
+                <span className="tabular-nums">{menu.price}€</span>
+              </h3>
+              {menu.description && <p className="texto-cuerpo mt-2">{menu.description}</p>}
+              {menu.items && (
+                <ul className="texto-cuerpo mt-3 space-y-1">
+                  {menu.items.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              )}
+              {menu.nota && <p className="texto-small mt-3">{menu.nota}</p>}
+              <button type="button" onClick={() => addToCart(menu.name)} className="boton mt-5">
+                Añadir al carrito
               </button>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Menu cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {menus.map((menu, i) => {
-            const total = menu.pricePerPerson * persons;
-            return (
-              <motion.div
-                key={menu.name}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: 0.4 + i * 0.12 }}
-                className="border border-foreground/20 rounded-sm p-6 flex flex-col bg-background/40 backdrop-blur-sm"
-              >
-                <h3 className="font-display text-xl md:text-2xl text-foreground mb-3 text-center">
-                  {menu.name}
-                </h3>
-                <p className="font-body text-sm text-foreground/60 text-center mb-6 flex-1">
-                  {menu.description}
-                </p>
-                <div className="text-center mb-5">
-                  <span className="font-display text-3xl text-foreground">{total}€</span>
-                  <span className="font-body text-xs text-foreground/50 block mt-1">
-                    {menu.pricePerPerson}€ × {persons} {persons === 1 ? "persona" : "personas"}
-                  </span>
-                </div>
-                <a
-                  href={menu.link}
-                  className="block w-full text-center py-3 border border-foreground/30 rounded-sm font-body text-sm tracking-[0.2em] uppercase text-foreground hover:bg-foreground hover:text-background transition-all duration-300"
-                >
-                  Regalar
-                </a>
-              </motion.div>
-            );
-          })}
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

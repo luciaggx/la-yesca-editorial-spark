@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
+import { MotionConfig } from "framer-motion";
 
 import Navbar               from "@/components/Navbar";
 import HeroSection          from "@/components/HeroSection";
-import ScrollingStrip       from "@/components/ScrollingStrip";
-import FloralDivider        from "@/components/FloralDivider";
 import QueEsSection         from "@/components/QueEsSection";
 import QuienesSomosSection  from "@/components/QuienesSomosSection";
 import MenuSection          from "@/components/MenuSection";
@@ -24,24 +23,23 @@ const readHash = () => decodeURIComponent(window.location.hash.slice(1));
    Sin el resto de la web debajo, para no tener que bajar por toda la página. */
 const CartaView = () => (
   <>
-    <header className="sticky top-0 z-50 bg-background/92 backdrop-blur-md border-b border-foreground/10">
+    <header className="sticky top-0 z-50 bg-background">
       <div className="flex items-center justify-between h-14 px-5 max-w-2xl mx-auto">
         <span
-          className="text-sm tracking-[0.32em] uppercase text-foreground"
-          style={{ fontFamily: "'Roboto', sans-serif", fontWeight: 100 }}
+          className="wordmark text-sm text-foreground"
         >
           LA YESCA
         </span>
         <a
           href="#"
           onClick={(e) => { e.preventDefault(); window.location.hash = "inicio"; }}
-          className="font-body text-[10px] tracking-[0.2em] uppercase text-foreground/60 hover:text-foreground transition-colors"
+          className="enlace font-body text-base text-foreground"
         >
           Ver la web →
         </a>
       </div>
     </header>
-    <main className="pt-8">
+    <main>
       <MenuSection />
     </main>
   </>
@@ -114,42 +112,25 @@ const Index = () => {
 
   return (
     <CartProvider>
-    <div className="bg-background text-foreground overflow-x-hidden">
+    <MotionConfig reducedMotion="user">
+    <div className="bg-background text-foreground overflow-x-clip">
       <Navbar />
 
       <HeroSection />
-      <ScrollingStrip />
-      <FloralDivider />
-
       <QueEsSection />
-      <FloralDivider />
-
       <QuienesSomosSection />
-      <FloralDivider />
-
       <MenuSection />
-      <FloralDivider />
-
       <EventosSection />
-      <FloralDivider />
-
       <GiftExperienceSection />
-      <FloralDivider />
-
       <BoutiqueSection />
-      <FloralDivider />
-
       <BodegaSection />
-      <FloralDivider />
-
       <ReservationSection />
-      <FloralDivider />
-
       <FooterSection onOpenLegal={openLegal} />
 
       <CartSheet />
       {legal}
     </div>
+    </MotionConfig>
     </CartProvider>
   );
 };

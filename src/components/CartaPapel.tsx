@@ -104,7 +104,7 @@ const Linea = ({ plato }: { plato: Plato }) => (
       <span className="whitespace-nowrap">{plato.precio}</span>
     </div>
     {plato.detalle && (
-      <p className="text-[0.92em] text-neutral-600 normal-case mt-0.5">{plato.detalle}</p>
+      <p className="text-[13px] text-neutral-600 normal-case mt-0.5">{plato.detalle}</p>
     )}
   </li>
 );
@@ -113,7 +113,7 @@ const Hoja = ({ apartados, numero, total, conTitulo }: {
   apartados: Apartado[]; numero: number; total: number; conTitulo: boolean;
 }) => (
   <article
-    className="relative mx-auto w-full max-w-[640px] px-6 py-10 sm:px-12 sm:py-14 md:px-16 md:py-16 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.35)] text-neutral-900"
+    className="relative mx-auto w-full max-w-[640px] px-6 py-10 sm:px-12 sm:py-14 md:px-14 md:py-16 text-neutral-900"
     style={{ ...roboto, backgroundColor: "hsl(48 33% 96%)" }}
   >
     {conTitulo && (
@@ -122,7 +122,7 @@ const Hoja = ({ apartados, numero, total, conTitulo }: {
       </h3>
     )}
 
-    <div className="space-y-8 md:space-y-10 text-[12px] sm:text-[13px] md:text-[14px] leading-snug">
+    <div className="space-y-8 md:space-y-10 text-[13px] sm:text-[14px] leading-snug">
       {apartados.map((a) => (
         <section key={a.titulo}>
           <h4 className="uppercase underline underline-offset-4 decoration-1 text-[1.15em] mb-4" style={{ fontWeight: 500 }}>
@@ -138,14 +138,14 @@ const Hoja = ({ apartados, numero, total, conTitulo }: {
       ))}
     </div>
 
-    <p className="mt-12 text-center text-[10px] tracking-[0.3em] text-neutral-400">
+    <p className="mt-12 text-center text-[13px] text-neutral-600">
       {numero} / {total}
     </p>
   </article>
 );
 
 const CartaPapel = () => (
-  <div className="flex flex-col gap-8 md:gap-10 -mx-2 sm:mx-0">
+  <div className="grid lg:grid-cols-2 gap-8 lg:gap-6 lg:items-start -mx-2 sm:mx-0">
     {paginas.map((apartados, i) => (
       <Hoja key={i} apartados={apartados} numero={i + 1} total={paginas.length} conTitulo={i === 0} />
     ))}
