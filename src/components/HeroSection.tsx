@@ -7,7 +7,8 @@ const HeroSection = () => (
     {/* Portada sencilla: el nombre y el dibujo de la yesca */}
     <div className="flex-1 grid md:grid-cols-2 items-center gap-x-[clamp(24px,5vw,80px)] gap-y-6 py-6 md:py-0">
       <div className="flex flex-col gap-7 md:gap-10">
-        <h1 className="hero-titulo uppercase tracking-[0.06em]">La Yesca</h1>
+        {/* Misma letra que el logo de la barra de arriba */}
+        <h1 className="wordmark uppercase whitespace-nowrap text-[clamp(40px,5.2vw,88px)] leading-none">La Yesca</h1>
 
         <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
           {/* Sin href="#...": #carta abre la vista "solo carta" del QR */}

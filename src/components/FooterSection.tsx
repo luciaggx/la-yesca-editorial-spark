@@ -94,9 +94,7 @@ const FooterSection = ({ onOpenLegal }: FooterSectionProps) => (
           </button>
         </div>
         <p className="hidden md:block opacity-75">
-          Grabados de dominio público de la Library of Congress, vía Wikimedia Commons:{" "}
-          <a className="enlace" href="https://commons.wikimedia.org/wiki/File:The_Stag,_or_Red_Deer_LCCN2007681452.jpg" target="_blank" rel="noopener noreferrer">The Stag, or Red Deer</a>
-          {" y "}
+          Grabado de dominio público de la Library of Congress, vía Wikimedia Commons:{" "}
           <a className="enlace" href="https://commons.wikimedia.org/wiki/File:Vista_del_patio_de_los_reyes_en_el_real_monasterio_de_San_Lorenzo_del_escorial_mirado_desde_el_portico_LCCN2003673045.tif" target="_blank" rel="noopener noreferrer">Vista del patio de los reyes</a>.
         </p>
       </div>
