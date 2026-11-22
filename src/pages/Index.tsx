@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type JSX } from "react";
 import { MotionConfig } from "framer-motion";
 
 import Navbar               from "@/components/Navbar";
@@ -19,31 +19,18 @@ import { CartProvider }     from "@/hooks/use-cart";
 
 const readHash = () => decodeURIComponent(window.location.hash.slice(1));
 
-/* Vista "solo carta": la que abre el QR de las mesas (/#carta).
-   Sin el resto de la web debajo, para no tener que bajar por toda la página. */
-const CartaView = () => (
-  <>
-    <header className="sticky top-0 z-50 bg-background">
-      <div className="flex items-center justify-between h-14 px-5 max-w-2xl mx-auto">
-        <span
-          className="wordmark text-sm text-foreground"
-        >
-          LA YESCA
-        </span>
-        <a
-          href="#"
-          onClick={(e) => { e.preventDefault(); window.location.hash = "inicio"; }}
-          className="enlace font-body text-base text-foreground"
-        >
-          Ver la web →
-        </a>
-      </div>
-    </header>
-    <main>
-      <MenuSection />
-    </main>
-  </>
-);
+/* Cada sección es una pantalla propia: el menú lateral elige cuál se ve.
+   /#carta es también la que abre el QR de las mesas. */
+const secciones: Record<string, () => JSX.Element> = {
+  "que-es":        () => <QueEsSection />,
+  "quienes-somos": () => <QuienesSomosSection />,
+  carta:           () => <MenuSection />,
+  eventos:         () => <EventosSection />,
+  regala:          () => <GiftExperienceSection />,
+  boutique:        () => <BoutiqueSection />,
+  bodega:          () => <BodegaSection />,
+  reservas:        () => <ReservationSection />,
+};
 
 const Index = () => {
   const [legalOpen, setLegalOpen] = useState(false);
@@ -56,59 +43,20 @@ const Index = () => {
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
-  const soloCarta = hash === "carta";
-
-  /* Si la URL trae #seccion, baja hasta ella al cargar */
+  /* Cada pantalla empieza arriba */
   useEffect(() => {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-    if (soloCarta || !hash || hash === "inicio") {
-      window.scrollTo(0, 0);
-      return;
-    }
-
-    /* Imágenes y animaciones cambian la altura de la página mientras cargan,
-       así que se recoloca varias veces hasta que todo está en su sitio */
-    const goTo = () => document.getElementById(hash)?.scrollIntoView({ behavior: "auto", block: "start" });
-    const timers = [100, 600, 1200, 2000].map(ms => setTimeout(goTo, ms));
-    window.addEventListener("load", goTo);
-
-    /* Si el usuario empieza a desplazarse, deja de recolocar */
-    const stop = () => timers.forEach(clearTimeout);
-    window.addEventListener("wheel", stop, { once: true, passive: true });
-    window.addEventListener("touchstart", stop, { once: true, passive: true });
-
-    return () => {
-      stop();
-      window.removeEventListener("load", goTo);
-      window.removeEventListener("wheel", stop);
-      window.removeEventListener("touchstart", stop);
-    };
-  }, [hash, soloCarta]);
+    window.scrollTo(0, 0);
+  }, [hash]);
 
   const openLegal = (type: "privacidad" | "cookies") => {
     setLegalType(type);
     setLegalOpen(true);
   };
 
-  const legal = (
-    <>
-      <CookieBanner onOpenLegal={openLegal} />
-      <LegalModal
-        open={legalOpen}
-        onClose={() => setLegalOpen(false)}
-        type={legalType}
-      />
-    </>
-  );
-
-  if (soloCarta) {
-    return (
-      <div className="bg-background text-foreground min-h-screen overflow-x-hidden">
-        <CartaView />
-        {legal}
-      </div>
-    );
-  }
+  const seccion = hash === "contacto"
+    ? <FooterSection onOpenLegal={openLegal} />
+    : secciones[hash]?.();
 
   return (
     <CartProvider>
@@ -116,19 +64,23 @@ const Index = () => {
     <div className="bg-background text-foreground overflow-x-clip">
       <Navbar />
 
-      <HeroSection />
-      <QueEsSection />
-      <QuienesSomosSection />
-      <MenuSection />
-      <EventosSection />
-      <GiftExperienceSection />
-      <BoutiqueSection />
-      <BodegaSection />
-      <ReservationSection />
-      <FooterSection onOpenLegal={openLegal} />
+      {seccion ? (
+        /* La sección llena la pantalla bajo la barra, aunque sea corta */
+        <main key={hash} className="pt-16 min-h-svh flex flex-col [&>*]:flex-1">
+          {seccion}
+        </main>
+      ) : (
+        /* Portada: una sola pantalla, sin scroll */
+        <HeroSection />
+      )}
 
       <CartSheet />
-      {legal}
+      <CookieBanner onOpenLegal={openLegal} />
+      <LegalModal
+        open={legalOpen}
+        onClose={() => setLegalOpen(false)}
+        type={legalType}
+      />
     </div>
     </MotionConfig>
     </CartProvider>

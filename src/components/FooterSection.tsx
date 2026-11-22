@@ -53,7 +53,7 @@ const FooterSection = ({ onOpenLegal }: FooterSectionProps) => (
     <div className="marco-hero hero-texto bg-background">
       <div className="pt-9 pb-6 md:pt-[clamp(56px,7vw,112px)] md:pb-[clamp(40px,5vw,72px)] flex flex-wrap items-end justify-between gap-x-12 gap-y-10">
         <Reveal>
-          <p className="text-[34px] md:text-[clamp(44px,5.3vw,84px)] leading-none tracking-[-0.015em] mb-2 md:mb-5">Taberna o viceversa</p>
+          <p className="font-light text-[32px] md:text-[clamp(40px,4.6vw,72px)] leading-none tracking-[-0.015em] mb-2 md:mb-5">Taberna o viceversa</p>
           <p className="hero-lead mb-5 md:mb-9">Cocina de fuego y tradición</p>
           <button type="button" onClick={() => irASeccion("reservas")} className="hero-boton">
             Reservar mesa

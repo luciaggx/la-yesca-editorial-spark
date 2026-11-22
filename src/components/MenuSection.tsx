@@ -59,13 +59,6 @@ const GroupMenuSection = () => (
       ))}
       <a
         href="#contacto"
-        onClick={(e) => {
-          e.preventDefault();
-          const el = document.getElementById("contacto");
-          /* En la vista "solo carta" (QR) no hay contacto: abre la web completa */
-          if (el) el.scrollIntoView({ behavior: "smooth" });
-          else window.location.hash = "contacto";
-        }}
         className="boton"
       >
         Consultar disponibilidad

@@ -102,7 +102,7 @@ const EventosSection = () => (
           Eventos privados
         </p>
         <h2 className="texto-titulo mb-4 md:mb-6">Eventos La Yesca</h2>
-        <p className="texto-lead italic max-w-[22ch]">Momentos que merecen algo más que una comida</p>
+        <p className="texto-lead max-w-[24ch]">Momentos que merecen algo más que una comida</p>
         <img
           src={patioDeLosReyes}
           alt="Grabado antiguo del Patio de los Reyes del monasterio de San Lorenzo de El Escorial"

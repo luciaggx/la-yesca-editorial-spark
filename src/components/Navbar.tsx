@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, X } from "lucide-react";
 import { useCart } from "@/hooks/use-cart";
+import { irASeccion } from "@/lib/scroll";
 
 const navItems = [
   { label: "Qué es La Yesca",   id: "que-es" },
@@ -41,9 +42,7 @@ const Navbar = () => {
 
   const scrollTo = (id: string) => {
     setMenuOpen(false);
-    setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    }, 300);
+    irASeccion(id);
   };
 
   return (
@@ -58,7 +57,7 @@ const Navbar = () => {
 
           {/* Logo */}
           <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={() => irASeccion("inicio")}
             className="wordmark text-[15px] text-[#1A1D15]"
           >
             LA YESCA

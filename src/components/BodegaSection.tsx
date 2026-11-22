@@ -68,7 +68,7 @@ const BodegaSection = () => {
       <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-3">
         <div className="flex flex-col gap-2.5">
           <h2 className="text-[34px] md:text-[clamp(44px,5vw,72px)] leading-none">La Bodega</h2>
-          <p className="text-[clamp(19px,1.6vw,23px)] italic text-[#C9D1B4]">
+          <p className="text-[clamp(17px,1.4vw,21px)] text-[#C9D1B4]">
             Vinos elegidos para acompañar la brasa. Llévatelos a casa.
           </p>
         </div>
@@ -148,7 +148,7 @@ const BodegaSection = () => {
             {vino.bottle ? (
               <span className="text-[40px] whitespace-nowrap tabular-nums">{formatEuros(Number(vino.bottle))}</span>
             ) : (
-              <span className="text-[18px] md:text-[24px] italic whitespace-nowrap">Precio a confirmar</span>
+              <span className="text-[17px] md:text-[22px] whitespace-nowrap">Precio a confirmar</span>
             )}
             <button
               type="button"

@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"EB Garamond"', 'serif'],
-        body: ['"EB Garamond"', '"Cormorant Garamond"', 'serif'],
+        display: ['Jost', 'sans-serif'],
+        body: ['Jost', 'sans-serif'],
       },
       colors: {
         field: "hsl(var(--field))",
