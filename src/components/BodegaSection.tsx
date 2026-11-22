@@ -157,7 +157,7 @@ const BodegaSection = () => {
             >
               {anadido ? "Añadido" : "Añadir al carrito"}
             </button>
-            <span className="font-['Jost'] text-[11px] md:text-[13px] tracking-[0.14em] uppercase text-[#B9CEA1]">
+            <span className="hidden md:inline font-['Jost'] text-[13px] tracking-[0.14em] uppercase text-[#B9CEA1]">
               En carrito · {enCarrito}
             </span>
           </div>

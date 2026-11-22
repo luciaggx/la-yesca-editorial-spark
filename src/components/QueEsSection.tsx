@@ -41,7 +41,7 @@ const QueEsSection = () => {
             width={980}
             height={760}
             loading="lazy"
-            className="w-full max-w-[230px] md:max-w-[480px] mx-auto"
+            className="w-full max-w-[180px] md:max-w-[480px] mx-auto"
           />
         </Reveal>
       </div>
@@ -89,7 +89,8 @@ const QueEsSection = () => {
         </Reveal>
       </div>
 
-      <Reveal className="mt-8 md:mt-[clamp(64px,7.5vw,120px)]">
+      {/* La cita final solo en ordenador: en móvil alarga y recarga la sección */}
+      <Reveal className="hidden md:block mt-[clamp(64px,7.5vw,120px)]">
         <p className="max-w-[1040px] mx-auto text-center italic text-[22px] md:text-[clamp(28px,3vw,46px)] leading-[1.27]">
           En La Yesca creemos que comer bien no tiene por qué ser complicado. Tiene que
           ser honesto. Una cocina de territorio, de temporada y de memoria; una cocina

@@ -1,98 +1,8 @@
+import type { Apartado, Plato } from "@/data/carta";
+import { useCarta } from "@/hooks/use-carta";
+
 /* Carta con aspecto de documento impreso (como la carta en papel del local).
-   Para cambiar platos o precios, editar `paginas`. */
-
-interface Plato {
-  nombre: string;
-  precio?: string;
-  detalle?: string;   /* línea pequeña debajo (p. ej. bodega de un vino) */
-}
-
-interface Apartado {
-  titulo: string;
-  platos: Plato[];
-  nota?: string;
-}
-
-const paginas: Apartado[][] = [
-  [
-    {
-      titulo: "Para empezar",
-      platos: [
-        { nombre: "Paté de campaña (pato y faisán)", precio: "13€ / 22€" },
-        { nombre: "Codorniz en escabeche", precio: "9€ / 15€" },
-        { nombre: "Gilda de pato", precio: "3,80€" },
-        { nombre: "Ensaladilla, perdiz, piparras", precio: "3,50€ / 8€ / 15€" },
-        { nombre: "Croquetas de jamón hechas en casa", precio: "2,80€ / (6 und) 15€" },
-        { nombre: "Ensalada de pimientos asados y bacalao", precio: "13€ / 24€" },
-        { nombre: "Antxoa y mantequilla", precio: "4€" },
-        { nombre: "Trucha, mantequilla con encurtidos", precio: "4€" },
-        { nombre: "Salmorejo, tomates y queso de La Cabezuela", precio: "14€" },
-      ],
-    },
-    {
-      titulo: "Del terruño",
-      platos: [
-        { nombre: "Albóndigas de corzo", precio: "13€ / 25€" },
-        { nombre: "Jarrete de ciervo", precio: "21€" },
-        { nombre: "Lomo de venado a la brasa", precio: "27€" },
-        { nombre: "Perdiz (guiso y brasa)", precio: "27€" },
-        { nombre: "Chuletillas de jabalí a la brasa", precio: "24€" },
-        { nombre: "Ancas de rana a la brasa", precio: "19€" },
-        { nombre: "Lentejas con pato azulón", precio: "30€" },
-        { nombre: "Pluma ibérica de bellota a la brasa", precio: "26€" },
-      ],
-    },
-    {
-      titulo: "Esta semana y hasta acabar existencias",
-      platos: [
-        { nombre: "Bacalao a la brasa con piperrada", precio: "21€" },
-        { nombre: "Setas a la segoviana", precio: "16€" },
-        { nombre: "Callos de La Yesca", precio: "23€" },
-      ],
-      nota: "Pan del obrador de Abantos con mantequilla · 2€",
-    },
-  ],
-  [
-    {
-      titulo: "Para rematar",
-      platos: [
-        { nombre: "Flan con nata", precio: "6€" },
-        { nombre: "Tarta de queso con fresas", precio: "7€" },
-        { nombre: "Helado de boletus y tierra de bellota", precio: "9€" },
-        { nombre: "Tabla de quesos de La Cabezuela", precio: "14€ / 26€" },
-      ],
-    },
-    {
-      titulo: "Cafés",
-      platos: [
-        { nombre: "Café solo / cortado", precio: "2,30€" },
-        { nombre: "Café con leche de vaca / americano", precio: "2,50€" },
-        { nombre: "Café doble carga", precio: "4,60€" },
-      ],
-    },
-    {
-      titulo: "Licores caseros",
-      platos: [
-        { nombre: "Recolectados y macerados en casa", precio: "4€" },
-      ],
-    },
-    {
-      titulo: "Vinos dulces",
-      platos: [
-        { nombre: "Pan Caliente", precio: "6€", detalle: "Jesús Soto · Soto Manrique · Ávila · Albillo Real" },
-        { nombre: "Sauvignon Dulce Menade", precio: "6€", detalle: "Familia Sanz · Menade · Valladolid · Sauvignon Blanc" },
-        { nombre: "Uretzi", precio: "7€", detalle: "Garikoitz Ríos · Itsasmendi · Vizcaya · Hondarrabi Zuri Zerratie" },
-      ],
-    },
-    {
-      titulo: "Combinados",
-      platos: [
-        { nombre: "Combinados", precio: "9€" },
-        { nombre: "Combinados premium", precio: "12€" },
-      ],
-    },
-  ],
-];
+   Los platos y precios vienen de la hoja de Google: ver src/data/carta.ts */
 
 const roboto = { fontFamily: "'Roboto', sans-serif" };
 
@@ -129,7 +39,7 @@ const Hoja = ({ apartados, numero, total, conTitulo }: {
             {a.titulo}:
           </h4>
           <ul className="space-y-1 md:space-y-1.5">
-            {a.platos.map((p) => <Linea key={p.nombre} plato={p} />)}
+            {a.platos.map((p, i) => <Linea key={i} plato={p} />)}
           </ul>
           {a.nota && (
             <p className="uppercase mt-3 md:mt-5 text-neutral-700">(**{a.nota})</p>
@@ -144,12 +54,16 @@ const Hoja = ({ apartados, numero, total, conTitulo }: {
   </article>
 );
 
-const CartaPapel = () => (
-  <div className="grid lg:grid-cols-2 gap-3 md:gap-8 lg:gap-6 lg:items-start -mx-2 sm:mx-0">
-    {paginas.map((apartados, i) => (
-      <Hoja key={i} apartados={apartados} numero={i + 1} total={paginas.length} conTitulo={i === 0} />
-    ))}
-  </div>
-);
+const CartaPapel = () => {
+  const paginas = useCarta();
+
+  return (
+    <div className="grid lg:grid-cols-2 gap-3 md:gap-8 lg:gap-6 lg:items-start -mx-2 sm:mx-0">
+      {paginas.map((apartados, i) => (
+        <Hoja key={i} apartados={apartados} numero={i + 1} total={paginas.length} conTitulo={i === 0} />
+      ))}
+    </div>
+  );
+};
 
 export default CartaPapel;

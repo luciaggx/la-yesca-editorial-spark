@@ -54,6 +54,18 @@
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 78 15% 76%;
     --sidebar-ring: 36 55% 44%;
+
+    color-scheme: only light;
+  }
+
+  /* En móvil la pantalla satura más el verde: fondo más claro y suave */
+  @media (max-width: 767px) {
+    :root {
+      --background: 86 24% 85%;
+      --primary-foreground: 86 24% 85%;
+      --tono:       80 22% 92%;
+      --border:     84 16% 74%;
+    }
   }
 }
 

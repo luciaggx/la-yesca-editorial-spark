@@ -93,7 +93,7 @@ const FooterSection = ({ onOpenLegal }: FooterSectionProps) => (
             Política de Cookies
           </button>
         </div>
-        <p className="opacity-75">
+        <p className="hidden md:block opacity-75">
           Grabados de dominio público de la Library of Congress, vía Wikimedia Commons:{" "}
           <a className="enlace" href="https://commons.wikimedia.org/wiki/File:The_Stag,_or_Red_Deer_LCCN2007681452.jpg" target="_blank" rel="noopener noreferrer">The Stag, or Red Deer</a>
           {" y "}
