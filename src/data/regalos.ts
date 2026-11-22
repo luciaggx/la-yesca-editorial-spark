@@ -6,12 +6,14 @@ export interface GiftMenu {
   description?: string;
   items?: string[];
   nota?: string;
+  dibujo?: "gildas";   /* dibujo junto a la lista de platos */
 }
 
 export const giftMenus: GiftMenu[] = [
   {
     name: "Menú Aperitivo",
     price: 55,
+    dibujo: "gildas",
     items: [
       "Botella de Matabuey (Verdejo de Nava de la Asunción, Segovia)",
       "2 gildas de pato",

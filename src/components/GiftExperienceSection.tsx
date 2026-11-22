@@ -2,6 +2,7 @@ import { toast } from "sonner";
 import lamina from "@/assets/yesca-lamina.webp";
 import { giftMenus } from "@/data/regalos";
 import { useCart } from "@/hooks/use-cart";
+import DibujoGildas from "./DibujoGildas";
 import Reveal from "./Reveal";
 
 const GiftExperienceSection = () => {
@@ -40,9 +41,12 @@ const GiftExperienceSection = () => {
               </h3>
               {menu.description && <p className="texto-cuerpo mt-2">{menu.description}</p>}
               {menu.items && (
-                <ul className="texto-cuerpo mt-3 space-y-1">
-                  {menu.items.map((item) => <li key={item}>{item}</li>)}
-                </ul>
+                <div className="flex items-center justify-between gap-4 md:gap-8 mt-3">
+                  <ul className="texto-cuerpo space-y-1">
+                    {menu.items.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                  {menu.dibujo === "gildas" && <DibujoGildas className="shrink-0 w-[72px] md:w-[110px] h-auto" />}
+                </div>
               )}
               {menu.nota && <p className="texto-small mt-3">{menu.nota}</p>}
               <button type="button" onClick={() => addToCart(menu.name)} className="boton mt-5">
